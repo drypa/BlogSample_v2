@@ -12,7 +12,7 @@ namespace Blog.BusinessLogic.Tests
         [Fact]
         public void CanAddPost()
         {
-            var service = new NHibernateBlogService();
+            var service = new NHibernateBlogManager();
             var post = new BlogPost
             {
                 Title = "Title",

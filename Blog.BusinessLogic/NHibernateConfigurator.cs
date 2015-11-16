@@ -77,10 +77,5 @@ namespace Blog.BusinessLogic
             config.AddDeserializedMapping(mapping, "NHSchema");
             SchemaMetadataUpdater.QuoteTableAndColumns(config);
         }
-
-        private ISessionFactory BuildSessionFactory()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

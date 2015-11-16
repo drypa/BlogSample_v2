@@ -49,8 +49,8 @@
     <Compile Include="AppSettingsHelper.cs" />
     <Compile Include="Mappings\BlogPostMapping.cs" />
     <Compile Include="Mappings\CommentMapping.cs" />
-    <Compile Include="NhibernateBlogService.cs" />
-    <Compile Include="IBlogService.cs" />
+    <Compile Include="NHibernateBlogManager.cs" />
+    <Compile Include="IBlogManager.cs" />
     <Compile Include="NHibernateConfigurator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

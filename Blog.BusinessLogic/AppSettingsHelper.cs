@@ -8,15 +8,14 @@ namespace Blog.BusinessLogic
         public string GetConnectionString(string name)
         {
             ConnectionStringSettingsCollection settings =
-            ConfigurationManager.ConnectionStrings;
+                ConfigurationManager.ConnectionStrings;
 
-            var setting = settings[name];
+            ConnectionStringSettings setting = settings[name];
             if (setting == null)
             {
                 throw new ArgumentOutOfRangeException(name);
             }
             return setting.ConnectionString;
         }
-
     }
 }

@@ -6,7 +6,7 @@ using NHibernate;
 
 namespace Blog.BusinessLogic
 {
-    public class NHibernateBlogService : IBlogService
+    public class NHibernateBlogManager : IBlogManager
     {
         private NHibernateConfigurator _configurator;
 
@@ -31,6 +31,19 @@ namespace Blog.BusinessLogic
             }
         }
 
+        public void AddComment(Comment comment)
+        {
+            using (ISession session = OpenSession())
+            {
+                using (ITransaction transaction = session.BeginTransaction())
+                {
+                    session.SaveOrUpdate(comment);
+
+                    transaction.Commit();
+                }
+            }
+        }
+
         /// <summary>
         /// Добавить новую статью
         /// </summary>
@@ -48,9 +61,12 @@ namespace Blog.BusinessLogic
             }
         }
 
-        public void DeletePost(Guid postId)
+        public void DeletePost(BlogPost post)
         {
-            throw new NotImplementedException();
+            using (ISession session = OpenSession())
+            {
+                session.Delete(post);
+            }
         }
 
         public BlogPost GetPost(Guid postId)
