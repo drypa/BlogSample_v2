@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.BusinessLogic", "Blog.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.BusinessLogic.Tests", "Blog.BusinessLogic.Tests\Blog.BusinessLogic.Tests.csproj", "{BCDB4023-8A77-4660-9C46-5CE5B3F0BA60}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sql", "Sql", "{6E5F3177-9A83-4E6A-9080-69200605B4DC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

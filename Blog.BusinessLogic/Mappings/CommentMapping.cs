@@ -1,5 +1,6 @@
 ﻿using System;
 using Blog.BusinessEntities;
+using NHibernate.Mapping.ByCode;
 using NHibernate.Mapping.ByCode.Conformist;
 
 namespace Blog.BusinessLogic.Mappings
@@ -8,10 +9,10 @@ namespace Blog.BusinessLogic.Mappings
     {
         public CommentMapping()
         {
-            Id(x=>x.Id);
-            Property(x=>x.Text);
-            Property(x=>x.CreateDate);
-            ManyToOne(x=>x.Post);
+            Id(x => x.Id, m => m.Generator(Generators.Guid));
+            Property(x => x.Text);
+            Property(x => x.CreateDate);
+            ManyToOne(x => x.Post);
         }
     }
 }

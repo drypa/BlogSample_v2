@@ -2,6 +2,7 @@
 using System.Data;
 using Blog.BusinessEntities;
 using Blog.BusinessLogic.Mappings;
+using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Cfg.MappingSchema;
 using NHibernate.Dialect;
@@ -14,7 +15,8 @@ namespace Blog.BusinessLogic
     public class NHibernateConfigurator
     {
         private static Configuration configuration;
-        
+        private static ISessionFactory sessionFactory;
+
         public Configuration GetConfiguration()
         {
             if (configuration != null)
@@ -24,13 +26,27 @@ namespace Blog.BusinessLogic
             return (configuration = BuildConfiguration());
         }
 
-        private static void Init(Configuration config)
+        public ISessionFactory GetSessionFactory()
+        {
+            if (sessionFactory != null)
+            {
+                return sessionFactory;
+            }
+            return (sessionFactory = GetConfiguration().BuildSessionFactory());
+        }
+
+        private ISessionFactory BuildSessionFactory()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void InitMappings(Configuration config)
         {
             HbmMapping mapping = GetMappings();
             config.AddDeserializedMapping(mapping, "NHSchema");
             SchemaMetadataUpdater.QuoteTableAndColumns(config);
-        }
 
+        }
 
         private static HbmMapping GetMappings()
         {
@@ -47,7 +63,7 @@ namespace Blog.BusinessLogic
         private static Configuration BuildConfiguration()
         {
             var configure = new Configuration();
-            
+
             configure.SessionFactoryName("SessionFactoryName");
 
             configure.DataBaseIntegration(db =>
@@ -63,7 +79,8 @@ namespace Blog.BusinessLogic
                 db.LogSqlInConsole = true;
                 db.AutoCommentSql = true;
             });
-            Init(configure);
+            InitMappings(configure);
+            
             return configure;
         }
     }

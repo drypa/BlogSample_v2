@@ -1,11 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
 using NHibernate.Tool.hbm2ddl;
 using Xunit;
 
 namespace Blog.BusinessLogic.Tests
 {
-    [TestClass]
-    public class DataAccessTests
+    public class DataAccessFixture
     {
         [Fact]
         public void CanGenerateSchema()
@@ -14,7 +13,8 @@ namespace Blog.BusinessLogic.Tests
             var cfg = configurator.GetConfiguration();
 
             new SchemaExport(cfg).Execute(false, true, false);
-            
+
+            Assert.NotNull(configurator.GetSessionFactory());
         }
     }
 }

@@ -7,15 +7,15 @@ namespace Blog.BusinessEntities
     public class Comment
     {
         [DataMember]
-        public Guid Id { get; set; }
+        public virtual Guid Id { get; set; }
 
         [DataMember]
-        public DateTime CreateDate { get; set; }
+        public virtual DateTime CreateDate { get; set; }
 
         [DataMember]
-        public string Text { get; set; }
+        public virtual string Text { get; set; }
 
         [DataMember]
-        public BlogPost Post { get; set; }
+        public virtual BlogPost Post { get; set; }
     }
 }

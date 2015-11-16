@@ -1,5 +1,6 @@
 ﻿using System;
 using Blog.BusinessEntities;
+using NHibernate.Mapping.ByCode;
 using NHibernate.Mapping.ByCode.Conformist;
 
 namespace Blog.BusinessLogic.Mappings
@@ -8,7 +9,7 @@ namespace Blog.BusinessLogic.Mappings
     {
         public BlogPostMapping()
         {
-            Id(x => x.Id);
+            Id(x => x.Id, m => m.Generator(Generators.Guid));
             Property(x => x.Text);
             Property(x => x.Title);
             Property(x => x.CreateDate);
