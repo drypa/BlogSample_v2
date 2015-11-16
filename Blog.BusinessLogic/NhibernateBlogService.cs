@@ -1,11 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using Blog.BusinessEntities;
+using NHibernate;
 
 namespace Blog.BusinessLogic
 {
-    public class NhibernateBlogService : IBlogService
+    public class NHibernateBlogService : IBlogService
     {
+        private static ISessionFactory sessionFactory;
+
+
+        private static ISessionFactory SessionFactory
+        {
+            get { return sessionFactory; }
+            set { sessionFactory = value; }
+        }
+
+        private NHibernateConfigurator _configurator;
+        private NHibernateConfigurator Configurator
+        {
+            get { return _configurator ?? (_configurator = new NHibernateConfigurator()); }
+        }
+
+
+
+
         public void AddPost(BlogPost post)
         {
             throw new NotImplementedException();

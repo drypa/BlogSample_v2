@@ -14,5 +14,8 @@ namespace Blog.BusinessEntities
 
         [DataMember]
         public string Text { get; set; }
+
+        [DataMember]
+        public BlogPost Post { get; set; }
     }
 }
