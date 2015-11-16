@@ -8,21 +8,21 @@ namespace Blog.BusinessEntities
     public class BlogPost
     {
         [DataMember]
-        public virtual Guid Id { get; set; }
+        public virtual IList<Comment> Comments { get; set; }
 
         [DataMember]
         public virtual DateTime CreateDate { get; set; }
 
         [DataMember]
-        public virtual string Title { get; set; }
+        public virtual string Description { get; set; }
 
         [DataMember]
-        public virtual string Description { get; set; }
+        public virtual Guid Id { get; set; }
 
         [DataMember]
         public virtual string Text { get; set; }
 
         [DataMember]
-        public virtual IList<Comment> Comments { get; set; }
+        public virtual string Title { get; set; }
     }
 }

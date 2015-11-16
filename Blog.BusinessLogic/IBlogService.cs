@@ -8,10 +8,8 @@ namespace Blog.BusinessLogic
     {
         void AddPost(BlogPost post);
 
-        IList<BlogPost> GetPosts();
-
-        BlogPost GetPost(Guid postId);
-
         void DeletePost(Guid postId);
+        BlogPost GetPost(Guid postId);
+        IList<BlogPost> GetPosts();
     }
 }

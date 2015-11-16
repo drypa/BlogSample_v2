@@ -35,31 +35,6 @@ namespace Blog.BusinessLogic
             return (sessionFactory = GetConfiguration().BuildSessionFactory());
         }
 
-        private ISessionFactory BuildSessionFactory()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static void InitMappings(Configuration config)
-        {
-            HbmMapping mapping = GetMappings();
-            config.AddDeserializedMapping(mapping, "NHSchema");
-            SchemaMetadataUpdater.QuoteTableAndColumns(config);
-
-        }
-
-        private static HbmMapping GetMappings()
-        {
-            ModelMapper mapper = new ModelMapper();
-
-            mapper.AddMapping<BlogPostMapping>();
-            mapper.AddMapping<CommentMapping>();
-
-            HbmMapping mapping = mapper.CompileMappingFor(new[] { typeof(BlogPost), typeof(Comment) });
-
-            return mapping;
-        }
-
         private static Configuration BuildConfiguration()
         {
             var configure = new Configuration();
@@ -80,8 +55,32 @@ namespace Blog.BusinessLogic
                 db.AutoCommentSql = true;
             });
             InitMappings(configure);
-            
+
             return configure;
+        }
+
+        private static HbmMapping GetMappings()
+        {
+            var mapper = new ModelMapper();
+
+            mapper.AddMapping<BlogPostMapping>();
+            mapper.AddMapping<CommentMapping>();
+
+            HbmMapping mapping = mapper.CompileMappingFor(new[] { typeof(BlogPost), typeof(Comment) });
+
+            return mapping;
+        }
+
+        private static void InitMappings(Configuration config)
+        {
+            HbmMapping mapping = GetMappings();
+            config.AddDeserializedMapping(mapping, "NHSchema");
+            SchemaMetadataUpdater.QuoteTableAndColumns(config);
+        }
+
+        private ISessionFactory BuildSessionFactory()
+        {
+            throw new NotImplementedException();
         }
     }
 }

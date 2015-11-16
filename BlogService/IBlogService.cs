@@ -5,7 +5,6 @@ using Blog.BusinessEntities;
 
 namespace Blog.Service
 {
-
     [ServiceContract]
     public interface IBlogService
     {
@@ -13,12 +12,12 @@ namespace Blog.Service
         void AddPost(BlogPost post);
 
         [OperationContract]
-        List<BlogPost> GetPosts();
+        void DeletePost(Guid postId);
 
         [OperationContract]
         BlogPost GetPost(Guid postId);
 
         [OperationContract]
-        void DeletePost(Guid postId);
+        List<BlogPost> GetPosts();
     }
 }

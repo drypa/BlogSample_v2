@@ -26,25 +26,23 @@ namespace Blog.BusinessLogic.Tests
             posts = service.GetPosts();
             Assert.Equal(beforePostCount + 1, posts.Count);
 
-            var firstPost = posts.First();
-            var selectedPost = service.GetPost(firstPost.Id);
+            BlogPost firstPost = posts.First();
+            BlogPost selectedPost = service.GetPost(firstPost.Id);
             Assert.NotNull(selectedPost);
             Equals(firstPost, selectedPost);
         }
 
-
         private void Equals<T>(T t1, T t2)
         {
             PropertyInfo[] properties = typeof(T).GetProperties();
-            foreach (var property in properties)
+            foreach (PropertyInfo property in properties)
             {
                 if (property.PropertyType.IsPrimitive)
                 {
-                    var t1val = property.GetValue(t1, null);
-                    var t2val = property.GetValue(t2, null);
+                    object t1val = property.GetValue(t1, null);
+                    object t2val = property.GetValue(t2, null);
                     Assert.Equal(t1val, t2val);
                 }
-                
             }
         }
     }
