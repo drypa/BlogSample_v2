@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ServiceModel;
-using System.ServiceModel.Web;
 using Blog.BusinessEntities;
 using Blog.BusinessLogic;
 
@@ -9,35 +7,42 @@ namespace Blog.Service
 {
     public class BlogService : IBlogService
     {
-        private IBlogManager _manager;
-        private IBlogManager Manager
+        private IBlogManager _nhManager;
+
+        private IBlogManager NHManager
         {
-            get { return _manager ?? (_manager = new NHibernateBlogManager()); }
+            get { return _nhManager ?? (_nhManager = new NHibernateBlogManager()); }
+        }
+        private IBlogManager _dapperManager;
+
+        private IBlogManager DapperManager
+        {
+            get { return _dapperManager ?? (_dapperManager = new DapperBlogManager()); }
         }
 
         public void AddComment(Comment comment)
         {
-            Manager.AddComment(comment);
+            NHManager.AddComment(comment);
         }
 
         public void AddPost(BlogPost post)
         {
-            Manager.AddPost(post);
+            NHManager.AddPost(post);
         }
 
         public void DeletePost(BlogPost post)
         {
-            Manager.DeletePost(post);
+            NHManager.DeletePost(post);
         }
-        
+
         public BlogPost GetPost(Guid postId)
         {
-            return Manager.GetPost(postId);
+            return DapperManager.GetPost(postId);
         }
 
         public IList<BlogPost> GetPosts()
         {
-            return Manager.GetPosts();
+            return DapperManager.GetPosts();
         }
     }
 }
