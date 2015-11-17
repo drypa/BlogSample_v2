@@ -10,7 +10,7 @@ namespace Blog.BusinessLogic.Mappings
         public CommentMapping()
         {
             Id(x => x.Id, m => m.Generator(Generators.Guid));
-            Property(x => x.Text);
+            Property(x => x.Text, mapper => mapper.Column(c=>c.Length(50)));
             Property(x => x.CreateDate);
             ManyToOne(x => x.Post);
         }

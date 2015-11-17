@@ -10,10 +10,10 @@ namespace Blog.BusinessLogic.Mappings
         public BlogPostMapping()
         {
             Id(x => x.Id, m => m.Generator(Generators.Guid));
-            Property(x => x.Text);
-            Property(x => x.Title);
+            Property(x => x.Text, mapper => mapper.Column(c => c.Length(200)));
+            Property(x => x.Title, mapper => mapper.Column(c => c.Length(100)));
             Property(x => x.CreateDate);
-            Property(x => x.Description);
+            Property(x => x.Description, mapper => mapper.Column(c => c.Length(50)));
             Bag(x => x.Comments, cm => { }, cr => cr.OneToMany(y => y.Class(typeof(Comment))));
         }
     }
