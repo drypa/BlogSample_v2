@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 using Blog.BusinessEntities;
 using Dapper;
 using Dapper.Contrib.Extensions;
@@ -9,13 +10,26 @@ namespace Blog.BusinessLogic
 {
     public class DapperBlogManager : IBlogManager
     {
-        private readonly string selectPostQuery = @"SELECT [Id]
+        private readonly string selectPostsQuery = @"SELECT [Id]
       ,[CreateDate]
       ,[Description]
       ,[Text]
       ,[Title]
   FROM [BlogService].[dbo].[BlogPost]
 ";
+        private readonly string selectPostWithCommentsQuery = @"select [Id]
+      ,[CreateDate]
+      ,[Description]
+      ,[Text]
+      ,[Title] 
+  from [dbo].[BlogPost] where Id =  @postId;
+  
+  select [Id]
+      ,[CreateDate]
+      ,[Text]
+  from [dbo].[Comment] where Post = @postId;
+";
+
 
         public void AddComment(Comment comment)
         {
@@ -36,7 +50,13 @@ namespace Blog.BusinessLogic
         {
             using (SqlConnection connection = GetReadyConnection())
             {
-                return connection.Get<BlogPost>(postId);
+                var data = connection.QueryMultiple(selectPostWithCommentsQuery, new { postId });
+                BlogPost resultPost = data.Read<BlogPost>().SingleOrDefault();
+                if (resultPost != null)
+                {
+                    resultPost.Comments = data.Read<Comment>().ToList();
+                }
+                return resultPost;
             }
         }
 
@@ -44,7 +64,7 @@ namespace Blog.BusinessLogic
         {
             using (SqlConnection connection = GetReadyConnection())
             {
-                return connection.Query<BlogPost>(selectPostQuery).AsList();
+                return connection.Query<BlogPost>(selectPostsQuery).AsList();
             }
         }
 
