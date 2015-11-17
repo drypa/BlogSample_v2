@@ -85,6 +85,21 @@ namespace Blog.BusinessLogic.Tests
             Assert.Throws<GenericADOException>(() => manager.AddPost(post));
         }
 
+        [Fact]
+        public void CantAddPostWithTextLengthMoreThan200Characters()
+        {
+            const int maxLength = 200;
+            var manager = new NHibernateBlogRepository(GetAppSettingsHelper());
+            var post = new BlogPost
+            {
+                Title = "title",
+                Description = "description",
+                CreateDate = DateTime.Now,
+                Text = new string('a', maxLength + 1)
+            };
+            Assert.Throws<GenericADOException>(() => manager.AddPost(post));
+        }
+
         private void Equals<T>(T t1, T t2)
         {
             PropertyInfo[] properties = typeof(T).GetProperties();
