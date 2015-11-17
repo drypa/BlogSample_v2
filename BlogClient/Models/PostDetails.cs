@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Input;
 
-namespace Blog.Client
+namespace Blog.Client.Models
 {
     public class PostDetails : Post
     {

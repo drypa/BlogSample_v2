@@ -1,11 +1,13 @@
 ﻿<Window x:Class="Blog.Client.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:client="clr-namespace:Blog.Client"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:models="clr-namespace:Blog.Client.Models"
         Title="MainWindow" Height="350" Width="525">
     <Window.Resources>
-        <client:BlogViewModel x:Key="ViewModel"></client:BlogViewModel>
+        <models:BlogViewModel x:Key="ViewModel"></models:BlogViewModel>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"></BooleanToVisibilityConverter>
     </Window.Resources>
-    <Grid>
+    <Grid DataContext="{StaticResource ViewModel}">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"></RowDefinition>
             <RowDefinition Height="40"></RowDefinition>
@@ -15,15 +17,26 @@
             <ColumnDefinition Width="30*"></ColumnDefinition>
             <ColumnDefinition Width="70*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Button Grid.Column="0" Margin="8" Grid.Row="0">Добавить статью</Button>
+        <Button Grid.Column="0" Margin="8" Grid.Row="0" Command="{Binding Path=NewPostCommand}">Добавить статью</Button>
         <Label Grid.Column="0" Margin="8" Grid.Row="1">Список статей</Label>
         <ListBox Grid.Row="2" Grid.Column="0"/>
         <Grid Grid.Column="1" Grid.Row="1" Grid.RowSpan="2">
             <Grid.RowDefinitions>
-                <RowDefinition Height="50*"></RowDefinition>
+                <RowDefinition Height="12*"></RowDefinition>
+                <RowDefinition Height="12*"></RowDefinition>
+                <RowDefinition Height="26*"></RowDefinition>
                 <RowDefinition Height="50*"></RowDefinition>
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30*"></ColumnDefinition>
+                <ColumnDefinition Width="70*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            
+            <Label Grid.Row="0" Grid.Column="0" Content="{Binding CurrentPost.CreationDate}"></Label>
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CurrentPost.Title}"></TextBox>
+            <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2" Text="{Binding CurrentPost.Text}"></TextBox>
         </Grid>
+        <Button Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75"  Command="{Binding AddPostCommand}">Сохранить</Button>
 
     </Grid>
 </Window>
