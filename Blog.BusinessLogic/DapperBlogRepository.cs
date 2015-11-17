@@ -4,19 +4,13 @@ using System.Data.SqlClient;
 using System.Linq;
 using Blog.BusinessEntities;
 using Dapper;
-using Dapper.Contrib.Extensions;
 
 namespace Blog.BusinessLogic
 {
-    public class DapperBlogManager : IBlogManager
+    public class DapperBlogRepository : IBlogRepository
     {
-        private readonly string selectPostsQuery = @"SELECT [Id]
-      ,[CreateDate]
-      ,[Description]
-      ,[Text]
-      ,[Title]
-  FROM [BlogService].[dbo].[BlogPost]
-";
+        private readonly IAppSettingsHelper _appSettingsHelper;
+
         private readonly string selectPostWithCommentsQuery = @"select [Id]
       ,[CreateDate]
       ,[Description]
@@ -29,7 +23,18 @@ namespace Blog.BusinessLogic
       ,[Text]
   from [dbo].[Comment] where Post = @postId;
 ";
+        private readonly string selectPostsQuery = @"SELECT [Id]
+      ,[CreateDate]
+      ,[Description]
+      ,[Text]
+      ,[Title]
+  FROM [BlogService].[dbo].[BlogPost]
+";
 
+        public DapperBlogRepository(IAppSettingsHelper appSettingsHelper)
+        {
+            _appSettingsHelper = appSettingsHelper;
+        }
 
         public void AddComment(Comment comment)
         {
@@ -48,9 +53,9 @@ namespace Blog.BusinessLogic
 
         public BlogPost GetPost(Guid postId)
         {
-            using (SqlConnection connection = GetReadyConnection())
+            using (SqlConnection connection = GetOpenConnection())
             {
-                var data = connection.QueryMultiple(selectPostWithCommentsQuery, new { postId });
+                SqlMapper.GridReader data = connection.QueryMultiple(selectPostWithCommentsQuery, new { postId });
                 BlogPost resultPost = data.Read<BlogPost>().SingleOrDefault();
                 if (resultPost != null)
                 {
@@ -62,15 +67,15 @@ namespace Blog.BusinessLogic
 
         public IList<BlogPost> GetPosts()
         {
-            using (SqlConnection connection = GetReadyConnection())
+            using (SqlConnection connection = GetOpenConnection())
             {
                 return connection.Query<BlogPost>(selectPostsQuery).AsList();
             }
         }
 
-        private SqlConnection GetReadyConnection()
+        private SqlConnection GetOpenConnection()
         {
-            var connection = new SqlConnection(new AppSettingsHelper().GetConnectionString("BlogDb"));
+            var connection = new SqlConnection(_appSettingsHelper.GetConnectionString());
             connection.Open();
             return connection;
         }

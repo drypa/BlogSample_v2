@@ -6,13 +6,19 @@ using NHibernate;
 
 namespace Blog.BusinessLogic
 {
-    public class NHibernateBlogManager : IBlogManager
+    public class NHibernateBlogRepository : IBlogRepository
     {
+        private readonly IAppSettingsHelper _appSettingsHelper;
         private NHibernateConfigurator _configurator;
+
+        public NHibernateBlogRepository(IAppSettingsHelper appSettingsHelper)
+        {
+            _appSettingsHelper = appSettingsHelper;
+        }
 
         private NHibernateConfigurator Configurator
         {
-            get { return _configurator ?? (_configurator = new NHibernateConfigurator()); }
+            get { return _configurator ?? (_configurator = new NHibernateConfigurator(_appSettingsHelper)); }
         }
 
         /// <summary>
@@ -23,7 +29,6 @@ namespace Blog.BusinessLogic
         /// <returns>список статей</returns>
         public List<BlogPost> GetPosts(int first, int count)
         {
-            //TODO: реализовать с помощью Dapper
             using (ISession session = OpenSession())
             {
                 ICriteria criteria = session.CreateCriteria<BlogPost>().SetFirstResult(first).SetMaxResults(count);
@@ -71,7 +76,6 @@ namespace Blog.BusinessLogic
 
         public BlogPost GetPost(Guid postId)
         {
-            //TODO: реализовать с помощью Dapper
             using (ISession session = OpenSession())
             {
                 return session.Get<BlogPost>(postId);

@@ -40,6 +40,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
@@ -50,6 +51,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppSettingsHelper.cs" />
     <Compile Include="IBlogService.cs" />
     <Compile Include="BlogService.svc.cs">
       <DependentUpon>BlogService.svc</DependentUpon>

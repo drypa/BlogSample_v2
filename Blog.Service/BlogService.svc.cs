@@ -7,42 +7,42 @@ namespace Blog.Service
 {
     public class BlogService : IBlogService
     {
-        private IBlogManager _nhManager;
+        private IBlogRepository nhRepository;
 
-        private IBlogManager NHManager
+        private IBlogRepository NhRepository
         {
-            get { return _nhManager ?? (_nhManager = new NHibernateBlogManager()); }
+            get { return nhRepository ?? (nhRepository = new NHibernateBlogRepository(new AppSettingsHelper())); }
         }
-        private IBlogManager _dapperManager;
+        private IBlogRepository dapperRepository;
 
-        private IBlogManager DapperManager
+        private IBlogRepository DapperRepository
         {
-            get { return _dapperManager ?? (_dapperManager = new DapperBlogManager()); }
+            get { return dapperRepository ?? (dapperRepository = new DapperBlogRepository(new AppSettingsHelper())); }
         }
 
         public void AddComment(Comment comment)
         {
-            NHManager.AddComment(comment);
+            NhRepository.AddComment(comment);
         }
 
         public void AddPost(BlogPost post)
         {
-            NHManager.AddPost(post);
+            NhRepository.AddPost(post);
         }
 
         public void DeletePost(BlogPost post)
         {
-            NHManager.DeletePost(post);
+            NhRepository.DeletePost(post);
         }
 
         public BlogPost GetPost(Guid postId)
         {
-            return DapperManager.GetPost(postId);
+            return DapperRepository.GetPost(postId);
         }
 
         public IList<BlogPost> GetPosts()
         {
-            return DapperManager.GetPosts();
+            return DapperRepository.GetPosts();
         }
     }
 }

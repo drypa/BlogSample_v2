@@ -4,7 +4,7 @@ using Blog.BusinessEntities;
 
 namespace Blog.BusinessLogic
 {
-    public interface IBlogManager
+    public interface IBlogRepository
     {
         /// <summary>
         /// Добавить новый комментарий

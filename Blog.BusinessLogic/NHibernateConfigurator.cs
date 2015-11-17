@@ -12,18 +12,16 @@ using NHibernate.Tool.hbm2ddl;
 
 namespace Blog.BusinessLogic
 {
-    public class NHibernateConfigurator
+    internal class NHibernateConfigurator
     {
+        private readonly IAppSettingsHelper appSettingsHelper;
+
         private static Configuration configuration;
         private static ISessionFactory sessionFactory;
 
-        public Configuration GetConfiguration()
+        public NHibernateConfigurator(IAppSettingsHelper appSettingsHelper)
         {
-            if (configuration != null)
-            {
-                return configuration;
-            }
-            return (configuration = BuildConfiguration());
+            this.appSettingsHelper = appSettingsHelper;
         }
 
         public ISessionFactory GetSessionFactory()
@@ -35,35 +33,10 @@ namespace Blog.BusinessLogic
             return (sessionFactory = GetConfiguration().BuildSessionFactory());
         }
 
-        private static Configuration BuildConfiguration()
-        {
-            var configure = new Configuration();
-
-            configure.SessionFactoryName("SessionFactoryName");
-
-            configure.DataBaseIntegration(db =>
-            {
-                db.Dialect<MsSql2008Dialect>();
-                db.Driver<SqlClientDriver>();
-                db.KeywordsAutoImport = Hbm2DDLKeyWords.AutoQuote;
-                db.IsolationLevel = IsolationLevel.ReadCommitted;
-                db.ConnectionString = new AppSettingsHelper().GetConnectionString("BlogDb");
-                db.Timeout = 10;
-
-                db.LogFormattedSql = true;
-                db.LogSqlInConsole = true;
-                db.AutoCommentSql = true;
-            });
-            InitMappings(configure);
-            GenerateSchema(configure);
-            return configure;
-        }
-
         private static void GenerateSchema(Configuration config)
         {
             new SchemaExport(config).Execute(false, true, false);
         }
-
 
         private static HbmMapping GetMappings()
         {
@@ -82,6 +55,39 @@ namespace Blog.BusinessLogic
             HbmMapping mapping = GetMappings();
             config.AddDeserializedMapping(mapping, "NHSchema");
             SchemaMetadataUpdater.QuoteTableAndColumns(config);
+        }
+
+        private Configuration BuildConfiguration()
+        {
+            var configure = new Configuration();
+
+            configure.SessionFactoryName("SessionFactoryName");
+
+            configure.DataBaseIntegration(db =>
+            {
+                db.Dialect<MsSql2008Dialect>();
+                db.Driver<SqlClientDriver>();
+                db.KeywordsAutoImport = Hbm2DDLKeyWords.AutoQuote;
+                db.IsolationLevel = IsolationLevel.ReadCommitted;
+                db.ConnectionString = appSettingsHelper.GetConnectionString();
+                db.Timeout = 10;
+
+                db.LogFormattedSql = true;
+                db.LogSqlInConsole = true;
+                db.AutoCommentSql = true;
+            });
+            InitMappings(configure);
+            GenerateSchema(configure);
+            return configure;
+        }
+
+        private Configuration GetConfiguration()
+        {
+            if (configuration != null)
+            {
+                return configuration;
+            }
+            return (configuration = BuildConfiguration());
         }
     }
 }
