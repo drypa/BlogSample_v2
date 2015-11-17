@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ServiceModel;
+using System.ServiceModel.Web;
 using Blog.BusinessEntities;
 using Blog.BusinessLogic;
 
@@ -27,7 +29,7 @@ namespace Blog.Service
         {
             Manager.DeletePost(post);
         }
-
+        
         public BlogPost GetPost(Guid postId)
         {
             return Manager.GetPost(postId);

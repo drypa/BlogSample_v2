@@ -55,9 +55,15 @@ namespace Blog.BusinessLogic
                 db.AutoCommentSql = true;
             });
             InitMappings(configure);
-
+            GenerateSchema(configure);
             return configure;
         }
+
+        private static void GenerateSchema(Configuration config)
+        {
+            new SchemaExport(config).Execute(false, true, false);
+        }
+
 
         private static HbmMapping GetMappings()
         {

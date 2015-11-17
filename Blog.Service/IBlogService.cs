@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ServiceModel;
+using System.ServiceModel.Web;
 using Blog.BusinessEntities;
 
 namespace Blog.Service
@@ -31,12 +32,15 @@ namespace Blog.Service
         /// </summary>
         /// <param name="postId">Идентификатор статьи</param>
         /// <returns>статья с коментариями</returns>
+        [WebGet]
         [OperationContract]
         BlogPost GetPost(Guid postId);
         /// <summary>
         /// Получить список всех статей
         /// </summary>
         /// <returns>Список всех статей</returns>
+//        [WebGet]
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json,BodyStyle = WebMessageBodyStyle.Bare)]
         [OperationContract]
         IList<BlogPost> GetPosts();
     }
