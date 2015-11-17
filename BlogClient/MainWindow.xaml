@@ -14,13 +14,20 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="30*"></ColumnDefinition>
-            <ColumnDefinition Width="70*"></ColumnDefinition>
+            <ColumnDefinition Width="155*"></ColumnDefinition>
+            <ColumnDefinition Width="123*"></ColumnDefinition>
+            <ColumnDefinition Width="239*"/>
         </Grid.ColumnDefinitions>
         <Button Grid.Column="0" Margin="8" Grid.Row="0" Command="{Binding Path=NewPostCommand}">Добавить статью</Button>
         <Label Grid.Column="0" Margin="8" Grid.Row="1">Список статей</Label>
-        <ListBox Grid.Row="2" Grid.Column="0"/>
-        <Grid Grid.Column="1" Grid.Row="1" Grid.RowSpan="2">
+        <ListBox Grid.Row="2" Grid.Column="0" ItemsSource="{Binding Posts}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Label Content="{Binding Title}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Grid Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="12*"></RowDefinition>
                 <RowDefinition Height="12*"></RowDefinition>
@@ -31,7 +38,7 @@
                 <ColumnDefinition Width="30*"></ColumnDefinition>
                 <ColumnDefinition Width="70*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            
+
             <Label Grid.Row="0" Grid.Column="0" Content="{Binding CurrentPost.CreationDate}"></Label>
             <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CurrentPost.Title}"></TextBox>
             <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2" Text="{Binding CurrentPost.Text}"></TextBox>

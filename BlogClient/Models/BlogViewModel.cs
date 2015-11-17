@@ -16,6 +16,7 @@ namespace Blog.Client.Models
         private ICommand newPostCommand;
         private PostDetails currentPost;
         private bool hasNewPost;
+        private List<Post> posts;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ICommand NewPostCommand
@@ -79,7 +80,33 @@ namespace Blog.Client.Models
             get { throw new NotImplementedException(); }
         }
 
-        public List<Post> Posts { get; set; }
+        public List<Post> Posts
+        {
+            get
+            {
+                if (posts == null)
+                {
+                    posts = GetPosts();
+                    OnPropertyChanged();
+                }
+                return posts;
+            }
+            set
+            {
+                if (posts != value)
+                {
+                    posts = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        private List<Post> GetPosts()
+        {
+            using (var factory = CreateChanelFactory())
+            {
+                return factory.CreateChannel().GetPosts().ToViewModel();
+            }
+        } 
 
         public ICommand SelectPostCommand
         {
@@ -88,17 +115,24 @@ namespace Blog.Client.Models
 
         private void AddNewPost()
         {
-            using (ChannelFactory<IBlogService> factory = new ChannelFactory<IBlogService>(
-                new WebHttpBinding(), ConfigurationManager.AppSettings["SeviceUrl"]))
+            var model = CurrentPost.ToModel();
+            model.CreateDate = DateTime.Now;
+            using (var factory = CreateChanelFactory())
             {
-                factory.Endpoint.Behaviors.Add(new WebHttpBehavior());
-
-                var blogService = factory.CreateChannel();
-                var model = CurrentPost.ToModel();
-                model.CreateDate = DateTime.Now;
-                blogService.AddPost(model);
+                factory.CreateChannel().AddPost(model);
             }
+            
             HasNewPost = false;
+        }
+
+
+
+        private ChannelFactory<IBlogService> CreateChanelFactory()
+        {
+            ChannelFactory<IBlogService> factory = new ChannelFactory<IBlogService>(
+                new WebHttpBinding(), ConfigurationManager.AppSettings["SeviceUrl"]);
+            factory.Endpoint.Behaviors.Add(new WebHttpBehavior());
+            return factory;
         }
 
         [NotifyPropertyChangedInvocator]
