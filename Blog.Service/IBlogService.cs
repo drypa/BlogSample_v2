@@ -15,18 +15,36 @@ namespace Blog.Service
         /// <param name="comment">Новый коментарий</param>
         [OperationContract]
         void AddComment(Comment comment);
+
         /// <summary>
         /// Добавить новую статью
         /// </summary>
         /// <param name="post">Новая статья</param>
         [OperationContract]
         void AddPost(BlogPost post);
+
+        /// <summary>
+        /// Удалить коментарий
+        /// </summary>
+        /// <param name="comment">Удаляемый коментарий</param>
+        void DeleteComment(Comment comment);
+
         /// <summary>
         /// Удалить статью
         /// </summary>
         /// <param name="post">Удаляемая статья</param>
         [OperationContract]
         void DeletePost(BlogPost post);
+
+        /// <summary>
+        /// Получить список коментариев для статьи
+        /// </summary>
+        /// <param name="postId">Идентификатор статьи, для которой получаем коментарии</param>
+        /// <returns>Список коментариев для статьи</returns>
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        [OperationContract]
+        IList<Comment> GetComments(Guid postId);
+
         /// <summary>
         /// Получить статью вместе с коментариями по её идентификатору
         /// </summary>
@@ -35,12 +53,12 @@ namespace Blog.Service
         [WebGet]
         [OperationContract]
         BlogPost GetPost(Guid postId);
+
         /// <summary>
         /// Получить список всех статей
         /// </summary>
         /// <returns>Список всех статей</returns>
-//        [WebGet]
-        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json,BodyStyle = WebMessageBodyStyle.Bare)]
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
         [OperationContract]
         IList<BlogPost> GetPosts();
     }

@@ -10,6 +10,12 @@ namespace Blog.BusinessLogic
     public class DapperBlogRepository : IBlogRepository
     {
         private readonly IAppSettingsHelper _appSettingsHelper;
+        private readonly string selectCommentsQuery = @"SELECT [Id]
+      ,[CreateDate]
+      ,[Text]
+  FROM [dbo].[Comment]
+  where Post = @postId
+";
 
         private readonly string selectPostWithCommentsQuery = @"select [Id]
       ,[CreateDate]
@@ -28,7 +34,7 @@ namespace Blog.BusinessLogic
       ,[Description]
       ,[Text]
       ,[Title]
-  FROM [BlogService].[dbo].[BlogPost]
+  FROM [dbo].[BlogPost]
 ";
 
         public DapperBlogRepository(IAppSettingsHelper appSettingsHelper)
@@ -46,9 +52,22 @@ namespace Blog.BusinessLogic
             throw new NotImplementedException();
         }
 
+        public void DeleteComment(Comment comment)
+        {
+            throw new NotImplementedException();
+        }
+
         public void DeletePost(BlogPost post)
         {
             throw new NotImplementedException();
+        }
+
+        public IList<Comment> GetComments(Guid postId)
+        {
+            using (SqlConnection connection = GetOpenConnection())
+            {
+                return connection.Query<Comment>(selectCommentsQuery, new { postId }).AsList();
+            }
         }
 
         public BlogPost GetPost(Guid postId)

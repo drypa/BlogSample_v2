@@ -21,21 +21,6 @@ namespace Blog.BusinessLogic
             get { return _configurator ?? (_configurator = new NHibernateConfigurator(_appSettingsHelper)); }
         }
 
-        /// <summary>
-        /// Получение списка статей с поддержкой пейджинга
-        /// </summary>
-        /// <param name="first"></param>
-        /// <param name="count"></param>
-        /// <returns>список статей</returns>
-        public List<BlogPost> GetPosts(int first, int count)
-        {
-            using (ISession session = OpenSession())
-            {
-                ICriteria criteria = session.CreateCriteria<BlogPost>().SetFirstResult(first).SetMaxResults(count);
-                return criteria.List<BlogPost>().ToList();
-            }
-        }
-
         public void AddComment(Comment comment)
         {
             using (ISession session = OpenSession())
@@ -66,12 +51,29 @@ namespace Blog.BusinessLogic
             }
         }
 
+        public void DeleteComment(Comment comment)
+        {
+            using (ISession session = OpenSession())
+            {
+                session.Delete(comment);
+                session.Flush();
+            }
+        }
+
         public void DeletePost(BlogPost post)
         {
             using (ISession session = OpenSession())
             {
                 session.Delete(post);
                 session.Flush();
+            }
+        }
+
+        public IList<Comment> GetComments(Guid postId)
+        {
+            using (ISession session = OpenSession())
+            {
+                return session.QueryOver<Comment>().Where(x => x.Post.Id == postId).List<Comment>();
             }
         }
 
@@ -89,7 +91,6 @@ namespace Blog.BusinessLogic
         /// <returns>список всех статей</returns>
         public IList<BlogPost> GetPosts()
         {
-            //TODO: реализовать с помощью Dapper
             using (ISession session = OpenSession())
             {
                 return session.QueryOver<BlogPost>().List<BlogPost>();

@@ -30,9 +30,19 @@ namespace Blog.Service
             NhRepository.AddPost(post);
         }
 
+        public void DeleteComment(Comment comment)
+        {
+            NhRepository.DeleteComment(comment);
+        }
+
         public void DeletePost(BlogPost post)
         {
             NhRepository.DeletePost(post);
+        }
+
+        public IList<Comment> GetComments(Guid postId)
+        {
+            return DapperRepository.GetComments(postId);
         }
 
         public BlogPost GetPost(Guid postId)
