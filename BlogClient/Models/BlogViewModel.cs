@@ -19,17 +19,14 @@ namespace Blog.Client.Models
         private ICommand newPostCommand;
         private List<Post> posts;
         private ICommand selectPostCommand;
+        private ICommand deletePostCommand;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ICommand AddPostCommand
         {
             get
             {
-                if (addPostCommand == null)
-                {
-                    addPostCommand = new RelayCommand(x => AddNewPost(), x => HasNewPost);
-                }
-                return addPostCommand;
+                return addPostCommand ?? (addPostCommand = new RelayCommand(x => AddNewPost(), x => HasNewPost));
             }
         }
 
@@ -48,7 +45,20 @@ namespace Blog.Client.Models
 
         public ICommand DeletePostCommand
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                return deletePostCommand ?? (deletePostCommand = new RelayCommand(DeletePost,x=>true));
+            }
+        }
+
+        private void DeletePost(object obj)
+        {
+            var post = (obj as Post);
+            using (ChannelFactory<IBlogService> factory = CreateChanelFactory())
+            {
+                factory.CreateChannel().DeletePost(post.ToModel());
+                Posts = GetPosts();
+            }
         }
 
         public bool HasNewPost
@@ -115,7 +125,11 @@ namespace Blog.Client.Models
             var postId = (post as Post).Id;
             using (ChannelFactory<IBlogService> factory = CreateChanelFactory())
             {
-                CurrentPost = factory.CreateChannel().GetPost(postId).ToPostDetails();
+                var blogPost = factory.CreateChannel().GetPost(postId);
+                if (blogPost != null)
+                {
+                    CurrentPost = blogPost.ToPostDetails();
+                }
             }
         }
 
@@ -127,7 +141,7 @@ namespace Blog.Client.Models
             {
                 factory.CreateChannel().AddPost(model);
             }
-
+            Posts = GetPosts();
             HasNewPost = false;
         }
 

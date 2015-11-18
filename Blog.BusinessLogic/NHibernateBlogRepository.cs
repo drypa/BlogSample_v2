@@ -71,6 +71,7 @@ namespace Blog.BusinessLogic
             using (ISession session = OpenSession())
             {
                 session.Delete(post);
+                session.Flush();
             }
         }
 

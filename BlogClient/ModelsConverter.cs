@@ -58,5 +58,14 @@ namespace Blog.Client
                 Comments = post.Comments.ToViewModel()
             };
         }
+
+        public static BlogPost ToModel(this Post post)
+        {
+            return new BlogPost
+            {
+                Id = post.Id,
+                Title = post.Title
+            };
+        }
     }
 }

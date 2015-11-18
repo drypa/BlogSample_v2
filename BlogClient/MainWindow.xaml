@@ -23,8 +23,11 @@
         <ListBox Grid.Row="2" Grid.Column="0" ItemsSource="{Binding Posts}" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Button Content="{Binding Title}" Command="{Binding DataContext.SelectPostCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}" 
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="{Binding Title}" Command="{Binding DataContext.SelectPostCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}" 
                             CommandParameter="{Binding}"/>
+                        <Button Command="{Binding DataContext.DeletePostCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}" CommandParameter="{Binding}" Content="X" ToolTip="Удалить" />
+                    </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
