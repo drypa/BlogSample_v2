@@ -20,10 +20,11 @@
         </Grid.ColumnDefinitions>
         <Button Grid.Column="0" Margin="8" Grid.Row="0" Command="{Binding Path=NewPostCommand}">Добавить статью</Button>
         <Label Grid.Column="0" Margin="8" Grid.Row="1">Список статей</Label>
-        <ListBox Grid.Row="2" Grid.Column="0" ItemsSource="{Binding Posts}">
+        <ListBox Grid.Row="2" Grid.Column="0" ItemsSource="{Binding Posts}" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Label Content="{Binding Title}"/>
+                    <Button Content="{Binding Title}" Command="{Binding DataContext.SelectPostCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}" 
+                            CommandParameter="{Binding}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

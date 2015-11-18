@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.Windows.Input;
+using Blog.BusinessEntities;
 using Blog.Client.Annotations;
 
 namespace Blog.Client.Models
@@ -13,29 +14,12 @@ namespace Blog.Client.Models
     public sealed class BlogViewModel : INotifyPropertyChanged
     {
         private ICommand addPostCommand;
-        private ICommand newPostCommand;
         private PostDetails currentPost;
         private bool hasNewPost;
+        private ICommand newPostCommand;
         private List<Post> posts;
+        private ICommand selectPostCommand;
         public event PropertyChangedEventHandler PropertyChanged;
-
-        public ICommand NewPostCommand
-        {
-            get
-            {
-                if (newPostCommand == null)
-                {
-                    newPostCommand = new RelayCommand(x => CreateNewPost(), x => true);
-                }
-                return newPostCommand;
-            }
-        }
-
-        private void CreateNewPost()
-        {
-            HasNewPost = true;
-            CurrentPost = new PostDetails();
-        }
 
         public ICommand AddPostCommand
         {
@@ -62,6 +46,11 @@ namespace Blog.Client.Models
             }
         }
 
+        public ICommand DeletePostCommand
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         public bool HasNewPost
         {
             get { return hasNewPost; }
@@ -75,9 +64,16 @@ namespace Blog.Client.Models
             }
         }
 
-        public ICommand DeletePostCommand
+        public ICommand NewPostCommand
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                if (newPostCommand == null)
+                {
+                    newPostCommand = new RelayCommand(x => CreateNewPost(), x => true);
+                }
+                return newPostCommand;
+            }
         }
 
         public List<Post> Posts
@@ -100,39 +96,61 @@ namespace Blog.Client.Models
                 }
             }
         }
-        private List<Post> GetPosts()
-        {
-            using (var factory = CreateChanelFactory())
-            {
-                return factory.CreateChannel().GetPosts().ToViewModel();
-            }
-        } 
 
         public ICommand SelectPostCommand
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                if (selectPostCommand == null)
+                {
+                    selectPostCommand = new RelayCommand(LoadPostDetails, x => true);
+                }
+                return selectPostCommand;
+            }
+
+        }
+
+        private void LoadPostDetails(object post)
+        {
+            var postId = (post as Post).Id;
+            using (ChannelFactory<IBlogService> factory = CreateChanelFactory())
+            {
+                CurrentPost = factory.CreateChannel().GetPost(postId).ToPostDetails();
+            }
         }
 
         private void AddNewPost()
         {
-            var model = CurrentPost.ToModel();
+            BlogPost model = CurrentPost.ToModel();
             model.CreateDate = DateTime.Now;
-            using (var factory = CreateChanelFactory())
+            using (ChannelFactory<IBlogService> factory = CreateChanelFactory())
             {
                 factory.CreateChannel().AddPost(model);
             }
-            
+
             HasNewPost = false;
         }
 
-
-
         private ChannelFactory<IBlogService> CreateChanelFactory()
         {
-            ChannelFactory<IBlogService> factory = new ChannelFactory<IBlogService>(
+            var factory = new ChannelFactory<IBlogService>(
                 new WebHttpBinding(), ConfigurationManager.AppSettings["SeviceUrl"]);
             factory.Endpoint.Behaviors.Add(new WebHttpBehavior());
             return factory;
+        }
+
+        private void CreateNewPost()
+        {
+            HasNewPost = true;
+            CurrentPost = new PostDetails();
+        }
+
+        private List<Post> GetPosts()
+        {
+            using (ChannelFactory<IBlogService> factory = CreateChanelFactory())
+            {
+                return factory.CreateChannel().GetPosts().ToViewModel();
+            }
         }
 
         [NotifyPropertyChangedInvocator]

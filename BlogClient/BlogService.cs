@@ -231,6 +231,7 @@ public interface IBlogService
     System.Threading.Tasks.Task DeletePostAsync(Blog.BusinessEntities.BlogPost post);
     
     [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBlogService/GetPost", ReplyAction="http://tempuri.org/IBlogService/GetPostResponse")]
+    [System.ServiceModel.Web.WebInvoke(Method = "GET", ResponseFormat = System.ServiceModel.Web.WebMessageFormat.Json, BodyStyle = System.ServiceModel.Web.WebMessageBodyStyle.Bare)]
     Blog.BusinessEntities.BlogPost GetPost(System.Guid postId);
     
     [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBlogService/GetPost", ReplyAction="http://tempuri.org/IBlogService/GetPostResponse")]
