@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using Blog.Client.Models;
 
 namespace Blog.Client
 {
@@ -7,8 +9,11 @@ namespace Blog.Client
     /// </summary>
     public partial class MainWindow : Window
     {
+        public BlogViewModel ViewModel { get; set; }
         public MainWindow()
         {
+            var alert = (Action<string>)((msg) => MessageBox.Show(msg));
+            ViewModel = new BlogViewModel(alert);
             InitializeComponent();
         }
     }

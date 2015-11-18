@@ -13,21 +13,21 @@ namespace Blog.Client.Models
 {
     public sealed class BlogViewModel : INotifyPropertyChanged
     {
-        private ICommand addPostCommand;
+        private readonly Action<string> notification;
+
+        public BlogViewModel(Action<string> alert)
+        {
+            notification = alert;
+        }
+
         private PostDetails currentPost;
         private bool hasNewPost;
-        private ICommand newPostCommand;
         private List<Post> posts;
-        private ICommand selectPostCommand;
-        private ICommand deletePostCommand;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ICommand AddPostCommand
         {
-            get
-            {
-                return addPostCommand ?? (addPostCommand = new RelayCommand(x => AddNewPost(), x => HasNewPost));
-            }
+            get { return new RelayCommand(x => AddNewPost(), x => HasNewPost); }
         }
 
         public PostDetails CurrentPost
@@ -45,20 +45,7 @@ namespace Blog.Client.Models
 
         public ICommand DeletePostCommand
         {
-            get
-            {
-                return deletePostCommand ?? (deletePostCommand = new RelayCommand(DeletePost,x=>true));
-            }
-        }
-
-        private void DeletePost(object obj)
-        {
-            var post = (obj as Post);
-            using (ChannelFactory<IBlogService> factory = CreateChanelFactory())
-            {
-                factory.CreateChannel().DeletePost(post.ToModel());
-                Posts = GetPosts();
-            }
+            get { return new RelayCommand(DeletePost, x => true); }
         }
 
         public bool HasNewPost
@@ -76,14 +63,7 @@ namespace Blog.Client.Models
 
         public ICommand NewPostCommand
         {
-            get
-            {
-                if (newPostCommand == null)
-                {
-                    newPostCommand = new RelayCommand(x => CreateNewPost(), x => true);
-                }
-                return newPostCommand;
-            }
+            get { return new RelayCommand(x => CreateNewPost(), x => true); }
         }
 
         public List<Post> Posts
@@ -107,30 +87,14 @@ namespace Blog.Client.Models
             }
         }
 
-        public ICommand SelectPostCommand
+        public ICommand SelectEmptyPostCommand
         {
-            get
-            {
-                if (selectPostCommand == null)
-                {
-                    selectPostCommand = new RelayCommand(LoadPostDetails, x => true);
-                }
-                return selectPostCommand;
-            }
-
+            get { return new RelayCommand(x => LoadPostDetails(new Post()), x => true); }
         }
 
-        private void LoadPostDetails(object post)
+        public ICommand SelectPostCommand
         {
-            var postId = (post as Post).Id;
-            using (ChannelFactory<IBlogService> factory = CreateChanelFactory())
-            {
-                var blogPost = factory.CreateChannel().GetPost(postId);
-                if (blogPost != null)
-                {
-                    CurrentPost = blogPost.ToPostDetails();
-                }
-            }
+            get { return new RelayCommand(LoadPostDetails, x => true); }
         }
 
         private void AddNewPost()
@@ -159,11 +123,38 @@ namespace Blog.Client.Models
             CurrentPost = new PostDetails();
         }
 
+        private void DeletePost(object obj)
+        {
+            var post = (obj as Post);
+            using (ChannelFactory<IBlogService> factory = CreateChanelFactory())
+            {
+                factory.CreateChannel().DeletePost(post.ToModel());
+                Posts = GetPosts();
+            }
+        }
+
         private List<Post> GetPosts()
         {
             using (ChannelFactory<IBlogService> factory = CreateChanelFactory())
             {
                 return factory.CreateChannel().GetPosts().ToViewModel();
+            }
+        }
+
+        private void LoadPostDetails(object post)
+        {
+            Guid postId = (post as Post).Id;
+            using (ChannelFactory<IBlogService> factory = CreateChanelFactory())
+            {
+                BlogPost blogPost = factory.CreateChannel().GetPost(postId);
+                if (blogPost != null)
+                {
+                    CurrentPost = blogPost.ToPostDetails();
+                }
+                else
+                {
+                    notification("Статья не найдена");
+                }
             }
         }
 
