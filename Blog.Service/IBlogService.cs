@@ -50,7 +50,7 @@ namespace Blog.Service
         /// </summary>
         /// <param name="postId">Идентификатор статьи</param>
         /// <returns>статья с коментариями</returns>
-        [WebGet]
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
         [OperationContract]
         BlogPost GetPost(Guid postId);
 

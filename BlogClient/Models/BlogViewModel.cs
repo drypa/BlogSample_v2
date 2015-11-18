@@ -32,6 +32,11 @@ namespace Blog.Client.Models
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public ICommand AddCommentCommand
+        {
+            get { return new RelayCommand(AddComment, x => true); }
+        }
+
         public ICommand AddPostCommand
         {
             get { return new RelayCommand(x => AddNewPost(), x => HasNewPost); }
@@ -48,6 +53,11 @@ namespace Blog.Client.Models
                     OnPropertyChanged();
                 }
             }
+        }
+
+        public ICommand DeleteCommentCommand
+        {
+            get { return new RelayCommand(DeleteComment, x => true); }
         }
 
         public ICommand DeletePostCommand
@@ -104,6 +114,10 @@ namespace Blog.Client.Models
             get { return new RelayCommand(LoadPostDetails, x => true); }
         }
 
+        private void AddComment(object obj)
+        {
+        }
+
         private void AddNewPost()
         {
             BlogPost model = CurrentPost.ToModel();
@@ -128,6 +142,10 @@ namespace Blog.Client.Models
         {
             HasNewPost = true;
             CurrentPost = new PostDetails();
+        }
+
+        private void DeleteComment(object obj)
+        {
         }
 
         private void DeletePost(object obj)
