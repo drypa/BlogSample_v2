@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Configuration;
 using System.Runtime.CompilerServices;
 using System.ServiceModel;
 using System.ServiceModel.Description;
@@ -14,15 +13,23 @@ namespace Blog.Client.Models
     public sealed class BlogViewModel : INotifyPropertyChanged
     {
         private readonly Action<string> notification;
-
-        public BlogViewModel(Action<string> alert)
-        {
-            notification = alert;
-        }
+        private readonly string serviceUrl;
 
         private PostDetails currentPost;
         private bool hasNewPost;
         private List<Post> posts;
+
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="service">Адрес сервиса для получения данных</param>
+        /// <param name="alert">Делегат, который будет использоваться для отображения сообщений пользователю</param>
+        public BlogViewModel(string service, Action<string> alert)
+        {
+            serviceUrl = service;
+            notification = alert;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ICommand AddPostCommand
@@ -112,7 +119,7 @@ namespace Blog.Client.Models
         private ChannelFactory<IBlogService> CreateChanelFactory()
         {
             var factory = new ChannelFactory<IBlogService>(
-                new WebHttpBinding(), ConfigurationManager.AppSettings["SeviceUrl"]);
+                new WebHttpBinding(), serviceUrl);
             factory.Endpoint.Behaviors.Add(new WebHttpBehavior());
             return factory;
         }

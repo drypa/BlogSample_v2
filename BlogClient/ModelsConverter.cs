@@ -18,6 +18,27 @@ namespace Blog.Client
             };
         }
 
+        public static BlogPost ToModel(this Post post)
+        {
+            return new BlogPost
+            {
+                Id = post.Id,
+                Title = post.Title
+            };
+        }
+
+        public static PostDetails ToPostDetails(this BlogPost post)
+        {
+            return new PostDetails
+            {
+                Id = post.Id,
+                Title = post.Title,
+                Text = post.Text,
+                CreationDate = post.CreateDate,
+                Comments = post.Comments.ToViewModel()
+            };
+        }
+
         public static List<Post> ToViewModel(this IEnumerable<BlogPost> posts)
         {
             return posts.Select(x => x.ToViewModel()).ToList();
@@ -41,27 +62,6 @@ namespace Blog.Client
         public static Post ToViewModel(this BlogPost post)
         {
             return new Post
-            {
-                Id = post.Id,
-                Title = post.Title
-            };
-        }
-
-        public static PostDetails ToPostDetails(this BlogPost post)
-        {
-            return new PostDetails
-            {
-                Id = post.Id,
-                Title = post.Title,
-                Text = post.Text,
-                CreationDate = post.CreateDate,
-                Comments = post.Comments.ToViewModel()
-            };
-        }
-
-        public static BlogPost ToModel(this Post post)
-        {
-            return new BlogPost
             {
                 Id = post.Id,
                 Title = post.Title
