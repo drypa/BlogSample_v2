@@ -28,6 +28,9 @@ public interface IBlogService
     [System.ServiceModel.OperationContractAttribute(Action = "http://tempuri.org/IBlogService/DeletePost", ReplyAction = "http://tempuri.org/IBlogService/DeletePostResponse")]
     void DeletePost(Blog.BusinessEntities.BlogPost post);
 
+    [System.ServiceModel.OperationContractAttribute(Action = "http://tempuri.org/IBlogService/DeleteComment", ReplyAction = "http://tempuri.org/IBlogService/DeleteCommentResponse")]
+    void DeleteComment(Blog.BusinessEntities.Comment comment);
+
     [System.ServiceModel.OperationContractAttribute(Action = "http://tempuri.org/IBlogService/DeletePost", ReplyAction = "http://tempuri.org/IBlogService/DeletePostResponse")]
     System.Threading.Tasks.Task DeletePostAsync(Blog.BusinessEntities.BlogPost post);
 
@@ -110,6 +113,11 @@ public partial class BlogServiceClient : System.ServiceModel.ClientBase<IBlogSer
     public void DeletePost(Blog.BusinessEntities.BlogPost post)
     {
         base.Channel.DeletePost(post);
+    }
+
+    public void DeleteComment(Blog.BusinessEntities.Comment comment)
+    {
+        base.Channel.DeleteComment(comment);
     }
 
     public System.Threading.Tasks.Task DeletePostAsync(Blog.BusinessEntities.BlogPost post)

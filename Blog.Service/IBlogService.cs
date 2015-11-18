@@ -27,6 +27,7 @@ namespace Blog.Service
         /// Удалить коментарий
         /// </summary>
         /// <param name="comment">Удаляемый коментарий</param>
+        [OperationContract]
         void DeleteComment(Comment comment);
 
         /// <summary>

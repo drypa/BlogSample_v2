@@ -17,6 +17,7 @@ namespace Blog.Client.Models
 
         private PostDetails currentPost;
         private bool hasNewPost;
+        private PostComment newComment = new PostComment();
         private List<Post> posts;
 
         /// <summary>
@@ -34,7 +35,7 @@ namespace Blog.Client.Models
 
         public ICommand AddCommentCommand
         {
-            get { return new RelayCommand(AddComment, x => true); }
+            get { return new RelayCommand(AddComment, CanAddComment); }
         }
 
         public ICommand AddPostCommand
@@ -78,6 +79,19 @@ namespace Blog.Client.Models
             }
         }
 
+        public PostComment NewComment
+        {
+            get { return newComment; }
+            set
+            {
+                if (newComment != value)
+                {
+                    newComment = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public ICommand NewPostCommand
         {
             get { return new RelayCommand(x => CreateNewPost(), x => true); }
@@ -116,6 +130,14 @@ namespace Blog.Client.Models
 
         private void AddComment(object obj)
         {
+            newComment.CreationDate = DateTime.Now;
+            newComment.Post = CurrentPost;
+            using (ChannelFactory<IBlogService> factory = CreateChanelFactory())
+            {
+                factory.CreateChannel().AddComment(newComment.ToModel());
+            }
+            LoadPostDetails(CurrentPost);
+            newComment.Text = string.Empty;
         }
 
         private void AddNewPost()
@@ -128,6 +150,11 @@ namespace Blog.Client.Models
             }
             Posts = GetPosts();
             HasNewPost = false;
+        }
+
+        private bool CanAddComment(object obj)
+        {
+            return currentPost != null && newComment != null && !string.IsNullOrEmpty(newComment.Text);
         }
 
         private ChannelFactory<IBlogService> CreateChanelFactory()
@@ -146,6 +173,13 @@ namespace Blog.Client.Models
 
         private void DeleteComment(object obj)
         {
+            var comment = (obj as PostComment);
+            comment.Post = CurrentPost;
+            using (ChannelFactory<IBlogService> factory = CreateChanelFactory())
+            {
+                factory.CreateChannel().DeleteComment(comment.ToModel());
+                LoadPostDetails(CurrentPost);
+            }
         }
 
         private void DeletePost(object obj)

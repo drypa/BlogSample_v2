@@ -11,6 +11,7 @@ namespace Blog.Client.Models
         public DateTime CreationDate { get; set; }
         public Guid Id { get; set; }
         public string Text { get; set; }
+        public Post Post { get; set; }
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

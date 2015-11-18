@@ -41,20 +41,21 @@
             <Label Grid.Row="0" Grid.Column="0" Content="{Binding CurrentPost.CreationDate}"/>
             <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CurrentPost.Title}"></TextBox>
             <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2" Text="{Binding CurrentPost.Text}"></TextBox>
-            <Button Content="Добавить" HorizontalAlignment="Left" Margin="10,5,0,0" Grid.Row="3" VerticalAlignment="Top" Width="75"/>
-            <ListBox Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="63" Margin="0,67,0,0" Grid.Row="3" VerticalAlignment="Top" ItemsSource="{Binding CurrentPost.Comments}">
+            <Button Content="Добавить" Command="{Binding AddCommentCommand}" HorizontalAlignment="Left" Margin="10,5,0,0" Grid.Row="3" VerticalAlignment="Top" Width="75"/>
+            <ListBox Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="73" Margin="0,67,0,0" Grid.Row="3" VerticalAlignment="Top" ItemsSource="{Binding CurrentPost.Comments}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Border>
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="{Binding Text}"></Label>
                                 <Label Content="{Binding CreationDate}"></Label>
-                                <Button Content="X" ToolTip="Удалить" />
+                                <Button Command="{Binding DataContext.DeleteCommentCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}" CommandParameter="{Binding}" Content="X" ToolTip="Удалить" />
                             </StackPanel>
                         </Border>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            <TextBox HorizontalAlignment="Left" Height="23" Margin="10,30,0,0" Grid.Row="3" TextWrapping="Wrap" Text="{Binding NewComment.Text}" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
         </Grid>
         <Button Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75"  Command="{Binding AddPostCommand}">Сохранить</Button>
         <Button Content="Несуществующая" Grid.Column="1" HorizontalAlignment="Left" Margin="90,0,0,0" VerticalAlignment="Top" Width="108" Grid.ColumnSpan="2" Command="{Binding SelectEmptyPostCommand}"/>

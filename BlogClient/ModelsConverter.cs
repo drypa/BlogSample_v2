@@ -27,6 +27,17 @@ namespace Blog.Client
             };
         }
 
+        public static Comment ToModel(this PostComment comment)
+        {
+            return new Comment
+            {
+                Post = comment.Post.ToModel(),
+                Text = comment.Text,
+                CreateDate = comment.CreationDate,
+                Id = comment.Id
+            };
+        }
+
         public static PostDetails ToPostDetails(this BlogPost post)
         {
             return new PostDetails
