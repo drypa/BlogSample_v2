@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.ServiceModel;
 using System.ServiceModel.Description;
@@ -189,6 +190,10 @@ namespace Blog.Client.Models
             {
                 factory.CreateChannel().DeletePost(post.ToModel());
                 Posts = GetPosts();
+                if (Posts.Count > 0)
+                {
+                    LoadPostDetails(Posts.First());
+                }
             }
         }
 
