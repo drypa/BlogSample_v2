@@ -12,7 +12,7 @@ using NHibernate.Tool.hbm2ddl;
 
 namespace Blog.BusinessLogic
 {
-    internal class NHibernateConfigurator
+    public class NHibernateConfigurator
     {
         private readonly IAppSettingsHelper appSettingsHelper;
 
@@ -57,7 +57,7 @@ namespace Blog.BusinessLogic
             SchemaMetadataUpdater.QuoteTableAndColumns(config);
         }
 
-        private Configuration BuildConfiguration()
+        public static Configuration BuildConfiguration(string connectionString)
         {
             var configure = new Configuration();
 
@@ -69,7 +69,7 @@ namespace Blog.BusinessLogic
                 db.Driver<SqlClientDriver>();
                 db.KeywordsAutoImport = Hbm2DDLKeyWords.AutoQuote;
                 db.IsolationLevel = IsolationLevel.ReadCommitted;
-                db.ConnectionString = appSettingsHelper.GetConnectionString();
+                db.ConnectionString = connectionString;
                 db.Timeout = 10;
 
                 db.LogFormattedSql = true;
@@ -79,6 +79,11 @@ namespace Blog.BusinessLogic
             InitMappings(configure);
             GenerateSchema(configure);
             return configure;
+        }
+
+        private Configuration BuildConfiguration()
+        {
+            return BuildConfiguration(appSettingsHelper.GetConnectionString());
         }
 
         private Configuration GetConfiguration()

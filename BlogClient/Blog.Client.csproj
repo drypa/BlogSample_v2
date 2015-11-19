@@ -104,9 +104,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Blog.BusinessEntities\Blog.BusinessEntities.csproj">
       <Project>{8089f243-361a-41a8-957d-61db7ecfb5cc}</Project>
       <Name>Blog.BusinessEntities</Name>

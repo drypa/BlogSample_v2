@@ -13,6 +13,7 @@ namespace Blog.Client.Models
 {
     public sealed class BlogViewModel : INotifyPropertyChanged
     {
+        private readonly int maxReceivedMessageSize;
         private readonly Action<string> notification;
         private readonly string serviceUrl;
 
@@ -25,10 +26,12 @@ namespace Blog.Client.Models
         /// Конструктор
         /// </summary>
         /// <param name="service">Адрес сервиса для получения данных</param>
+        /// <param name="maxMessageSize"></param>
         /// <param name="alert">Делегат, который будет использоваться для отображения сообщений пользователю</param>
-        public BlogViewModel(string service, Action<string> alert)
+        public BlogViewModel(string service, int maxMessageSize, Action<string> alert)
         {
             serviceUrl = service;
+            maxReceivedMessageSize = maxMessageSize;
             notification = alert;
         }
 
@@ -131,14 +134,14 @@ namespace Blog.Client.Models
 
         private void AddComment(object obj)
         {
-            newComment.CreationDate = DateTime.Now;
-            newComment.Post = CurrentPost;
+            NewComment.CreationDate = DateTime.Now;
+            NewComment.Post = CurrentPost;
             using (ChannelFactory<IBlogService> factory = CreateChanelFactory())
             {
-                factory.CreateChannel().AddComment(newComment.ToModel());
+                factory.CreateChannel().AddComment(NewComment.ToModel());
             }
             LoadPostDetails(CurrentPost);
-            newComment.Text = string.Empty;
+            NewComment.Text = string.Empty;
         }
 
         private void AddNewPost()
@@ -155,13 +158,13 @@ namespace Blog.Client.Models
 
         private bool CanAddComment(object obj)
         {
-            return currentPost != null && newComment != null && !string.IsNullOrEmpty(newComment.Text);
+            return currentPost != null && NewComment != null && !string.IsNullOrEmpty(NewComment.Text);
         }
 
         private ChannelFactory<IBlogService> CreateChanelFactory()
         {
-            var factory = new ChannelFactory<IBlogService>(
-                new WebHttpBinding(), serviceUrl);
+            WebHttpBinding binding = maxReceivedMessageSize == 0 ? new WebHttpBinding() : new WebHttpBinding { MaxReceivedMessageSize = maxReceivedMessageSize };
+            var factory = new ChannelFactory<IBlogService>(binding, serviceUrl);
             factory.Endpoint.Behaviors.Add(new WebHttpBehavior());
             return factory;
         }

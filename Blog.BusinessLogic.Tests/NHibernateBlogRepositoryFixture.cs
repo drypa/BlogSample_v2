@@ -15,7 +15,13 @@ namespace Blog.BusinessLogic.Tests
     {
         public NHibernateBlogRepositoryFixture()
         {
+            CreateDbSchema();
             Cleanup();
+        }
+
+        private void CreateDbSchema()
+        {
+            NHibernateConfigurator.BuildConfiguration(GetAppSettingsHelper().GetConnectionString());
         }
 
         [Fact]
