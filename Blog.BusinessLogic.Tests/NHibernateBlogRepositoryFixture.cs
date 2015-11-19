@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
 using Blog.BusinessEntities;
@@ -9,8 +11,28 @@ using Xunit;
 
 namespace Blog.BusinessLogic.Tests
 {
-    public class NHibernateBlogRepositoryFixture
+    public class NHibernateBlogRepositoryFixture:IDisposable
     {
+        public NHibernateBlogRepositoryFixture()
+        {
+            Cleanup();
+        }
+
+        private void Cleanup()
+        {
+            using (SqlConnection connection = new SqlConnection(GetAppSettingsHelper().GetConnectionString()))
+            {
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    connection.Open();
+                    cmd.CommandText = @"truncate table [dbo].[Comment]; delete from [dbo].[BlogPost]";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         [Fact]
         public void CanAddPost()
         {
@@ -119,6 +141,11 @@ namespace Blog.BusinessLogic.Tests
             var mock = new Mock<IAppSettingsHelper>();
             mock.Setup(x => x.GetConnectionString()).Returns(@"Data Source=localhost\SQLEXPRESS;Initial Catalog=BlogService;Integrated Security=True");
             return mock.Object;
+        }
+
+        public void Dispose()
+        {
+            Cleanup();
         }
     }
 }
