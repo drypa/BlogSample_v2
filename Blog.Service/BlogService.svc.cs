@@ -7,52 +7,49 @@ namespace Blog.Service
 {
     public class BlogService : IBlogService
     {
-        private IBlogRepository nhRepository;
+        private readonly IBlogRepository readBlogRepository;
 
-        private IBlogRepository NhRepository
-        {
-            get { return nhRepository ?? (nhRepository = new NHibernateBlogRepository(new AppSettingsHelper())); }
-        }
-        private IBlogRepository dapperRepository;
+        private readonly IBlogRepository writeBlogRepository;
 
-        private IBlogRepository DapperRepository
+        public BlogService(IBlogRepository readRepository, IBlogRepository writeRepository)
         {
-            get { return dapperRepository ?? (dapperRepository = new DapperBlogRepository(new AppSettingsHelper())); }
+            readBlogRepository = readRepository;
+            writeBlogRepository = writeRepository;
         }
 
         public void AddComment(Comment comment)
         {
-            NhRepository.AddComment(comment);
+            writeBlogRepository.AddComment(comment);
         }
 
         public void AddPost(BlogPost post)
         {
-            NhRepository.AddPost(post);
+            writeBlogRepository.AddPost(post);
         }
 
         public void DeleteComment(Comment comment)
         {
-            NhRepository.DeleteComment(comment);
+            writeBlogRepository.DeleteComment(comment);
         }
 
         public void DeletePost(BlogPost post)
         {
-            NhRepository.DeletePost(post);
+            writeBlogRepository.DeletePost(post);
         }
 
         public IList<Comment> GetComments(Guid postId)
         {
-            return DapperRepository.GetComments(postId);
+            return readBlogRepository.GetComments(postId);
         }
 
         public BlogPost GetPost(Guid postId)
         {
-            return DapperRepository.GetPost(postId);
+            return readBlogRepository.GetPost(postId);
         }
 
         public IList<BlogPost> GetPosts()
         {
-            return DapperRepository.GetPosts();
+            return readBlogRepository.GetPosts();
         }
     }
 }

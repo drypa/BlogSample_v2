@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Blog.BusinessEntities;
 using NHibernate;
+using Ninject;
 
 namespace Blog.BusinessLogic
 {
@@ -11,6 +11,7 @@ namespace Blog.BusinessLogic
         private readonly IAppSettingsHelper _appSettingsHelper;
         private NHibernateConfigurator _configurator;
 
+        [Inject]
         public NHibernateBlogRepository(IAppSettingsHelper appSettingsHelper)
         {
             _appSettingsHelper = appSettingsHelper;
@@ -24,7 +25,7 @@ namespace Blog.BusinessLogic
         public void AddComment(Comment comment)
         {
             using (ISession session = OpenSession())
-            {
+            {   
                 using (ITransaction transaction = session.BeginTransaction())
                 {
                     session.SaveOrUpdate(comment);

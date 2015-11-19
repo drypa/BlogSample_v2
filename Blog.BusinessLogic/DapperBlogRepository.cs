@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using Blog.BusinessEntities;
 using Dapper;
+using Ninject;
 
 namespace Blog.BusinessLogic
 {
@@ -36,7 +37,7 @@ namespace Blog.BusinessLogic
       ,[Title]
   FROM [dbo].[BlogPost]
 ";
-
+        [Inject]
         public DapperBlogRepository(IAppSettingsHelper appSettingsHelper)
         {
             _appSettingsHelper = appSettingsHelper;
