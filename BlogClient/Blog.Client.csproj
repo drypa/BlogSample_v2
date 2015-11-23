@@ -55,7 +55,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BlogClient.cs" />
     <Compile Include="BlogService.cs" />
+    <Compile Include="ClientNotificator.cs" />
+    <Compile Include="IBlogClient.cs" />
+    <Compile Include="IClientNotificator.cs" />
     <Compile Include="ModelsConverter.cs" />
     <Compile Include="RelayCommand .cs" />
     <Page Include="MainWindow.xaml">

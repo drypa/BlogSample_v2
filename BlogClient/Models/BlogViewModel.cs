@@ -3,36 +3,30 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.ServiceModel;
-using System.ServiceModel.Description;
 using System.Windows.Input;
-using Blog.BusinessEntities;
 using Blog.Client.Annotations;
 
 namespace Blog.Client.Models
 {
     public sealed class BlogViewModel : INotifyPropertyChanged
     {
-        private readonly int maxReceivedMessageSize;
-        private readonly Action<string> notification;
-        private readonly string serviceUrl;
+        private readonly IBlogClient blogClient;
+        private readonly PostComment newComment = new PostComment();
+        private readonly IClientNotificator clientNotificator;
 
         private PostDetails currentPost;
         private bool hasNewPost;
-        private PostComment newComment = new PostComment();
         private List<Post> posts;
 
         /// <summary>
         /// Конструктор
         /// </summary>
-        /// <param name="service">Адрес сервиса для получения данных</param>
-        /// <param name="maxMessageSize"></param>
-        /// <param name="alert">Делегат, который будет использоваться для отображения сообщений пользователю</param>
-        public BlogViewModel(string service, int maxMessageSize, Action<string> alert)
+        /// <param name="client" >Клиент получения данных</param>
+        /// <param name="notificator">Сервис, позволяющий информировать пользователя</param>
+        public BlogViewModel(IBlogClient client, IClientNotificator notificator)
         {
-            serviceUrl = service;
-            maxReceivedMessageSize = maxMessageSize;
-            notification = alert;
+            blogClient = client;
+            clientNotificator = notificator;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -50,7 +44,7 @@ namespace Blog.Client.Models
         public PostDetails CurrentPost
         {
             get { return currentPost; }
-            set
+            private set
             {
                 if (currentPost != value)
                 {
@@ -70,30 +64,9 @@ namespace Blog.Client.Models
             get { return new RelayCommand(DeletePost, x => true); }
         }
 
-        public bool HasNewPost
-        {
-            get { return hasNewPost; }
-            set
-            {
-                if (hasNewPost != value)
-                {
-                    hasNewPost = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
         public PostComment NewComment
         {
             get { return newComment; }
-            set
-            {
-                if (newComment != value)
-                {
-                    newComment = value;
-                    OnPropertyChanged();
-                }
-            }
         }
 
         public ICommand NewPostCommand
@@ -107,7 +80,7 @@ namespace Blog.Client.Models
             {
                 if (posts == null)
                 {
-                    posts = GetPosts();
+                    posts = blogClient.GetPosts();
                     OnPropertyChanged();
                 }
                 return posts;
@@ -132,41 +105,41 @@ namespace Blog.Client.Models
             get { return new RelayCommand(LoadPostDetails, x => true); }
         }
 
+        private bool HasNewPost
+        {
+            get { return hasNewPost; }
+            set
+            {
+                if (hasNewPost != value)
+                {
+                    hasNewPost = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         private void AddComment(object obj)
         {
             NewComment.CreationDate = DateTime.Now;
             NewComment.Post = CurrentPost;
-            using (ChannelFactory<IBlogService> factory = CreateChanelFactory())
-            {
-                factory.CreateChannel().AddComment(NewComment.ToModel());
-            }
+
+            blogClient.AddComment(NewComment);
+
             LoadPostDetails(CurrentPost);
             NewComment.Text = string.Empty;
         }
 
         private void AddNewPost()
         {
-            BlogPost model = CurrentPost.ToModel();
-            model.CreateDate = DateTime.Now;
-            using (ChannelFactory<IBlogService> factory = CreateChanelFactory())
-            {
-                factory.CreateChannel().AddPost(model);
-            }
-            Posts = GetPosts();
+            CurrentPost.CreationDate = DateTime.Now;
+            blogClient.AddPost(CurrentPost);
+            Posts = blogClient.GetPosts();
             HasNewPost = false;
         }
 
         private bool CanAddComment(object obj)
         {
             return currentPost != null && NewComment != null && !string.IsNullOrEmpty(NewComment.Text);
-        }
-
-        private ChannelFactory<IBlogService> CreateChanelFactory()
-        {
-            WebHttpBinding binding = maxReceivedMessageSize == 0 ? new WebHttpBinding() : new WebHttpBinding { MaxReceivedMessageSize = maxReceivedMessageSize };
-            var factory = new ChannelFactory<IBlogService>(binding, serviceUrl);
-            factory.Endpoint.Behaviors.Add(new WebHttpBehavior());
-            return factory;
         }
 
         private void CreateNewPost()
@@ -179,49 +152,33 @@ namespace Blog.Client.Models
         {
             var comment = (obj as PostComment);
             comment.Post = CurrentPost;
-            using (ChannelFactory<IBlogService> factory = CreateChanelFactory())
-            {
-                factory.CreateChannel().DeleteComment(comment.ToModel());
-                LoadPostDetails(CurrentPost);
-            }
+            blogClient.DeleteComment(comment);
+
+            LoadPostDetails(CurrentPost);
         }
 
         private void DeletePost(object obj)
         {
             var post = (obj as Post);
-            using (ChannelFactory<IBlogService> factory = CreateChanelFactory())
+            blogClient.DeletePost(post);
+            Posts = blogClient.GetPosts();
+            if (Posts.Count > 0)
             {
-                factory.CreateChannel().DeletePost(post.ToModel());
-                Posts = GetPosts();
-                if (Posts.Count > 0)
-                {
-                    LoadPostDetails(Posts.First());
-                }
-            }
-        }
-
-        private List<Post> GetPosts()
-        {
-            using (ChannelFactory<IBlogService> factory = CreateChanelFactory())
-            {
-                return factory.CreateChannel().GetPosts().ToViewModel();
+                LoadPostDetails(Posts.First());
             }
         }
 
         private void LoadPostDetails(object post)
         {
             Guid postId = (post as Post).Id;
-            using (ChannelFactory<IBlogService> factory = CreateChanelFactory())
+            PostDetails loadedPost = blogClient.GetPost(postId);
+            if (loadedPost == null)
             {
-                BlogPost blogPost = factory.CreateChannel().GetPost(postId);
-                if (blogPost != null)
-                {
-                    CurrentPost = blogPost.ToPostDetails();
-                }
-                else
-                {
-                    notification("Статья не найдена");
-                }
+                clientNotificator.ShowMessage("Статья не найдена");
+            }
+            else
+            {
+                CurrentPost = loadedPost;
             }
         }
 

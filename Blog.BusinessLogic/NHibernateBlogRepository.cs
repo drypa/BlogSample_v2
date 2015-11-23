@@ -8,24 +8,24 @@ namespace Blog.BusinessLogic
 {
     public class NHibernateBlogRepository : IBlogRepository
     {
-        private readonly IAppSettingsHelper _appSettingsHelper;
-        private NHibernateConfigurator _configurator;
+        private readonly IAppSettingsHelper appSettings;
+        private NHibernateConfigurator configurator;
 
         [Inject]
         public NHibernateBlogRepository(IAppSettingsHelper appSettingsHelper)
         {
-            _appSettingsHelper = appSettingsHelper;
+            appSettings = appSettingsHelper;
         }
 
         private NHibernateConfigurator Configurator
         {
-            get { return _configurator ?? (_configurator = new NHibernateConfigurator(_appSettingsHelper)); }
+            get { return configurator ?? (configurator = new NHibernateConfigurator(appSettings)); }
         }
 
         public void AddComment(Comment comment)
         {
             using (ISession session = OpenSession())
-            {   
+            {
                 using (ITransaction transaction = session.BeginTransaction())
                 {
                     session.SaveOrUpdate(comment);

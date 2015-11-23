@@ -16,7 +16,9 @@ namespace Blog.Client
             string serviceUrl = ConfigurationManager.AppSettings["SeviceUrl"];
             int maxReceivedMessageSize;
             int.TryParse(ConfigurationManager.AppSettings["MaxReceivedMessageSize"], out maxReceivedMessageSize);
-            ViewModel = new BlogViewModel(serviceUrl, maxReceivedMessageSize, alert);
+            var client = new BlogClient(serviceUrl, maxReceivedMessageSize);
+            var notificator = new ClientNotificator(alert);
+            ViewModel = new BlogViewModel(client, notificator);
             InitializeComponent();
         }
 

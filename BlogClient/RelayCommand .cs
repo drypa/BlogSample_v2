@@ -6,16 +6,15 @@ namespace Blog.Client
 {
     public class RelayCommand : ICommand
     {
-
-        readonly Action<object> _execute;
-        readonly Predicate<object> _canExecute;
+        private readonly Predicate<object> canExecutePredicate;
+        private readonly Action<object> executeAction;
 
         /// <summary>
-        /// Creates a new command that can always execute.
+        /// Creates a new command that can always executeAction.
         /// </summary>
-        /// <param name="execute">The execution logic.</param>
-        public RelayCommand(Action<object> execute)
-            : this(execute, null)
+        /// <param name="executeAction">The execution logic.</param>
+        public RelayCommand(Action<object> executeAction)
+            : this(executeAction, null)
         {
         }
 
@@ -27,16 +26,12 @@ namespace Blog.Client
         public RelayCommand(Action<object> execute, Predicate<object> canExecute)
         {
             if (execute == null)
+            {
                 throw new ArgumentNullException("execute");
+            }
 
-            _execute = execute;
-            _canExecute = canExecute;
-        }
-
-        [DebuggerStepThrough]
-        public bool CanExecute(object parameters)
-        {
-            return _canExecute == null || _canExecute(parameters);
+            executeAction = execute;
+            canExecutePredicate = canExecute;
         }
 
         public event EventHandler CanExecuteChanged
@@ -45,9 +40,15 @@ namespace Blog.Client
             remove { CommandManager.RequerySuggested -= value; }
         }
 
+        [DebuggerStepThrough]
+        public bool CanExecute(object parameters)
+        {
+            return canExecutePredicate == null || canExecutePredicate(parameters);
+        }
+
         public void Execute(object parameters)
         {
-            _execute(parameters);
+            executeAction(parameters);
         }
     }
 }

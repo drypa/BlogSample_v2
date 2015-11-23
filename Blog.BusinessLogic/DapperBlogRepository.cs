@@ -10,7 +10,7 @@ namespace Blog.BusinessLogic
 {
     public class DapperBlogRepository : IBlogRepository
     {
-        private readonly IAppSettingsHelper _appSettingsHelper;
+        private readonly IAppSettingsHelper appSettings;
         private readonly string selectCommentsQuery = @"SELECT [Id]
       ,[CreateDate]
       ,[Text]
@@ -37,10 +37,11 @@ namespace Blog.BusinessLogic
       ,[Title]
   FROM [dbo].[BlogPost]
 ";
+
         [Inject]
         public DapperBlogRepository(IAppSettingsHelper appSettingsHelper)
         {
-            _appSettingsHelper = appSettingsHelper;
+            appSettings = appSettingsHelper;
         }
 
         public void AddComment(Comment comment)
@@ -95,7 +96,7 @@ namespace Blog.BusinessLogic
 
         private SqlConnection GetOpenConnection()
         {
-            var connection = new SqlConnection(_appSettingsHelper.GetConnectionString());
+            var connection = new SqlConnection(appSettings.GetConnectionString());
             connection.Open();
             return connection;
         }
