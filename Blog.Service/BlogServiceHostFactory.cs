@@ -23,9 +23,9 @@ namespace Blog.Service
                 .Named("write");
 
             kernel.Bind<IBlogService>()
-                .To<BlogService>()
-                .WithConstructorArgument("readRepository", kernel.Get<IBlogRepository>("read"))
-                .WithConstructorArgument("writeRepository", kernel.Get<IBlogRepository>("write"));
+                .To<BlogService>();
+            //                .WithConstructorArgument("readRepository", kernel.Get<IBlogRepository>("read"))
+            //                .WithConstructorArgument("writeRepository", kernel.Get<IBlogRepository>("write"));
 
         }
 

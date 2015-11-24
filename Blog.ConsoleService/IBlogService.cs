@@ -3,8 +3,9 @@ using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Web;
 using Nelibur.ServiceModel.Contracts;
+using Nelibur.ServiceModel.Services.Operations;
 
-namespace Blog.Service
+namespace Blog.ConsoleService
 {
     [ServiceContract]
     public interface IBlogService

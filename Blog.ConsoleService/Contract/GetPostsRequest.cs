@@ -1,0 +1,10 @@
+﻿using System;
+using System.Runtime.Serialization;
+
+namespace Blog.ConsoleService.Contract
+{
+    [DataContract]
+    public class GetPostsRequest
+    {
+    }
+}

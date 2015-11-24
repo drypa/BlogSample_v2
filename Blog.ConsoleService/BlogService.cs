@@ -1,10 +1,10 @@
 ﻿using System;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
-using Blog.Service.Contract;
+using Blog.ConsoleService.Contract;
 using Nelibur.ServiceModel.Services;
 
-namespace Blog.Service
+namespace Blog.ConsoleService
 {
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall)]
     public class BlogService : IBlogService
