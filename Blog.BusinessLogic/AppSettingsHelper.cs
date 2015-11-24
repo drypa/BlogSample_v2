@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Configuration;
-using Blog.BusinessLogic;
 
-namespace Blog.ConsoleService
+namespace Blog.BusinessLogic
 {
-    internal class AppSettingsHelper : IAppSettingsHelper
+    public class AppSettingsHelper : IAppSettingsHelper
     {
         private readonly string ConnectionstringName = "BlogDb";
 
