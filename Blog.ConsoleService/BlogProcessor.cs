@@ -1,4 +1,5 @@
 ﻿using System;
+using Blog.BusinessLogic;
 using Blog.ConsoleService.Contract;
 using Nelibur.ServiceModel.Services.Operations;
 
@@ -12,6 +13,13 @@ namespace Blog.ConsoleService
         IGet<GetPostRequest>,
         IGet<GetPostsRequest>
     {
+        private readonly IBlogRepository repository;
+
+        public BlogProcessor(IBlogRepository readRepository)
+        {
+            repository = readRepository;
+        }
+
         public object Delete(DeleteCommentRequest request)
         {
             throw new NotImplementedException();
@@ -24,12 +32,12 @@ namespace Blog.ConsoleService
 
         public object Get(GetPostRequest request)
         {
-            throw new NotImplementedException();
+            return repository.GetPost(request.PostId);
         }
 
         public object Get(GetPostsRequest request)
         {
-            throw new NotImplementedException();
+            return repository.GetPosts();
         }
 
         public object Post(AddCommentRequest request)

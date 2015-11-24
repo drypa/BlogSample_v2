@@ -1,26 +1,16 @@
 ﻿using System;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
+using Blog.BusinessLogic;
 using Blog.ConsoleService.Contract;
 using Nelibur.ServiceModel.Services;
+using Ninject;
 
 namespace Blog.ConsoleService
 {
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall)]
     public class BlogService : IBlogService
     {
-        public BlogService()
-        {
-            NeliburRestService.Configure(x =>
-            {
-                x.Bind<AddPostRequest, BlogProcessor>();
-                x.Bind<DeletePostRequest, BlogProcessor>();
-                x.Bind<GetPostRequest, BlogProcessor>();
-                x.Bind<GetPostsRequest, BlogProcessor>();
-                x.Bind<AddCommentRequest, BlogProcessor>();
-                x.Bind<DeleteCommentRequest, BlogProcessor>();
-            });
-        }
 
         public void Delete(Message message)
         {

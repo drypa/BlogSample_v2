@@ -64,10 +64,6 @@
       <Project>{D0B75ADA-DBE1-40A8-BD77-1EC43817DBEE}</Project>
       <Name>Blog.BusinessLogic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Blog.Service\Blog.Service.csproj">
-      <Project>{05f41ab6-5916-4263-a3a8-cd9d6aac9aed}</Project>
-      <Name>Blog.Service</Name>
-    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
