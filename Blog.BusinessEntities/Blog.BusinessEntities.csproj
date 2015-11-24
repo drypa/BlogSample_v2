@@ -56,6 +56,7 @@
     <Compile Include="Contract\DeletePostRequest.cs" />
     <Compile Include="Contract\GetPostRequest.cs" />
     <Compile Include="Contract\GetPostsRequest.cs" />
+    <Compile Include="Contract\PostListResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -35,14 +35,16 @@ namespace Blog.Worker
             }
         }
 
-        private static void OnAction(dynamic o)
+        private static void OnAction(object obj)
         {
-            var addCommentRequest = o as AddCommentRequest;
-            if (addCommentRequest != null)
-            {
-                repository.AddComment(new Comment { CreateDate = DateTime.Now, Post = new BlogPost { Id = addCommentRequest.PostId }, Text = addCommentRequest.Text });
-                return;
-            }
+            throw new NotSupportedException();
+        }
+
+        private static void OnAction(AddCommentRequest request)
+        {
+            var comment = new Comment { CreateDate = DateTime.Now, Post = new BlogPost { Id = request.PostId }, Text = request.Text };
+            repository.AddComment(comment);
+            Console.WriteLine("Добавлен коментарий: '{0}' от {1}", comment.Text, comment.CreateDate.ToString());
         }
     }
 }

@@ -40,7 +40,10 @@ namespace Blog.ConsoleService
 
         public object Get(GetPostsRequest request)
         {
-            return repository.GetPosts();
+            return new PostListResponse
+            {
+                Posts = repository.GetPosts()
+            };
         }
 
         public void PostOneWay(AddCommentRequest request)
