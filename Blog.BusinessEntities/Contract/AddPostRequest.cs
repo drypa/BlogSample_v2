@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Blog.ConsoleService.Contract
+namespace Blog.BusinessEntities.Contract
 {
     [DataContract]
     public class AddPostRequest

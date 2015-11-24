@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Blog.ConsoleService.Contract
+namespace Blog.BusinessEntities.Contract
 {
     [DataContract]
-    public class DeletePostRequest
+    public class AddCommentRequest
     {
         [DataMember]
         public Guid PostId { get; set; }
+        [DataMember]
+        public string Text { get; set; }
     }
 }

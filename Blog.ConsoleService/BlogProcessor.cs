@@ -1,33 +1,36 @@
 ﻿using System;
+using Blog.BusinessEntities.Contract;
 using Blog.BusinessLogic;
-using Blog.ConsoleService.Contract;
+using Blog.BusinessLogic.RabbitMQ;
 using Nelibur.ServiceModel.Services.Operations;
 
 namespace Blog.ConsoleService
 {
     public class BlogProcessor :
-        IPost<AddPostRequest>,
-        IPost<AddCommentRequest>,
-        IDelete<DeletePostRequest>,
-        IDelete<DeleteCommentRequest>,
+        IPostOneWay<AddPostRequest>,
+        IPostOneWay<AddCommentRequest>,
+        IDeleteOneWay<DeletePostRequest>,
+        IDeleteOneWay<DeleteCommentRequest>,
         IGet<GetPostRequest>,
         IGet<GetPostsRequest>
     {
+        private readonly ExchangeConfiguration exchangeConfiguration;
         private readonly IBlogRepository repository;
 
-        public BlogProcessor(IBlogRepository readRepository)
+        public BlogProcessor(IBlogRepository readRepository, ExchangeConfiguration configuration)
         {
             repository = readRepository;
+            exchangeConfiguration = configuration;
         }
 
-        public object Delete(DeleteCommentRequest request)
+        public void DeleteOneWay(DeleteCommentRequest request)
         {
-            throw new NotImplementedException();
+            GetProducer(request).Send(request);
         }
 
-        public object Delete(DeletePostRequest request)
+        public void DeleteOneWay(DeletePostRequest request)
         {
-            throw new NotImplementedException();
+            GetProducer(request).Send(request);
         }
 
         public object Get(GetPostRequest request)
@@ -40,14 +43,19 @@ namespace Blog.ConsoleService
             return repository.GetPosts();
         }
 
-        public object Post(AddCommentRequest request)
+        public void PostOneWay(AddCommentRequest request)
         {
-            throw new NotImplementedException();
+            GetProducer(request).Send(request);
         }
 
-        public object Post(AddPostRequest request)
+        public void PostOneWay(AddPostRequest request)
         {
-            throw new NotImplementedException();
+            GetProducer(request).Send(request);
+        }
+
+        private Producer<T> GetProducer<T>(T request) where T : new()
+        {
+            return new Producer<T>(exchangeConfiguration.ServerName, string.Empty, exchangeConfiguration.ExchangeType, exchangeConfiguration.GetRouting(request.GetType()));
         }
     }
 }

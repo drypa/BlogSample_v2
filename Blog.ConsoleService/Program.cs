@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ServiceModel.Web;
+using Blog.BusinessEntities.Contract;
 using Blog.BusinessLogic;
-using Blog.ConsoleService.Contract;
 using Nelibur.ServiceModel.Services;
 using Ninject;
 
@@ -13,18 +13,17 @@ namespace Blog.ConsoleService
         {
             var kernel = new StandardKernel();
             kernel.Bind<IBlogRepository>()
-                .To<DapperBlogRepository>()
-                .Named("read");
+                .To<DapperBlogRepository>();
             kernel.Bind<IAppSettingsHelper>()
-               .To<AppSettingsHelper>();
+                .To<AppSettingsHelper>();
             return kernel;
         }
 
         private static void Main(string[] args)
         {
-            using (var kernel = GetNinjectKernel())
+            using (IKernel kernel = GetNinjectKernel())
             {
-                var instance = new BlogProcessor(kernel.Get<IBlogRepository>());
+                var instance = new BlogProcessor(kernel.Get<IBlogRepository>(), new ExchangeConfigurationProvider().Configuration);
                 NeliburRestService.Configure(x =>
                 {
                     x.Bind<AddPostRequest, BlogProcessor>(() => instance);
@@ -34,7 +33,6 @@ namespace Blog.ConsoleService
                     x.Bind<AddCommentRequest, BlogProcessor>(() => instance);
                     x.Bind<DeleteCommentRequest, BlogProcessor>(() => instance);
                 });
-
 
                 using (var service = new WebServiceHost(typeof(BlogService)))
                 {

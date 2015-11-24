@@ -63,12 +63,6 @@
     <Compile Include="AppSettingsHelper.cs" />
     <Compile Include="BlogProcessor.cs" />
     <Compile Include="BlogService.cs" />
-    <Compile Include="Contract\AddCommentRequest.cs" />
-    <Compile Include="Contract\AddPostRequest.cs" />
-    <Compile Include="Contract\DeleteCommentRequest.cs" />
-    <Compile Include="Contract\DeletePostRequest.cs" />
-    <Compile Include="Contract\GetPostRequest.cs" />
-    <Compile Include="Contract\GetPostsRequest.cs" />
     <Compile Include="IBlogService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -77,7 +71,9 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Blog.BusinessEntities\Blog.BusinessEntities.csproj">

@@ -67,6 +67,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DapperBlogRepository.cs" />
+    <Compile Include="ExchangeConfiguration.cs" />
+    <Compile Include="ExchangeConfigurationProvider.cs" />
     <Compile Include="IAppSettingsHelper.cs" />
     <Compile Include="Mappings\BlogPostMapping.cs" />
     <Compile Include="Mappings\CommentMapping.cs" />
