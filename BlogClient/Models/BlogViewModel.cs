@@ -118,6 +118,20 @@ namespace Blog.Client.Models
             }
         }
 
+        public ICommand RefreshCommand
+        {
+            get { return new RelayCommand(Refresh, x => true); }
+        }
+
+        private void Refresh(object obj)
+        {
+            Posts = blogClient.GetPosts();
+            if (CurrentPost != null)
+            {
+                CurrentPost = blogClient.GetPost(CurrentPost.Id);
+            }
+        }
+
         private void AddComment(object obj)
         {
             NewComment.CreationDate = DateTime.Now;
