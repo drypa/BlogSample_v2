@@ -20,10 +20,10 @@ namespace Blog.Worker
                 foreach (var route in config.Routes)
                 {
                     Type consumerType = typeof(Consumer<>);
-                    Type[] typeArgs = { route.Key };
-                    Type generic = consumerType.MakeGenericType(typeArgs);
 
-                    Action<object> action = OnAction;
+                    Type generic = consumerType.MakeGenericType(route.Key);
+
+                    Action<dynamic> action = (x) => OnAction(x);
                     object[] parameters = { config.ServerName, config.ExchangeType, route.Value, action };
                     dynamic consumer = Activator.CreateInstance(generic, parameters);
                     consumers.Add(consumer);
@@ -40,33 +40,7 @@ namespace Blog.Worker
                     consumer.Close();
                 }
             }
-            
 
-
-        }
-
-        private static void OnAction(object obj)
-        {
-            var addRequest = obj as AddCommentRequest;
-            if (addRequest != null)
-            {
-                OnAction(addRequest);
-            }
-            var delRequest = obj as DeleteCommentRequest;
-            if (delRequest != null)
-            {
-                OnAction(delRequest);
-            }
-            var addPostRequest = obj as AddPostRequest;
-            if (addPostRequest != null)
-            {
-                OnAction(addPostRequest);
-            }
-            var delPostRequest = obj as DeletePostRequest;
-            if (delPostRequest != null)
-            {
-                OnAction(delPostRequest);
-            }
         }
 
         private static void OnAction(AddCommentRequest request)
