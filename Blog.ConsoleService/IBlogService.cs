@@ -12,7 +12,7 @@ namespace Blog.ConsoleService
     {
         [OperationContract]
         [WebInvoke(Method = OperationType.Delete,
-            UriTemplate = RestServiceMetadata.Path.Delete,
+            UriTemplate = RestServiceMetadata.Path.DeleteOneWay,
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         void Delete(Message message);

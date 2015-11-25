@@ -8,14 +8,12 @@ namespace Blog.BusinessLogic.RabbitMQ
     {
         private readonly string exchangeName;
         private readonly string hostName;
-        private readonly string queue;
         private readonly string routing;
         private IConnection connection;
 
-        public Producer(string serverName, string queueName, string exchange, string routingKey)
+        public Producer(string serverName, string exchange, string routingKey)
         {
             hostName = serverName;
-            queue = queueName;
             exchangeName = exchange;
             routing = routingKey;
         }
@@ -47,42 +45,18 @@ namespace Blog.BusinessLogic.RabbitMQ
             }
         }
 
-        private void ConfigureChanel(IModel chanel)
-        {
-            chanel.QueueDeclare(queue, durable: true, exclusive: false, autoDelete: true, arguments: null);
-        }
-
         private void Send(byte[] message)
         {
             using (IModel channel = Connection.CreateModel())
             {
+                IBasicProperties properties = channel.CreateBasicProperties();
+                properties.DeliveryMode = DeliveryMode.Persistent;
+                
 
-                if (!string.IsNullOrEmpty(exchangeName))
-                {
-                    channel.QueueDeclare();
-                    channel.ExchangeDeclare(exchangeName, global::RabbitMQ.Client.ExchangeType.Fanout);
-                    channel.BasicPublish(exchange: exchangeName, routingKey: string.Empty, basicProperties: null, body: message);
-                }
-                else
-                {
-                    channel.QueueDeclare(queue: queue, durable: true, exclusive: false, autoDelete: true, arguments: null);
-                    IBasicProperties properties = channel.CreateBasicProperties();
-                    properties.DeliveryMode = DeliveryMode.Persistent;
-                    channel.BasicPublish(exchange: string.Empty, routingKey: queue, basicProperties: properties, body: message);
-                }
-            }
-        }
 
-        private static class DeliveryMode
-        {
-            public static byte NonPersistent
-            {
-                get { return 1; }
-            }
+                channel.ExchangeDeclare(exchangeName, ExchangeType.Direct);
+                channel.BasicPublish(exchange: exchangeName, routingKey: routing, basicProperties: properties, body: message);
 
-            public static byte Persistent
-            {
-                get { return 2; }
             }
         }
     }

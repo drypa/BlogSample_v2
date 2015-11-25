@@ -79,6 +79,7 @@
     <Compile Include="NHibernateConfigurator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RabbitMQ\Consumer.cs" />
+    <Compile Include="RabbitMQ\DeliveryMode.cs" />
     <Compile Include="RabbitMQ\ExchangeType.cs" />
     <Compile Include="RabbitMQ\Producer.cs" />
     <Compile Include="RabbitMQ\Serializer.cs" />

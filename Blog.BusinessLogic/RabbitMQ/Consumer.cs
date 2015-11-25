@@ -9,17 +9,15 @@ namespace Blog.BusinessLogic.RabbitMQ
     {
         private readonly string HostName;
         private readonly Action<TMessage> messageReceivedAction;
-        private readonly string queue;
         private readonly string routing;
         private readonly string exchange;
         private IModel model;
         private IConnection connection;
         private EventingBasicConsumer consumer;
 
-        public Consumer(string serverName, string queueName, string exchangeName, string routingKey, Action<TMessage> onMessageReceived)
+        public Consumer(string serverName, string exchangeName, string routingKey, Action<TMessage> onMessageReceived)
         {
             HostName = serverName;
-            queue = queueName;
             exchange = exchangeName;
             messageReceivedAction = onMessageReceived;
             routing = routingKey;
@@ -30,23 +28,21 @@ namespace Blog.BusinessLogic.RabbitMQ
             var factory = new ConnectionFactory { HostName = HostName };
             connection = factory.CreateConnection();
             model = connection.CreateModel();
+            IBasicProperties properties = model.CreateBasicProperties();
+            properties.DeliveryMode = DeliveryMode.Persistent;
 
-            if (string.IsNullOrEmpty(exchange))
-            {
-                model.QueueDeclare(queue, true, false, false, null);
-            }
-            else
-            {
-                model.ExchangeDeclare(exchange, global::RabbitMQ.Client.ExchangeType.Fanout);
-                var queueName = model.QueueDeclare().QueueName;
-                model.QueueBind(queueName, exchange, routing);
-            }
+            model.ExchangeDeclare(exchange, ExchangeType.Direct);
+            var queueName = model.QueueDeclare().QueueName;
+            model.BasicQos(0, 1, true);
+            model.QueueBind(queue: queueName,
+                exchange: exchange,
+                routingKey: routing);
 
             consumer = new EventingBasicConsumer(model);
 
             consumer.Received += (sender, args) => ItemProcessing(args);
-            model.BasicQos(0, 2, true);
-            model.BasicConsume(queue, false, consumer);
+            
+            model.BasicConsume(queueName, false, consumer);
 
         }
 

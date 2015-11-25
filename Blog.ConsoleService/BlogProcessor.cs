@@ -58,7 +58,7 @@ namespace Blog.ConsoleService
 
         private Producer<T> GetProducer<T>(T request) where T : new()
         {
-            return new Producer<T>(exchangeConfiguration.ServerName, string.Empty, exchangeConfiguration.ExchangeType, exchangeConfiguration.GetRouting(request.GetType()));
+            return new Producer<T>(exchangeConfiguration.ServerName, exchangeConfiguration.ExchangeType, exchangeConfiguration.GetRouting(request.GetType()));
         }
     }
 }

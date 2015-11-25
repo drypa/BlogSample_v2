@@ -26,10 +26,11 @@ namespace Blog.Worker
             Type[] typeArgs = { t };
             Type generic = consumerType.MakeGenericType(typeArgs);
 
-            Action<dynamic> action = OnAction;
-            object[] parameters = { config.ServerName, string.Empty, config.ExchangeType, routingName, action };
+            Action<object> action = OnAction;
+            object[] parameters = { config.ServerName, config.ExchangeType, routingName, action };
             using (dynamic consumer = Activator.CreateInstance(generic, parameters))
             {
+                consumer.Open();
                 Console.WriteLine("Press <enter> to exit!");
                 Console.ReadLine();
             }
@@ -37,7 +38,16 @@ namespace Blog.Worker
 
         private static void OnAction(object obj)
         {
-            throw new NotSupportedException();
+            AddCommentRequest addRequest = obj as AddCommentRequest;
+            if (addRequest != null)
+            {
+                OnAction(addRequest);
+            }
+            DeleteCommentRequest delRequest = obj as DeleteCommentRequest;
+            if (delRequest != null)
+            {
+                OnAction(delRequest);
+            }
         }
 
         private static void OnAction(AddCommentRequest request)
@@ -46,5 +56,12 @@ namespace Blog.Worker
             repository.AddComment(comment);
             Console.WriteLine("Добавлен коментарий: '{0}' от {1}", comment.Text, comment.CreateDate.ToString());
         }
+        private static void OnAction(DeleteCommentRequest request)
+        {
+            var comment = new Comment { Id = request.CommentId };
+            repository.DeleteComment(comment);
+            Console.WriteLine("Удалён коментарий: '{0}'", comment.Id);
+        }
+
     }
 }

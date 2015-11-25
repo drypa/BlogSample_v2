@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Blog.BusinessEntities;
 using Blog.BusinessEntities.Contract;
 using Blog.Client.Models;
 using Nelibur.ServiceModel.Clients;
@@ -21,36 +22,27 @@ namespace Blog.Client
 
         public void AddPost(Post post)
         {
-            throw new NotImplementedException();
-//            client.Post<AddPos>(post);
+            client.Post(new AddPostRequest { Title = post.Title });
         }
 
         public void DeleteComment(PostComment comment)
         {
-            client.Delete<PostComment>(comment);
+            client.Delete(new DeleteCommentRequest { CommentId = comment.Id });
         }
 
         public void DeletePost(Post post)
         {
-            client.Delete<Post>(post);
+            client.Delete(new DeletePostRequest { PostId = post.Id });
         }
 
         public PostDetails GetPost(Guid postId)
         {
-            throw new NotImplementedException();
-//            client.Post<PostComment>(comment);
-//            using (ChannelFactory<IBlogService> factory = CreateChanelFactory())
-//            {
-//                BlogPost blogPost = factory.CreateChannel().GetPost(postId);
-//                if (blogPost != null)
-//                {
-//                    return blogPost.ToPostDetails();
-//                }
-//                else
-//                {
-//                    return null;
-//                }
-//            }
+            var post = client.Get<BlogPost>(new GetPostRequest { PostId = postId });
+            if (post == null)
+            {
+                return null;
+            }
+            return post.ToPostDetails();
         }
 
         public List<Post> GetPosts()

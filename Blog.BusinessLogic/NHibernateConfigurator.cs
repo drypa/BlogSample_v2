@@ -35,7 +35,7 @@ namespace Blog.BusinessLogic
 
         private static void GenerateSchema(Configuration config)
         {
-            new SchemaExport(config).Execute(false, true, false);
+            new SchemaUpdate(config).Execute(true, true);
         }
 
         private static HbmMapping GetMappings()
