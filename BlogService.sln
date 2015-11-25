@@ -10,6 +10,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.BusinessLogic.Tests", "Blog.BusinessLogic.Tests\Blog.BusinessLogic.Tests.csproj", "{BCDB4023-8A77-4660-9C46-5CE5B3F0BA60}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sql", "Sql", "{6E5F3177-9A83-4E6A-9080-69200605B4DC}"
+	ProjectSection(SolutionItems) = preProject
+		sql\GenerateTestData.sql = sql\GenerateTestData.sql
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{E32E652B-53DD-47BC-8B20-7D597849D447}"
 	ProjectSection(SolutionItems) = preProject
@@ -23,6 +26,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.ConsoleService", "Blog.ConsoleService\Blog.ConsoleService.csproj", "{640B6ADA-5478-4CE3-825C-2F4B89560672}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.Worker", "Blog.Worker\Blog.Worker.csproj", "{72A069C7-BA53-49A8-8896-C5DAD43C7D37}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{21B06B97-47F9-42CA-A318-B70F7F4BB180}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

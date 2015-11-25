@@ -21,24 +21,30 @@ namespace Blog.BusinessLogic
             get { return exchangeType; }
         }
 
+        public Dictionary<Type, string> Routes
+        {
+            get { return routingMap; }
+        }
+
         public string ServerName
         {
             get { return serverName; }
         }
 
-        public ExchangeConfiguration AddRouting(Type type,string routing)
+        public ExchangeConfiguration AddRouting(Type type, string routing)
         {
-            routingMap.Add(type,routing);
+            routingMap.Add(type, routing);
             return this;
+        }
+
+        public Type GetMessageTypeForRoute(string route)
+        {
+            return routingMap.First(x => x.Value == route).Key;
         }
 
         public string GetRouting(Type type)
         {
             return routingMap[type];
-        }
-        public Type GetMessageTypeForRoute(string route)
-        {
-            return routingMap.First(x => x.Value == route).Key;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Blog.BusinessEntities;
 using Blog.BusinessEntities.Contract;
 using Blog.BusinessLogic;
@@ -12,48 +13,56 @@ namespace Blog.Worker
 
         private static void Main(string[] args)
         {
-            if (args.Length < 1)
-            {
-                Console.Error.WriteLine("Необходимо запускать с параметром <routing>");
-                Console.ReadLine();
-                return;
-            }
             ExchangeConfiguration config = new ExchangeConfigurationProvider().Configuration;
-            string routingName = args[0];
-
-            Type t = config.GetMessageTypeForRoute(routingName);
-            Type consumerType = typeof(Consumer<>);
-            Type[] typeArgs = { t };
-            Type generic = consumerType.MakeGenericType(typeArgs);
-
-            Action<object> action = OnAction;
-            object[] parameters = { config.ServerName, config.ExchangeType, routingName, action };
-            using (dynamic consumer = Activator.CreateInstance(generic, parameters))
+            List<dynamic> consumers = new List<dynamic>(config.Routes.Count);
+            try
             {
-                consumer.Open();
+                foreach (var route in config.Routes)
+                {
+                    Type consumerType = typeof(Consumer<>);
+                    Type[] typeArgs = { route.Key };
+                    Type generic = consumerType.MakeGenericType(typeArgs);
+
+                    Action<object> action = OnAction;
+                    object[] parameters = { config.ServerName, config.ExchangeType, route.Value, action };
+                    dynamic consumer = Activator.CreateInstance(generic, parameters);
+                    consumers.Add(consumer);
+                    consumer.Open();
+
+                }
                 Console.WriteLine("Press <enter> to exit!");
                 Console.ReadLine();
             }
+            finally 
+            {
+                foreach (var consumer in consumers)
+                {
+                    consumer.Close();
+                }
+            }
+            
+
+
         }
 
         private static void OnAction(object obj)
         {
-            AddCommentRequest addRequest = obj as AddCommentRequest;
+            var addRequest = obj as AddCommentRequest;
             if (addRequest != null)
             {
                 OnAction(addRequest);
             }
-            DeleteCommentRequest delRequest = obj as DeleteCommentRequest;
+            var delRequest = obj as DeleteCommentRequest;
             if (delRequest != null)
             {
                 OnAction(delRequest);
             }
-            AddPostRequest addPostRequest = obj as AddPostRequest;
+            var addPostRequest = obj as AddPostRequest;
             if (addPostRequest != null)
             {
                 OnAction(addPostRequest);
             }
-            DeletePostRequest delPostRequest = obj as DeletePostRequest;
+            var delPostRequest = obj as DeletePostRequest;
             if (delPostRequest != null)
             {
                 OnAction(delPostRequest);
@@ -66,6 +75,7 @@ namespace Blog.Worker
             repository.AddComment(comment);
             Console.WriteLine("Добавлен коментарий: '{0}' от {1}", comment.Text, comment.CreateDate.ToString());
         }
+
         private static void OnAction(DeleteCommentRequest request)
         {
             var comment = new Comment { Id = request.CommentId };

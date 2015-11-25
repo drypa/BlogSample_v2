@@ -46,6 +46,11 @@ namespace Blog.BusinessLogic.RabbitMQ
 
         }
 
+        public void Close()
+        {
+            Dispose();
+        }
+
         public void Dispose()
         {
             if (connection != null)
