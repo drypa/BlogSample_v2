@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Blog.BusinessEntities;
 using NHibernate;
-using Ninject;
 
 namespace Blog.BusinessLogic
 {
@@ -11,7 +10,7 @@ namespace Blog.BusinessLogic
         private readonly IAppSettingsHelper appSettings;
         private NHibernateConfigurator configurator;
 
-        [Inject]
+
         public NHibernateBlogRepository(IAppSettingsHelper appSettingsHelper)
         {
             appSettings = appSettingsHelper;
@@ -67,14 +66,6 @@ namespace Blog.BusinessLogic
             {
                 session.Delete(post);
                 session.Flush();
-            }
-        }
-
-        public IList<Comment> GetComments(Guid postId)
-        {
-            using (ISession session = OpenSession())
-            {
-                return session.QueryOver<Comment>().Where(x => x.Post.Id == postId).List<Comment>();
             }
         }
 
