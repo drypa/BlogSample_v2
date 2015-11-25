@@ -15,11 +15,11 @@ namespace Blog.ConsoleService
         IGet<GetPostsRequest>
     {
         private readonly ExchangeConfiguration exchangeConfiguration;
-        private readonly IBlogRepository repository;
+        private readonly IBlogReader reader;
 
-        public BlogProcessor(IBlogRepository readRepository, ExchangeConfiguration configuration)
+        public BlogProcessor(IBlogReader readRepository, ExchangeConfiguration configuration)
         {
-            repository = readRepository;
+            reader = readRepository;
             exchangeConfiguration = configuration;
         }
 
@@ -35,14 +35,14 @@ namespace Blog.ConsoleService
 
         public object Get(GetPostRequest request)
         {
-            return repository.GetPost(request.PostId);
+            return reader.GetPost(request.PostId);
         }
 
         public object Get(GetPostsRequest request)
         {
             return new PostListResponse
             {
-                Posts = repository.GetPosts()
+                Posts = reader.GetPosts()
             };
         }
 

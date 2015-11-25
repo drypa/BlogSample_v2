@@ -72,6 +72,8 @@
     <Compile Include="ExchangeConfiguration.cs" />
     <Compile Include="ExchangeConfigurationProvider.cs" />
     <Compile Include="IAppSettingsHelper.cs" />
+    <Compile Include="IBlogReader.cs" />
+    <Compile Include="IBlogWriter.cs" />
     <Compile Include="Mappings\BlogPostMapping.cs" />
     <Compile Include="Mappings\CommentMapping.cs" />
     <Compile Include="NHibernateBlogRepository.cs" />

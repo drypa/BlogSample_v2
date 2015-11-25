@@ -12,7 +12,7 @@ namespace Blog.ConsoleService
         private static IKernel GetNinjectKernel()
         {
             var kernel = new StandardKernel();
-            kernel.Bind<IBlogRepository>()
+            kernel.Bind<IBlogReader>()
                 .To<DapperBlogRepository>();
             kernel.Bind<IAppSettingsHelper>()
                 .To<AppSettingsHelper>();
@@ -23,7 +23,7 @@ namespace Blog.ConsoleService
         {
             using (IKernel kernel = GetNinjectKernel())
             {
-                var instance = new BlogProcessor(kernel.Get<IBlogRepository>(), new ExchangeConfigurationProvider().Configuration);
+                var instance = new BlogProcessor(kernel.Get<IBlogReader>(), new ExchangeConfigurationProvider().Configuration);
                 NeliburRestService.Configure(x =>
                 {
                     x.Bind<AddPostRequest, BlogProcessor>(() => instance);

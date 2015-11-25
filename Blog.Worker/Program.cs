@@ -8,7 +8,7 @@ namespace Blog.Worker
 {
     internal class Program
     {
-        private static readonly NHibernateBlogRepository repository = new NHibernateBlogRepository(new AppSettingsHelper());
+        private static readonly IBlogWriter repository = new NHibernateBlogRepository(new AppSettingsHelper());
 
         private static void Main(string[] args)
         {

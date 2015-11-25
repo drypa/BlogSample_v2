@@ -8,7 +8,7 @@ using Ninject;
 
 namespace Blog.BusinessLogic
 {
-    public class DapperBlogRepository : IBlogRepository
+    public class DapperBlogRepository : IBlogReader
     {
         private readonly IAppSettingsHelper appSettings;
 
@@ -36,26 +36,6 @@ namespace Blog.BusinessLogic
         public DapperBlogRepository(IAppSettingsHelper appSettingsHelper)
         {
             appSettings = appSettingsHelper;
-        }
-
-        public void AddComment(Comment comment)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddPost(BlogPost post)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteComment(Comment comment)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeletePost(BlogPost post)
-        {
-            throw new NotImplementedException();
         }
 
         public BlogPost GetPost(Guid postId)
