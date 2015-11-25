@@ -8,6 +8,7 @@ using Blog.BusinessEntities;
 using Moq;
 using NHibernate.Exceptions;
 using Xunit;
+using Xunit.Extensions;
 
 namespace Blog.BusinessLogic.Tests
 {
@@ -17,11 +18,6 @@ namespace Blog.BusinessLogic.Tests
         {
             CreateDbSchema();
             Cleanup();
-        }
-
-        private void CreateDbSchema()
-        {
-            NHibernateConfigurator.BuildConfiguration(GetAppSettingsHelper().GetConnectionString());
         }
 
         [Fact]
@@ -47,40 +43,43 @@ namespace Blog.BusinessLogic.Tests
             Equals(firstPost, selectedPost);
         }
 
-        [Fact]
-        public void CanAddPostWithTextLengthLessThat200Characters()
+        [Theory]
+        [InlineData(0)]
+        [InlineData(1)]
+        [InlineData(10)]
+        [InlineData(99)]
+        [InlineData(199)]
+        [InlineData(200)]
+        public void CanAddPostWithTextLengthLessThat200Characters(int textLength)
         {
             var manager = new NHibernateBlogRepository(GetAppSettingsHelper());
-            var lengths = new int[] { 0, 1, 5, 10, 50, 99, 100, 200 };
             var post = new BlogPost
             {
                 Title = "title",
                 Description = "description",
-                CreateDate = DateTime.Now
+                CreateDate = DateTime.Now,
+                Text = new string('a', textLength)
             };
-            foreach (int length in lengths)
-            {
-                post.Text = new string('a', length);
-                manager.AddPost(post);
-            }
+            manager.AddPost(post);
         }
 
-        [Fact]
-        public void CanAddPostWithTitleLengthLessThat100Characters()
+        [Theory]
+        [InlineData(0)]
+        [InlineData(1)]
+        [InlineData(10)]
+        [InlineData(99)]
+        [InlineData(100)]
+        public void CanAddPostWithTitleLengthLessThat100Characters(int titleLength)
         {
             var manager = new NHibernateBlogRepository(GetAppSettingsHelper());
-            var lengths = new int[] { 0, 1, 5, 10, 50, 99, 100 };
             var post = new BlogPost
             {
                 Text = "text",
                 Description = "description",
-                CreateDate = DateTime.Now
+                CreateDate = DateTime.Now, Title = new string('a', titleLength)
             };
-            foreach (int length in lengths)
-            {
-                post.Title = new string('a', length);
-                manager.AddPost(post);
-            }
+
+            manager.AddPost(post);
         }
 
         [Fact]
@@ -132,6 +131,11 @@ namespace Blog.BusinessLogic.Tests
             }
         }
 
+        private void CreateDbSchema()
+        {
+            NHibernateConfigurator.BuildConfiguration(GetAppSettingsHelper().GetConnectionString());
+        }
+
         private void Equals<T>(T t1, T t2)
         {
             PropertyInfo[] properties = typeof(T).GetProperties();
@@ -149,7 +153,7 @@ namespace Blog.BusinessLogic.Tests
         private IAppSettingsHelper GetAppSettingsHelper()
         {
             var mock = new Mock<IAppSettingsHelper>();
-            mock.Setup(x => x.GetConnectionString()).Returns(@"Data Source=localhost\SQLEXPRESS;Initial Catalog=BlogService;Integrated Security=True");
+            mock.Setup(x => x.GetConnectionString()).Returns(@"Data Source=localhost\SQLEXPRESS;Initial Catalog=BlogServiceTest;Integrated Security=True");
             return mock.Object;
         }
     }
