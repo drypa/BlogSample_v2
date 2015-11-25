@@ -48,6 +48,16 @@ namespace Blog.Worker
             {
                 OnAction(delRequest);
             }
+            AddPostRequest addPostRequest = obj as AddPostRequest;
+            if (addPostRequest != null)
+            {
+                OnAction(addPostRequest);
+            }
+            DeletePostRequest delPostRequest = obj as DeletePostRequest;
+            if (delPostRequest != null)
+            {
+                OnAction(delPostRequest);
+            }
         }
 
         private static void OnAction(AddCommentRequest request)
@@ -63,5 +73,18 @@ namespace Blog.Worker
             Console.WriteLine("Удалён коментарий: '{0}'", comment.Id);
         }
 
+        private static void OnAction(AddPostRequest request)
+        {
+            var post = new BlogPost { Text = request.Text, Title = request.Title, CreateDate = DateTime.Now };
+            repository.AddPost(post);
+            Console.WriteLine("Добавлена статья: '{0}' от {1}", post.Title, post.CreateDate);
+        }
+
+        private static void OnAction(DeletePostRequest request)
+        {
+            var post = new BlogPost { Id = request.PostId };
+            repository.DeletePost(post);
+            Console.WriteLine("Удалёна статья: '{0}'", post.Id);
+        }
     }
 }
