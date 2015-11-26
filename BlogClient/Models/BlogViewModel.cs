@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using Blog.BusinessEntities;
+using Blog.BusinessLogic.Client;
 using Blog.Client.Annotations;
 
 namespace Blog.Client.Models
@@ -80,7 +82,7 @@ namespace Blog.Client.Models
             {
                 if (posts == null)
                 {
-                    posts = blogClient.GetPosts();
+                    posts = blogClient.GetPosts().ToViewModel();
                     OnPropertyChanged();
                 }
                 return posts;
@@ -125,10 +127,10 @@ namespace Blog.Client.Models
 
         private void Refresh(object obj)
         {
-            Posts = blogClient.GetPosts();
+            Posts = blogClient.GetPosts().ToViewModel();
             if (CurrentPost != null)
             {
-                CurrentPost = blogClient.GetPost(CurrentPost.Id);
+                CurrentPost = blogClient.GetPost(CurrentPost.Id).ToPostDetails();
             }
         }
 
@@ -137,7 +139,7 @@ namespace Blog.Client.Models
             NewComment.CreationDate = DateTime.Now;
             NewComment.Post = CurrentPost;
 
-            blogClient.AddComment(NewComment);
+            blogClient.AddComment(NewComment.ToModel());
 
             LoadPostDetails(CurrentPost);
             NewComment.Text = string.Empty;
@@ -146,8 +148,8 @@ namespace Blog.Client.Models
         private void AddNewPost()
         {
             CurrentPost.CreationDate = DateTime.Now;
-            blogClient.AddPost(CurrentPost);
-            Posts = blogClient.GetPosts();
+            blogClient.AddPost(CurrentPost.ToModel());
+            Posts = blogClient.GetPosts().ToViewModel();
             HasNewPost = false;
         }
 
@@ -166,7 +168,7 @@ namespace Blog.Client.Models
         {
             var comment = (obj as PostComment);
             comment.Post = CurrentPost;
-            blogClient.DeleteComment(comment);
+            blogClient.DeleteComment(comment.ToModel());
 
             LoadPostDetails(CurrentPost);
         }
@@ -174,8 +176,8 @@ namespace Blog.Client.Models
         private void DeletePost(object obj)
         {
             var post = (obj as Post);
-            blogClient.DeletePost(post);
-            Posts = blogClient.GetPosts();
+            blogClient.DeletePost(post.ToModel());
+            Posts = blogClient.GetPosts().ToViewModel();
             if (Posts.Count > 0)
             {
                 LoadPostDetails(Posts.First());
@@ -185,14 +187,14 @@ namespace Blog.Client.Models
         private void LoadPostDetails(object post)
         {
             Guid postId = (post as Post).Id;
-            PostDetails loadedPost = blogClient.GetPost(postId);
+            BlogPost loadedPost = blogClient.GetPost(postId);
             if (loadedPost == null)
             {
                 clientNotificator.ShowMessage("Статья не найдена");
             }
             else
             {
-                CurrentPost = loadedPost;
+                CurrentPost = loadedPost.ToPostDetails();
             }
         }
 

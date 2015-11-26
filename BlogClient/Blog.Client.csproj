@@ -64,11 +64,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BlogClient.cs" />
     <Compile Include="ClientNotificator.cs" />
-    <Compile Include="IBlogClient.cs" />
     <Compile Include="IClientNotificator.cs" />
     <Compile Include="ModelsConverter.cs" />
+    <Compile Include="Models\BlogViewModel.cs" />
+    <Compile Include="Models\Post.cs" />
+    <Compile Include="Models\PostComment.cs" />
+    <Compile Include="Models\PostDetails.cs" />
     <Compile Include="RelayCommand .cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -78,16 +80,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\BlogViewModel.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Post.cs" />
-    <Compile Include="Models\PostComment.cs" />
-    <Compile Include="Models\PostDetails.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -120,6 +118,10 @@
     <ProjectReference Include="..\Blog.BusinessEntities\Blog.BusinessEntities.csproj">
       <Project>{8089f243-361a-41a8-957d-61db7ecfb5cc}</Project>
       <Name>Blog.BusinessEntities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Blog.BusinessLogic\Blog.BusinessLogic.csproj">
+      <Project>{D0B75ADA-DBE1-40A8-BD77-1EC43817DBEE}</Project>
+      <Name>Blog.BusinessLogic</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

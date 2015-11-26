@@ -15,7 +15,7 @@ namespace Blog.Client
             var alert = (Action<string>)((msg) => MessageBox.Show(msg));
             string serviceUrl = ConfigurationManager.AppSettings["SeviceUrl"];
 
-            var client = new BlogClient(serviceUrl);
+            var client = new BusinessLogic.Client.BlogClient(serviceUrl);
             var notificator = new ClientNotificator(alert);
             ViewModel = new BlogViewModel(client, notificator);
             InitializeComponent();

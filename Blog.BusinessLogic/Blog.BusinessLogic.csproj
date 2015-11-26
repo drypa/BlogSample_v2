@@ -44,6 +44,14 @@
       <HintPath>..\packages\Dapper.Contrib.Ext.1.0.3\lib\Dapper.Contrib.Ext.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Nelibur, Version=3.0.3.223, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nelibur.3.1.6\lib\net45\Nelibur.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Nelibur.Sword, Version=3.0.3.223, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nelibur.Sword.3.1.6\lib\net45\Nelibur.Sword.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -68,6 +76,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppSettingsHelper.cs" />
+    <Compile Include="Client\BlogClient.cs" />
+    <Compile Include="Client\IBlogClient.cs" />
     <Compile Include="DapperBlogRepository.cs" />
     <Compile Include="ExchangeConfiguration.cs" />
     <Compile Include="ExchangeConfigurationProvider.cs" />
