@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Blog.BusinessLogic
 {
@@ -35,11 +34,6 @@ namespace Blog.BusinessLogic
         {
             routingMap.Add(type, routing);
             return this;
-        }
-
-        public Type GetMessageTypeForRoute(string route)
-        {
-            return routingMap.First(x => x.Value == route).Key;
         }
 
         public string GetRouting(Type type)
