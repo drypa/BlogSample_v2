@@ -17,12 +17,12 @@ namespace Blog.BusinessLogic.Client
 
         public void AddComment(Comment comment)
         {
-            client.Post<AddCommentRequest>(new AddCommentRequest { Text = comment.Text, PostId = comment.Post.Id });
+            client.Post(new AddCommentRequest { Text = comment.Text, PostId = comment.Post.Id });
         }
 
         public void AddPost(BlogPost post)
         {
-            client.Post(new AddPostRequest { Title = post.Title });
+            client.Post(new AddPostRequest { Title = post.Title, Text = post.Text });
         }
 
         public void DeleteComment(Comment comment)
