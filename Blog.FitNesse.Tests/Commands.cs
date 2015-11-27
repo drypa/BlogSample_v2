@@ -2,15 +2,31 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Linq;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.XPath;
 using fitlibrary;
 
 namespace Blog.FitNesse.Tests
 {
     public class Commands : DoFixture, IDisposable
     {
-        private SqlConnection connection;
+        private static string connectionString;
         private static Process serviceProcess;
+        private static string serviceUrl;
         private static Process workerProcess;
+        private SqlConnection connection;
+
+        public static string ConnectionString
+        {
+            get { return connectionString; }
+        }
+
+        public static string ServiceUrl
+        {
+            get { return serviceUrl; }
+        }
 
         public void CleanComments()
         {
@@ -43,16 +59,26 @@ namespace Blog.FitNesse.Tests
             }
         }
 
-        public void OpenConnection(string connectionString)
+        public void OpenConnection(string connectionStr)
         {
+            connectionString = connectionStr;
             connection = new SqlConnection(connectionString);
             connection.Open();
             Console.WriteLine("Connection was opened");
         }
 
+        public void SetServiceUrl(string url)
+        {
+            serviceUrl = url;
+        }
+
         public void StartService(string servicePath)
         {
-            serviceProcess = StartProcess(servicePath);
+            serviceProcess = new Process
+            {
+                StartInfo = new ProcessStartInfo(servicePath, serviceUrl)
+            };
+            serviceProcess.Start();
             Console.WriteLine("serviceProcess" + serviceProcess.StartTime);
         }
 
@@ -80,6 +106,16 @@ namespace Blog.FitNesse.Tests
                 workerProcess.Close();
                 Console.WriteLine("workerProcess closing");
             }
+        }
+
+        public void UpdateBlogConnectionString(string configPath)
+        {
+            var doc = XDocument.Load(configPath);
+            XmlNamespaceManager xnm = new XmlNamespaceManager(new NameTable());
+            xnm.AddNamespace("x", "http://demo.com/2011/demo-schema");
+            var el = doc.XPathSelectElements("/configuration/connectionStrings/add[1]");
+            el.Attributes("connectionString").First().Value = ConnectionString;
+            doc.Save(configPath);
         }
 
         public void Dispose()

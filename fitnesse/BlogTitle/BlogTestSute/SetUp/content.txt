@@ -4,6 +4,9 @@
 | Clean Comments |
 | Clean Posts |
 | Close Connection |
-| Start Service | C:\projects\BlogService.v2\Blog.ConsoleService\bin\Debug\Blog.ConsoleService.exe |
+| Set Service Url| http://localhost:9999/blog |
+| Update Blog ConnectionString | C:\projects\BlogService.v2\Blog.ConsoleService\bin\Debug\Blog.ConsoleService.exe.config |
+| Start Service | C:\projects\BlogService.v2\Blog.ConsoleService\bin\Debug\Blog.ConsoleService.exe | 
+| Update Blog ConnectionString | C:\projects\BlogService.v2\Blog.Worker\bin\Debug\Blog.Worker.exe.config |
 | Start Worker | C:\projects\BlogService.v2\Blog.Worker\bin\Debug\Blog.Worker.exe |
 

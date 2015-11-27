@@ -9,6 +9,11 @@ namespace Blog.ConsoleService
 {
     public class Program
     {
+        private static WebServiceHost CreateService(string serviceUrl)
+        {
+            return new WebServiceHost(typeof(BlogService), new Uri(serviceUrl));
+        }
+
         private static IKernel GetNinjectKernel()
         {
             var kernel = new StandardKernel();
@@ -21,6 +26,11 @@ namespace Blog.ConsoleService
 
         private static void Main(string[] args)
         {
+            if (args.Length <= 0)
+            {
+                throw new ArgumentNullException(@"не задан URL сервиса");
+            }
+
             using (IKernel kernel = GetNinjectKernel())
             {
                 var instance = new BlogProcessor(kernel.Get<IBlogReader>(), new ExchangeConfigurationProvider().Configuration);
@@ -34,12 +44,11 @@ namespace Blog.ConsoleService
                     x.Bind<DeleteCommentRequest, BlogProcessor>(() => instance);
                 });
 
-                using (var service = new WebServiceHost(typeof(BlogService)))
+                using (WebServiceHost service = CreateService(args[0]))
                 {
                     service.Open();
                     Console.WriteLine("Press any key to exit");
                     Console.ReadKey();
-                    service.Close();
                 }
             }
         }

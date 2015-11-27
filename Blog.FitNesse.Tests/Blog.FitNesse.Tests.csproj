@@ -82,6 +82,16 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Blog.BusinessEntities\Blog.BusinessEntities.csproj">
+      <Project>{8089F243-361A-41A8-957D-61DB7ECFB5CC}</Project>
+      <Name>Blog.BusinessEntities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Blog.BusinessLogic\Blog.BusinessLogic.csproj">
+      <Project>{D0B75ADA-DBE1-40A8-BD77-1EC43817DBEE}</Project>
+      <Name>Blog.BusinessLogic</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
