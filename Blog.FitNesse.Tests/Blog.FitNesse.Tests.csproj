@@ -76,6 +76,7 @@
   <ItemGroup>
     <Compile Include="BlogFixture.cs" />
     <Compile Include="Commands.cs" />
+    <Compile Include="Helpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestDalc.cs" />
   </ItemGroup>
