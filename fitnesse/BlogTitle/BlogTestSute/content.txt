@@ -1,0 +1,10 @@
+!define working_directory {d:\fitnesse\FitNesseRoot}
+!define TEST_RUNNER {${working_directory}\runner\Runner.exe}
+!define COMMAND_PATTERN {%m -a c:\projects\BlogService.v2\Blog.FitNesse.Tests\bin\Debug\Blog.FitNesse.Tests.dll.config -r fitnesse.fitserver.FitServer,${working_directory}\runner\fit.dll -v %p}
+!path c:\projects\BlogService.v2\Blog.FitNesse.Tests\bin\Debug\Blog.FitNesse.Tests.dll
+
+
+!1 Test suite
+!contents -R2 -g -p -f -h
+
+

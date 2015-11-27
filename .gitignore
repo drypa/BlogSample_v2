@@ -1,5 +1,6 @@
 *.suo
 *.user
+*.zip
 bin
 debug
 packages

@@ -1,0 +1,9 @@
+!| Blog.FitNesse.Tests.Commands |
+
+| Open Connection | Data Source=localhost\SQLEXPRESS;Initial Catalog=BlogServiceTest;Integrated Security=True |
+| Clean Comments |
+| Clean Posts |
+| Close Connection |
+| Start Service | C:\projects\BlogService.v2\Blog.ConsoleService\bin\Debug\Blog.ConsoleService.exe |
+| Start Worker | C:\projects\BlogService.v2\Blog.Worker\bin\Debug\Blog.Worker.exe |
+

@@ -31,6 +31,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.Client.PowerShellCmdlet", "Blog.Client.PowerShellCmdlet\Blog.Client.PowerShellCmdlet.csproj", "{807A28F0-0C7A-4C45-802A-62CC07EC370D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.FitNesse.Tests", "Blog.FitNesse.Tests\Blog.FitNesse.Tests.csproj", "{A15D1310-B82F-477B-945F-F73342586D6E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{807A28F0-0C7A-4C45-802A-62CC07EC370D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{807A28F0-0C7A-4C45-802A-62CC07EC370D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{807A28F0-0C7A-4C45-802A-62CC07EC370D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A15D1310-B82F-477B-945F-F73342586D6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A15D1310-B82F-477B-945F-F73342586D6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A15D1310-B82F-477B-945F-F73342586D6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A15D1310-B82F-477B-945F-F73342586D6E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

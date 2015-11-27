@@ -16,6 +16,7 @@ namespace Blog.Client.PowerShellCmdlet
         protected override void ProcessRecord()
         {
             GetClient().AddComment(new Comment { Post = new BlogPost { Id = PostId }, Text = Text });
+            WriteObject("comment added");
         }
     }
 }
