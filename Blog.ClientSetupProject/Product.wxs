@@ -8,7 +8,6 @@
 
 		<Feature Id="ProductFeature" Title="Blog.SetupProject" Level="1">
 			<ComponentGroupRef Id="ProductComponents" />
-<!--      <Component Id="ProductComponent" />-->
 		</Feature>
 
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" ></Property>
@@ -26,9 +25,13 @@
 
 	<Fragment>
 		<ComponentGroup Id="ProductComponents" Directory="INSTALLLOCATION">
-			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
-			 <Component Id="ProductComponent">
+			 <Component Id="ProductComponent" Guid="c513cd46-95fb-4859-8271-5e7fed480300">
          <File Source="$(var.Blog.Client.TargetPath)" />
+         <File Source="$(var.Blog.Client.TargetDir)Blog.BusinessEntities.dll" Name="Blog.BusinessEntities.dll"/>
+         <File Source="$(var.Blog.Client.TargetDir)Blog.BusinessLogic.dll" Name="Blog.BusinessLogic.dll"/>
+         <File Source="$(var.Blog.Client.TargetDir)BlogClient.exe.config" Name="BlogClient.exe.config"/>
+         <File Source="$(var.Blog.Client.TargetDir)Nelibur.dll" Name="Nelibur.dll"/>
+         <File Source="$(var.Blog.Client.TargetDir)Nelibur.Sword.dll" Name="Nelibur.Sword.dll"/>
 			 </Component> 
 		</ComponentGroup>
 	</Fragment>

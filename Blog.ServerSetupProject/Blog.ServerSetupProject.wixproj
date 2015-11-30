@@ -4,9 +4,9 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>3.9</ProductVersion>
-    <ProjectGuid>113c4904-d9a1-49e8-ae95-f3316543a7f8</ProjectGuid>
+    <ProjectGuid>ee474066-ee26-4808-9891-1e3d5c6507bf</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>Blog.SetupProject</OutputName>
+    <OutputName>Blog.ServerSetupProject</OutputName>
     <OutputType>Package</OutputType>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND '$(MSBuildExtensionsPath32)' != '' ">$(MSBuildExtensionsPath32)\WiX Toolset\v4\Wix.targets</WixTargetsPath>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\WiX Toolset\v4\Wix.targets</WixTargetsPath>
@@ -25,18 +25,26 @@
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="WixUI_ru-ru.wxl" />
-  </ItemGroup>
-  <ItemGroup>
     <WixExtension Include="WixUIExtension">
       <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
       <Name>WixUIExtension</Name>
     </WixExtension>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BlogClient\Blog.Client.csproj">
-      <Name>Blog.Client</Name>
-      <Project>{85d937a5-9f7e-4cd5-b091-96a0e8f38b48}</Project>
+    <EmbeddedResource Include="WixUI_ru-ru.wxl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Blog.ConsoleService\Blog.ConsoleService.csproj">
+      <Name>Blog.ConsoleService</Name>
+      <Project>{640b6ada-5478-4ce3-825c-2f4b89560672}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\Blog.Worker\Blog.Worker.csproj">
+      <Name>Blog.Worker</Name>
+      <Project>{72a069c7-ba53-49a8-8896-c5dad43c7d37}</Project>
       <Private>True</Private>
       <DoNotHarvest>True</DoNotHarvest>
       <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>

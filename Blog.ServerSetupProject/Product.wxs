@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <?define Manufacturer="DRypa"?>
+  <Product Id="*" Name="Blog Server" Language="1049" Version="1.0.0.0" Manufacturer="$(var.Manufacturer)" UpgradeCode="0a471066-3bff-44ff-b288-50ccef0e8f7a">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate />
+
+    <Feature Id="ProductFeature" Title="Blog.ServerSetupProject" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+    </Feature>
+
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" ></Property>
+    <WixVariable Id="WixUILicenseRtf" Overridable="yes" Value="License.rtf"/>
+    <UIRef Id="WixUI_InstallDir"/>
+  </Product>
+  
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLLOCATION" Name="$(var.Manufacturer)">
+          <Directory Id="SERVER_INSTALLFOLDER" Name="Blog_Server" />  
+          <Directory Id="WORKER_INSTALLFOLDER" Name="Blog_Worker" />
+        </Directory>
+      </Directory>
+    </Directory>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="ProductComponents">
+      <Component Id="ServerComponent" Directory="SERVER_INSTALLFOLDER" Guid="0a471066-3bff-44ff-b288-50ccef0e8f71">
+        <File Source="$(var.Blog.ConsoleService.TargetPath)" />
+        <File Source="$(var.Blog.ConsoleService.TargetDir)Blog.BusinessEntities.dll" Name="Blog.BusinessEntities.dll"/>
+        <File Source="$(var.Blog.ConsoleService.TargetDir)Blog.BusinessLogic.dll" Name="Blog.BusinessLogic.dll"/>
+        <File Source="$(var.Blog.ConsoleService.TargetDir)Dapper.dll" Name="Dapper.dll"/>
+        <File Source="$(var.Blog.ConsoleService.TargetDir)Nelibur.dll" Name="Nelibur.dll"/>
+        <File Source="$(var.Blog.ConsoleService.TargetDir)Nelibur.Sword.dll" Name="Nelibur.Sword.dll"/>
+        <File Source="$(var.Blog.ConsoleService.TargetDir)Newtonsoft.Json.dll" Name="Newtonsoft.Json.dll"/>
+        <File Source="$(var.Blog.ConsoleService.TargetDir)Ninject.dll" Name="Ninject.dll"/>
+        <File Source="$(var.Blog.ConsoleService.TargetDir)Blog.ConsoleService.exe.config" Name="Blog.ConsoleService.exe.config"/>
+      </Component>
+      <Component Id="WorkerComponent" Directory="WORKER_INSTALLFOLDER" Guid="0a471066-3bff-44ff-b288-50ccef0e8f72">
+        <File Source="$(var.Blog.Worker.TargetPath)" />
+        <File Source="$(var.Blog.Worker.TargetDir)Blog.BusinessEntities.dll" Name="Blog.BusinessEntities.dll"/>
+        <File Source="$(var.Blog.Worker.TargetDir)Blog.BusinessLogic.dll" Name="Blog.BusinessLogic.dll"/>
+        <File Source="$(var.Blog.Worker.TargetDir)Dapper.dll" Name="Dapper.dll"/>
+        <File Source="$(var.Blog.Worker.TargetDir)Nelibur.dll" Name="Nelibur.dll"/>
+        <File Source="$(var.Blog.Worker.TargetDir)Nelibur.Sword.dll" Name="Nelibur.Sword.dll"/>
+        <File Source="$(var.Blog.Worker.TargetDir)Newtonsoft.Json.dll" Name="Newtonsoft.Json.dll"/>
+        <File Source="$(var.Blog.Worker.TargetDir)Ninject.dll" Name="Ninject.dll"/>
+        <File Source="$(var.Blog.Worker.TargetDir)RabbitMQ.Client.dll" Name="RabbitMQ.Client.dll"/>
+        <File Source="$(var.Blog.Worker.TargetDir)NHibernate.dll" Name="NHibernate.dll"/>
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>
