@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+	<Product Id="*" Name="Blog.Client" Language="1049" Version="1.0.0.0" Manufacturer="DRypa" UpgradeCode="c513cd46-95fb-4859-8271-5e7fed480307">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate />
+
+		<Feature Id="ProductFeature" Title="Blog.SetupProject" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+<!--      <Component Id="ProductComponent" />-->
+		</Feature>
+
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" ></Property>
+    <WixVariable Id="WixUILicenseRtf" Overridable="yes" Value="License.rtf"/>
+    <UIRef Id="WixUI_InstallDir"/>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLLOCATION" Name="Blog.Client" />
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLLOCATION">
+			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+			 <Component Id="ProductComponent">
+         <File Source="$(var.Blog.Client.TargetPath)" />
+			 </Component> 
+		</ComponentGroup>
+	</Fragment>
+</Wix>
