@@ -7,7 +7,7 @@
     LICENSE.TXT at the root directory of the distribution.
   </copyright>
 -->
-<WixLocalization Culture="ru-ru" Codepage="1251" xmlns="http://wixtoolset.org/schemas/v4/wxl">
+<WixLocalization Culture="ru-ru" Codepage="1251" xmlns="http://schemas.microsoft.com/wix/2006/localization">
     <UI Dialog="AdvancedWelcomeEulaDlg" Control="Print" X="50" />
     <UI Dialog="AdvancedWelcomeEulaDlg" Control="Advanced" X="124" Width="85" />
     <UI Dialog="InstallDirDlg" Control="Description" Y="20" Height="30" />
@@ -604,4 +604,22 @@
     <String Id="UITextVolumeCostRequired" Overridable="yes">Требуется</String>
     <String Id="UITextVolumeCostSize" Overridable="yes">Размер диска</String>
     <String Id="UITextVolumeCostVolume" Overridable="yes">Объем</String>
+  
+    <!-- my hack-->
+  <String Id="RollbackExecuteSqlStrings" Overridable="yes">RollbackExecuteSqlStrings</String>
+  <String Id="msierrUSRFailedUserGroupAdd" Overridable="yes">msierrUSRFailedUserGroupAdd</String>
+  <String Id="msierrUSRFailedUserCreatePswd" Overridable="yes">msierrUSRFailedUserCreatePswd</String>
+  <String Id="msierrUSRFailedUserCreateExists" Overridable="yes">msierrUSRFailedUserCreateExists</String>
+  <String Id="msierrUSRFailedUserCreate" Overridable="yes">msierrUSRFailedUserCreate</String>
+  <String Id="msierrSQLFailedExecString" Overridable="yes">msierrSQLFailedExecString</String>
+  <String Id="msierrSQLFailedDropDatabase" Overridable="yes">msierrSQLFailedDropDatabase</String>
+  <String Id="msierrSQLFailedCreateDatabase" Overridable="yes">msierrSQLFailedCreateDatabase</String>
+  <String Id="msierrSQLFailedConnectDatabase" Overridable="yes">msierrSQLFailedConnectDatabase</String>
+  <String Id="msierrSQLDatabaseAlreadyExists" Overridable="yes">msierrSQLDatabaseAlreadyExists</String>
+  <String Id="ExecuteSqlStrings" Overridable="yes">ExecuteSqlStrings</String>
+  <String Id="DropDatabase" Overridable="yes">DropDatabase</String>
+  <String Id="CreateDatabase" Overridable="yes">CreateDatabase</String>
+  <String Id="ConfigureSql" Overridable="yes">ConfigureSql</String>
+  <String Id="ConfigureSql" Overridable="yes">ConfigureSql</String>
+  
 </WixLocalization>

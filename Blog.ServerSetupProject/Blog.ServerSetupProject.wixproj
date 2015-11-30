@@ -3,19 +3,18 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProductVersion>3.9</ProductVersion>
-    <ProjectGuid>ee474066-ee26-4808-9891-1e3d5c6507bf</ProjectGuid>
+    <ProductVersion>3.10</ProductVersion>
+    <ProjectGuid>17e8e503-b10e-439e-8aea-9eab6d1dd52e</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
     <OutputName>Blog.ServerSetupProject</OutputName>
     <OutputType>Package</OutputType>
-    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND '$(MSBuildExtensionsPath32)' != '' ">$(MSBuildExtensionsPath32)\WiX Toolset\v4\Wix.targets</WixTargetsPath>
-    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\WiX Toolset\v4\Wix.targets</WixTargetsPath>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND '$(MSBuildExtensionsPath32)' != '' ">$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <DefineConstants>Debug</DefineConstants>
-    <Cultures>ru-RU</Cultures>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>bin\$(Configuration)\</OutputPath>
@@ -25,13 +24,29 @@
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CreateDatabase.sql" />
+    <Content Include="License.rtf" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="WixUI_ru-ru.wxl" />
+  </ItemGroup>
+  <ItemGroup>
+    <WixExtension Include="WixUtilExtension">
+      <HintPath>$(WixExtDir)\WixUtilExtension.dll</HintPath>
+      <Name>WixUtilExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixSqlExtension">
+      <HintPath>$(WixExtDir)\WixSqlExtension.dll</HintPath>
+      <Name>WixSqlExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixNetFxExtension">
+      <HintPath>$(WixExtDir)\WixNetFxExtension.dll</HintPath>
+      <Name>WixNetFxExtension</Name>
+    </WixExtension>
     <WixExtension Include="WixUIExtension">
       <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
       <Name>WixUIExtension</Name>
     </WixExtension>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="WixUI_ru-ru.wxl" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Blog.ConsoleService\Blog.ConsoleService.csproj">
@@ -50,9 +65,6 @@
       <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
       <RefTargetDir>INSTALLFOLDER</RefTargetDir>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="License.rtf" />
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <!--
