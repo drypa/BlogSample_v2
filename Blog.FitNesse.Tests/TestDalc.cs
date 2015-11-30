@@ -68,7 +68,7 @@ namespace Blog.FitNesse.Tests
             return comments;
         }
 
-        public void  AddPost(BlogPost post)
+        public void AddPost(BlogPost post)
         {
             using (var connection = new SqlConnection(connectionString))
             {
@@ -88,7 +88,7 @@ namespace Blog.FitNesse.Tests
                     cmd.CommandType = CommandType.Text;
                     cmd.Parameters.Add("@id", SqlDbType.UniqueIdentifier).Value = post.Id;
                     cmd.Parameters.Add("@createDate", SqlDbType.DateTime).Value = post.CreateDate;
-                    cmd.Parameters.Add("@text", SqlDbType.VarChar,200).Value = post.Text;
+                    cmd.Parameters.Add("@text", SqlDbType.VarChar, 200).Value = post.Text;
                     cmd.Parameters.Add("@title", SqlDbType.VarChar, 100).Value = post.Title;
 
 
@@ -111,6 +111,35 @@ namespace Blog.FitNesse.Tests
                 });
             }
             return posts;
+        }
+
+        public void AddComment(Comment comment)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = connection.CreateCommand())
+                {
+                    connection.Open();
+                    cmd.CommandText = @"INSERT INTO [dbo].[Comment]
+                                           ([Id]
+                                           ,[CreateDate]
+                                           ,[Post]
+                                           ,[Text])
+                                     VALUES
+                                           (@id
+                                           ,@date
+                                           ,@postId
+                                           ,@text)";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.Add("@id", SqlDbType.UniqueIdentifier).Value = comment.Id;
+                    cmd.Parameters.Add("@date", SqlDbType.DateTime).Value = comment.CreateDate;
+                    cmd.Parameters.Add("@text", SqlDbType.VarChar, 200).Value = comment.Text;
+                    cmd.Parameters.Add("@postId", SqlDbType.UniqueIdentifier).Value = comment.Post.Id;
+
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
     }
 }
