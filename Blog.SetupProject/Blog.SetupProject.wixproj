@@ -67,8 +67,8 @@
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <PropertyGroup>
-    <PreBuildEvent>"C:\Program Files (x86)\WiX Toolset v3.10\bin\heat.exe" dir "$(SolutionDir)\Blog.ConsoleService\bin\Debug" -t "$(ProjectDir)ServerWix.xslt" -o "$(ProjectDir)ServerOutputFiles.wxs" -gg –sfrag
-"C:\Program Files (x86)\WiX Toolset v3.10\bin\heat.exe" dir "$(SolutionDir)\Blog.Worker\bin\Debug" -t "$(ProjectDir)WorkerWix.xslt" -o "$(ProjectDir)WorkerOutputFiles.wxs" -gg –sfrag</PreBuildEvent>
+    <PreBuildEvent>"C:\Program Files (x86)\WiX Toolset v3.10\bin\heat.exe" dir "$(SolutionDir)\Blog.ConsoleService\bin\$(Configuration)" -t "$(ProjectDir)ServerWix.xslt" -o "$(ProjectDir)ServerOutputFiles.wxs" -gg –sfrag
+"C:\Program Files (x86)\WiX Toolset v3.10\bin\heat.exe" dir "$(SolutionDir)\Blog.Worker\bin\$(Configuration)" -t "$(ProjectDir)WorkerWix.xslt" -o "$(ProjectDir)WorkerOutputFiles.wxs" -gg –sfrag</PreBuildEvent>
   </PropertyGroup>
   <!--
 	To modify your build process, add your task inside one of the targets below and uncomment it.
