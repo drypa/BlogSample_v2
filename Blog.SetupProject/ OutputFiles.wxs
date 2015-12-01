@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <DirectoryRef Id="TARGETDIR">
+            <Directory Id="dir39B22699688E51DCD8DCBB99A47E835B" Name="Debug">
+                <Directory Id="dirEC2059F88A94927DC5B562971C99378C" Name="ru-ru">
+                    <Component Id="cmp048B513810969D318E072FB0A1E115B1" Guid="{CFE87E10-1BFA-4E35-B808-CA5A309A81B0}">
+                        <File Id="fil739763A103CA32FF2C6546773F120504" KeyPath="yes" Source="SourceDir\ru-ru\Blog.ServerSetupProject.msi" />
+                    </Component>
+                    <Component Id="cmpAE323F8AF0051744E22731F4B87D8E34" Guid="{91CE6084-D267-4CF6-9089-AB4BD66647F2}">
+                        <File Id="fil593FA5ACE77BC56B97DCA3865DEB52A3" KeyPath="yes" Source="SourceDir\ru-ru\Blog.ServerSetupProject.wixpdb" />
+                    </Component>
+                    <Component Id="cmp81FB6E5772FDB393C97D2290F527CCFF" Guid="{FC506DA3-97BB-40B9-8DEE-FB71C42726C2}">
+                        <File Id="filB8298513A9293AE19311F0293AAA1F29" KeyPath="yes" Source="SourceDir\ru-ru\cab1.cab" />
+                    </Component>
+                </Directory>
+            </Directory>
+        </DirectoryRef>
+    </Fragment>
+</Wix>
