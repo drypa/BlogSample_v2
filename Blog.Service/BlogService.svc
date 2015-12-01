@@ -1,1 +1,0 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="Blog.Service.BlogService" Factory="Blog.Service.BlogServiceHostFactory" %>
