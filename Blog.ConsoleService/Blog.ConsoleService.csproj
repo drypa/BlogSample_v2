@@ -70,6 +70,10 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="build.bat" />
+    <None Include="Build.msbuild">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
