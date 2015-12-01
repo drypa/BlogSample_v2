@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <DirectoryRef Id="Worker.Output.Content">
+    </DirectoryRef>
+
+    <DirectoryRef Id="Worker.Output.Binaries">
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="Worker.Output.Content">
+    </ComponentGroup>
+    <ComponentGroup Id="Worker.Output.Binaries">
+    </ComponentGroup>
+  </Fragment>
+</Wix>

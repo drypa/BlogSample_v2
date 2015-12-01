@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <DirectoryRef Id="SERVER_INSTALLFOLDER">
+      <Directory Id="ServerBinariesDir" ComponentGuidGenerationSeed="DBA8384E-CE1B-41af-B573-4203FB8A6A3B">
+        <Directory Id="Output.Binaries" />
+      </Directory>
+    </DirectoryRef>
+
+    <DirectoryRef Id="SERVER_INSTALLFOLDER">
+      <Directory Id="ServerContentDir" ComponentGuidGenerationSeed="35A3DCB8-4F85-4e3f-AC83-C51B78C04B94" Name="NewConfigurationFiles">
+        <Directory Id="Output.Content" />
+      </Directory>
+    </DirectoryRef>
+
+    <ComponentGroup Id="ServerOutputGroup">
+      <ComponentGroupRef Id="Output.Binaries"/>
+      <ComponentGroupRef Id="Output.Content"/>
+    </ComponentGroup>
+  
+  </Fragment>
+</Wix>

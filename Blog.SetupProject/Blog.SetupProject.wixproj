@@ -23,8 +23,9 @@
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="WorkerOutput.wxs" />
     <Compile Include="ServerOutputFiles.wxs" />
-    <Compile Include="Output.wxs" />
+    <Compile Include="ServerOutput.wxs" />
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>

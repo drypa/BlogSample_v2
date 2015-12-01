@@ -8,7 +8,8 @@
     <MediaTemplate />
 
     <Feature Id="ProductFeature" Title="Blog Server installation" Level="1">
-      <ComponentGroupRef Id="OutputGroup" />
+      <ComponentGroupRef Id="ServerOutputGroup" />
+      <ComponentGroupRef Id="WorkerOutputGroup" />
     </Feature>
 
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" ></Property>
@@ -33,6 +34,7 @@
       <Directory Id="ProgramFilesFolder">
         <Directory Id="INSTALLLOCATION" Name="$(var.Manufacturer)" >
           <Directory Id="SERVER_INSTALLFOLDER" Name="Blog_Server" />
+          <Directory Id="WORKER_INSTALLFOLDER" Name="Blog_Worker" />
         </Directory>
       </Directory>
     </Directory>
