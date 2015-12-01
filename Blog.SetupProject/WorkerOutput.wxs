@@ -8,14 +8,14 @@
     </DirectoryRef>
 
     <DirectoryRef Id="WORKER_INSTALLFOLDER">
-      <Directory Id="ContentDir" ComponentGuidGenerationSeed="35A3DCB8-4F85-4e3f-AC83-C51B78C04B94" Name="NewConfigurationFiles">
+      <Directory Id="ContentDir" ComponentGuidGenerationSeed="35A3DCB8-4F85-4e3f-AC83-C51B78C04B94">
         <Directory Id="Worker.Output.Content" />
       </Directory>
     </DirectoryRef>
 
     <ComponentGroup Id="WorkerOutputGroup">
-<!--      <ComponentGroupRef Id="Worker.Output.Binaries"/>-->
-<!--      <ComponentGroupRef Id="Worker.Output.Content"/>-->
+      <ComponentGroupRef Id="Worker.Output.Binaries"/>
+      <ComponentGroupRef Id="Worker.Output.Content"/>
     </ComponentGroup>
   
   </Fragment>
