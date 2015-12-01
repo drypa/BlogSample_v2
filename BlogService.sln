@@ -33,8 +33,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.Client.PowerShellCmdle
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.FitNesse.Tests", "Blog.FitNesse.Tests\Blog.FitNesse.Tests.csproj", "{A15D1310-B82F-477B-945F-F73342586D6E}"
 EndProject
-Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Blog.ServerSetupProject", "Blog.ServerSetupProject\Blog.ServerSetupProject.wixproj", "{17E8E503-B10E-439E-8AEA-9EAB6D1DD52E}"
-EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Blog.SetupProject", "Blog.SetupProject\Blog.SetupProject.wixproj", "{050C9FEE-2917-4D2A-8E22-94AEF6F7E068}"
 EndProject
 Global
@@ -137,16 +135,6 @@ Global
 		{A15D1310-B82F-477B-945F-F73342586D6E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{A15D1310-B82F-477B-945F-F73342586D6E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{A15D1310-B82F-477B-945F-F73342586D6E}.Release|x86.ActiveCfg = Release|Any CPU
-		{17E8E503-B10E-439E-8AEA-9EAB6D1DD52E}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{17E8E503-B10E-439E-8AEA-9EAB6D1DD52E}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{17E8E503-B10E-439E-8AEA-9EAB6D1DD52E}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{17E8E503-B10E-439E-8AEA-9EAB6D1DD52E}.Debug|x86.ActiveCfg = Debug|x86
-		{17E8E503-B10E-439E-8AEA-9EAB6D1DD52E}.Debug|x86.Build.0 = Debug|x86
-		{17E8E503-B10E-439E-8AEA-9EAB6D1DD52E}.Release|Any CPU.ActiveCfg = Release|x86
-		{17E8E503-B10E-439E-8AEA-9EAB6D1DD52E}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{17E8E503-B10E-439E-8AEA-9EAB6D1DD52E}.Release|Mixed Platforms.Build.0 = Release|x86
-		{17E8E503-B10E-439E-8AEA-9EAB6D1DD52E}.Release|x86.ActiveCfg = Release|x86
-		{17E8E503-B10E-439E-8AEA-9EAB6D1DD52E}.Release|x86.Build.0 = Release|x86
 		{050C9FEE-2917-4D2A-8E22-94AEF6F7E068}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{050C9FEE-2917-4D2A-8E22-94AEF6F7E068}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{050C9FEE-2917-4D2A-8E22-94AEF6F7E068}.Debug|Mixed Platforms.Build.0 = Debug|x86
