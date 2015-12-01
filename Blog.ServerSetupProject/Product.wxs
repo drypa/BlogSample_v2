@@ -22,7 +22,7 @@
     <Condition Message="This application requires .NET Framework 4.0 or later. Please install the .NET Framework then run this installer again.">
       <![CDATA[Installed OR WIX_IS_NETFRAMEWORK_40_OR_LATER_INSTALLED]]>
     </Condition>
-    
+
     <Property Id="SQL_EDITION">
       <RegistrySearch Id="CheckSQLEdition" Root="HKLM" Key="SOFTWARE\Microsoft\Microsoft SQL Server" Name="InstalledInstances" Type="raw"  Win64="yes"/>
     </Property>

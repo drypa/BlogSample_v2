@@ -16,6 +16,7 @@
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <DefineConstants>Debug</DefineConstants>
+    <Cultures>ru-Ru</Cultures>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>bin\$(Configuration)\</OutputPath>
@@ -27,6 +28,7 @@
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="License.rtf" />
     <Content Include="Wix.xslt" />
   </ItemGroup>
   <ItemGroup>
@@ -38,6 +40,19 @@
       <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
       <RefTargetDir>INSTALLFOLDER</RefTargetDir>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WixExtension Include="WixUIExtension">
+      <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
+      <Name>WixUIExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixNetFxExtension">
+      <HintPath>$(WixExtDir)\WixNetFxExtension.dll</HintPath>
+      <Name>WixNetFxExtension</Name>
+    </WixExtension>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="WixUI_ru-ru.wxl" />
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <PropertyGroup>

@@ -2,39 +2,39 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Fragment>
         <DirectoryRef Id="Output.Content">
-            <Component Id="cmp3E20BEDB18DF7C576CB3151A6FDEB685" Guid="{3ABFEEB1-1C81-4BB8-88CF-79B72979BCD3}">
+            <Component Id="cmp3E20BEDB18DF7C576CB3151A6FDEB685" Guid="{57A1781D-5806-4934-BD4D-F38CEBA4F659}">
                 <File Id="filA8C14A9739835EF57A78326A27C490E6" Source="$(var.Blog.ConsoleService.TargetDir)Blog.ConsoleService.exe.config" Name="Blog.ConsoleService.exe.config" />
             </Component>
         </DirectoryRef>
         <DirectoryRef Id="Output.Binaries">
-            <Component Id="cmp96E15C238D0B8F3CAD1ED2005BAE5C47" Guid="{541BDDF9-53E5-4D5A-BC17-0FCB7E345379}">
+            <Component Id="cmp96E15C238D0B8F3CAD1ED2005BAE5C47" Guid="{8C821E8E-BAFF-4D6A-BC1C-E0985215B4CE}">
                 <File Id="filADB2D94C2459CBCBCB564E8D1B07F5A3" Source="$(var.Blog.ConsoleService.TargetDir)Blog.BusinessEntities.dll" Name="Blog.BusinessEntities.dll" />
             </Component>
-            <Component Id="cmpAE06C4B5A871D46EC661A897585E9FE2" Guid="{C446C4E3-6307-4CBB-B46B-C26EBE6E7646}">
+            <Component Id="cmpAE06C4B5A871D46EC661A897585E9FE2" Guid="{84FAE558-26F1-4891-98D3-495222D5BAF3}">
                 <File Id="fil2729E54E551A19CFF899147C7BFD04A0" Source="$(var.Blog.ConsoleService.TargetDir)Blog.BusinessLogic.dll" Name="Blog.BusinessLogic.dll" />
             </Component>
-            <Component Id="cmpE01489B3C7D9C05C43CF2A68AC261B12" Guid="{ECF34BF2-A874-4B11-857A-6E0BD1877278}">
+            <Component Id="cmpE01489B3C7D9C05C43CF2A68AC261B12" Guid="{A5373B72-A954-4050-8ED7-3DEEC0FD3BB4}">
                 <File Id="fil5E31DDF1B1541C081618098C58308BD6" Source="$(var.Blog.ConsoleService.TargetDir)Blog.ConsoleService.exe" Name="Blog.ConsoleService.exe" />
             </Component>
-            <Component Id="cmpE11E3F4AA56278EB4713E709546E7F92" Guid="{446B2B91-EDAF-4916-8D6B-5B6E10C5CE7C}">
+            <Component Id="cmpE11E3F4AA56278EB4713E709546E7F92" Guid="{69881B55-2834-40B5-9AA4-D0FCA0E33C9B}">
                 <File Id="fil58103F71981B36FD4EF8F997E93DC89B" Source="$(var.Blog.ConsoleService.TargetDir)Dapper.dll" Name="Dapper.dll" />
             </Component>
-            <Component Id="cmp931EC8C6BACCCBD4AC41229F95FA5422" Guid="{5E11F75B-11F9-4DA4-8CD2-292E222801C3}">
+            <Component Id="cmp931EC8C6BACCCBD4AC41229F95FA5422" Guid="{CF1F6EC7-95EA-44F1-BFE5-9BB5B90847FE}">
                 <File Id="filDE5F1653B90F6D29F7B7B43EBEDB2410" Source="$(var.Blog.ConsoleService.TargetDir)Nelibur.dll" Name="Nelibur.dll" />
             </Component>
-            <Component Id="cmp351662265C794DDDEE1C59E149186F4E" Guid="{DA277A48-3232-433A-8474-FCBD9E7D82F2}">
+            <Component Id="cmp351662265C794DDDEE1C59E149186F4E" Guid="{1B81F587-1FF5-4709-B15A-21155274C6DF}">
                 <File Id="fil27E2CB10278C07C6425275BBA51A6B6E" Source="$(var.Blog.ConsoleService.TargetDir)Nelibur.Sword.dll" Name="Nelibur.Sword.dll" />
             </Component>
-            <Component Id="cmp1EA75742196A10FF30F14DEE49B96795" Guid="{04BF283C-4436-4CDF-829D-13C6D03FC329}">
+            <Component Id="cmp1EA75742196A10FF30F14DEE49B96795" Guid="{2FD4F912-88B4-4111-AC45-2BED55C4F671}">
                 <File Id="filA73AF48DE5075796F2DCBECBA256DB1F" Source="$(var.Blog.ConsoleService.TargetDir)Newtonsoft.Json.dll" Name="Newtonsoft.Json.dll" />
             </Component>
-            <Component Id="cmpA0B29840C33AEF51560F7DA794BC4A4A" Guid="{31BA24F3-2907-471D-BA66-D2DB5BDD28BD}">
+            <Component Id="cmpA0B29840C33AEF51560F7DA794BC4A4A" Guid="{C16661DE-E6AD-4E46-A6E2-172E94228A58}">
                 <File Id="filF86E966AC0E91992D48DF10C9E19A412" Source="$(var.Blog.ConsoleService.TargetDir)NHibernate.dll" Name="NHibernate.dll" />
             </Component>
-            <Component Id="cmp5A53AFDEE2AC8109C6B0BA4F06239E05" Guid="{A28E348A-46A6-4BD5-8C1D-7FEB843804D8}">
+            <Component Id="cmp5A53AFDEE2AC8109C6B0BA4F06239E05" Guid="{3C7F82D2-78AD-4388-AEB4-F6DFD6C46AD8}">
                 <File Id="fil31535B42902162ECF5D0689218FD93C3" Source="$(var.Blog.ConsoleService.TargetDir)Ninject.dll" Name="Ninject.dll" />
             </Component>
-            <Component Id="cmp366FC39F4E6A766342B8D341B3CFBAA2" Guid="{6DCD25C2-7F46-4E45-B68D-3EBE18D564DC}">
+            <Component Id="cmp366FC39F4E6A766342B8D341B3CFBAA2" Guid="{8C28F072-1E19-47C7-970C-88BAA3520880}">
                 <File Id="fil8374F1DAA14780027812CA26680CA889" Source="$(var.Blog.ConsoleService.TargetDir)RabbitMQ.Client.dll" Name="RabbitMQ.Client.dll" />
             </Component>
         </DirectoryRef>
