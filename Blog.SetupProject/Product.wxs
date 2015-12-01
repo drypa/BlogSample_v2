@@ -9,7 +9,6 @@
 
     <Feature Id="ProductFeature" Title="Blog Server installation" Level="1">
       <ComponentGroupRef Id="OutputGroup" />
-      <!--			<ComponentGroupRef Id="ProductComponents" />-->
     </Feature>
 
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" ></Property>

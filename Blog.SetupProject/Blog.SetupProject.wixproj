@@ -23,7 +23,7 @@
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="OutputFiles.wxs" />
+    <Compile Include="ServerOutputFiles.wxs" />
     <Compile Include="Output.wxs" />
     <Compile Include="Product.wxs" />
   </ItemGroup>
@@ -56,7 +56,7 @@
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <PropertyGroup>
-    <PreBuildEvent>"C:\Program Files (x86)\WiX Toolset v3.10\bin\heat.exe" dir "$(SolutionDir)\Blog.ConsoleService\bin\Debug" -t "$(ProjectDir)Wix.xslt" -o "$(ProjectDir)OutputFiles.wxs" -gg –sfrag</PreBuildEvent>
+    <PreBuildEvent>"C:\Program Files (x86)\WiX Toolset v3.10\bin\heat.exe" dir "$(SolutionDir)\Blog.ConsoleService\bin\Debug" -t "$(ProjectDir)Wix.xslt" -o "$(ProjectDir)ServerOutputFiles.wxs" -gg –sfrag</PreBuildEvent>
   </PropertyGroup>
   <!--
 	To modify your build process, add your task inside one of the targets below and uncomment it.
