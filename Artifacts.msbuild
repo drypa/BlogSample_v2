@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Project DefaultTargets="Rebuild" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <MSBuildExtensionsPath>$(MSBuildThisFileDirectory)\.build</MSBuildExtensionsPath>
+  </PropertyGroup>
+
+    <Import Project="$(MSBuildExtensionsPath)\MSBuild.Community.Tasks.Targets" />
+
+    <PropertyGroup>
+        <Configuration Condition="'$(Configuration)'==''">Release</Configuration>
+    </PropertyGroup>
+
+    <Target Name="Build" DependsOnTargets="Archive" />
+    <Target Name="Rebuild" DependsOnTargets="Build" />
+
+    <ItemGroup>
+        <ArchiveTask Include="BlogClient">
+            <Path>$(MSBuildThisFileDirectory)BlogClient\bin\$(Configuration)</Path>
+        </ArchiveTask>
+	<!--	<ArchiveTask Include="Blog.SetupProject">
+            <Path>$(MSBuildThisFileDirectory)Blog.SetupProject\bin\$(Configuration)\ru-Ru</Path>
+        </ArchiveTask> -->
+    </ItemGroup>
+
+    
+    <Target Name="Archive" Outputs="%(ArchiveTask.Identity)">
+        <Message Text="Starting archive distributives %(ArchiveTask.Identity) ..." />
+        <Message Text="Path %(ArchiveTask.Path)" />
+		<ItemGroup>
+            <ArtifactFiles Include="$(MSBuildThisFileDirectory)dist\%(ArchiveTask.Identity).zip" />
+        </ItemGroup>
+		
+		<Message Text="deleting files @(ArtifactFiles)" />
+		<Delete Files="@(ArtifactFiles)" />
+		
+
+        <ItemGroup>
+            <Files Include="%(ArchiveTask.Path)\**\*.*" />
+        </ItemGroup>
+
+        <Zip Files="@(Files)"
+             WorkingDirectory="%(ArchiveTask.Path)"
+             Condition="Exists('%(ArchiveTask.Path)')"
+             ZipFileName="$(MSBuildThisFileDirectory)dist\%(ArchiveTask.Identity).zip" />
+
+        <Message Text="Distributive %(ArchiveTask.Identity) successfully archived"
+                 Condition="Exists('%(ArchiveTask.Path)')" />
+
+        <Message Text="Distributive %(ArchiveTask.Identity) skipped. Folder does not exist."
+                 Condition="!Exists('%(ArchiveTask.Path)')" />
+    </Target>
+</Project>
