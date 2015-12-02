@@ -16,9 +16,9 @@
     <WixVariable Id="WixUILicenseRtf" Overridable="yes" Value="License.rtf"/>
     <UIRef Id="WixUI_InstallDir"/>
 
-    <PropertyRef Id="WIX_IS_NETFRAMEWORK_40_OR_LATER_INSTALLED"/>
-    <Condition Message="This application requires .NET Framework 4.0 or later. Please install the .NET Framework then run this installer again.">
-      <![CDATA[Installed OR WIX_IS_NETFRAMEWORK_40_OR_LATER_INSTALLED]]>
+    <PropertyRef Id="NETFRAMEWORK40FULL"/>
+    <Condition Message="This application requires .NET Framework 4.0. Please install the .NET Framework then run this installer again.">
+      <![CDATA[Installed OR NETFRAMEWORK40FULL]]>
     </Condition>
 
     <Property Id="SQL_EDITION">

@@ -56,17 +56,21 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="WixUI_ru-ru.wxl" />
+  </ItemGroup>
+  <ItemGroup>
+    <WixExtension Include="WixUtilExtension">
+      <HintPath>$(WixToolPath)WixUtilExtension.dll</HintPath>
+      <Name>WixUtilExtension</Name>
+    </WixExtension>
     <WixExtension Include="WixUIExtension">
-      <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
+      <HintPath>$(WixToolPath)WixUIExtension.dll</HintPath>
       <Name>WixUIExtension</Name>
     </WixExtension>
     <WixExtension Include="WixNetFxExtension">
-      <HintPath>$(WixExtDir)\WixNetFxExtension.dll</HintPath>
+      <HintPath>$(WixToolPath)WixNetFxExtension.dll</HintPath>
       <Name>WixNetFxExtension</Name>
     </WixExtension>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="WixUI_ru-ru.wxl" />
   </ItemGroup>
   <PropertyGroup>
     <WixToolPath>$(SolutionDir)packages\WiX.Toolset.3.9.1208.0\tools\wix\</WixToolPath>
@@ -75,8 +79,8 @@
   </PropertyGroup>
   <Import Project="$(WixTargetsPath)" />
   <PropertyGroup>
-    <PreBuildEvent>"C:\Program Files (x86)\WiX Toolset v3.10\bin\heat.exe" dir "$(SolutionDir)\Blog.ConsoleService\bin\$(Configuration)" -t "$(ProjectDir)ServerWix.xslt" -o "$(ProjectDir)ServerOutputFiles.wxs" -gg –sfrag
-"C:\Program Files (x86)\WiX Toolset v3.10\bin\heat.exe" dir "$(SolutionDir)\Blog.Worker\bin\$(Configuration)" -t "$(ProjectDir)WorkerWix.xslt" -o "$(ProjectDir)WorkerOutputFiles.wxs" -gg –sfrag</PreBuildEvent>
+    <PreBuildEvent>"$(WixToolPath)heat.exe" dir "$(SolutionDir)\Blog.ConsoleService\bin\$(Configuration)" -t "$(ProjectDir)ServerWix.xslt" -o "$(ProjectDir)ServerOutputFiles.wxs" -gg –sfrag
+"$(WixToolPath)heat.exe" dir "$(SolutionDir)\Blog.Worker\bin\$(Configuration)" -t "$(ProjectDir)WorkerWix.xslt" -o "$(ProjectDir)WorkerOutputFiles.wxs" -gg –sfrag</PreBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
