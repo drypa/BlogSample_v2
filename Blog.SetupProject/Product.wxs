@@ -22,7 +22,7 @@
     </Condition>
 
     <Property Id="SQL_EDITION">
-      <RegistrySearch Id="CheckSQLEdition" Root="HKLM" Key="SOFTWARE\Microsoft\Microsoft SQL Server" Name="InstalledInstances" Type="raw"  Win64="no"/>
+      <RegistrySearch Id="CheckSQLEdition" Root="HKLM" Key="SOFTWARE\Microsoft\Microsoft SQL Server" Name="InstalledInstances" Type="raw"  Win64="yes"/>
     </Property>
     <Condition Message="This application requires MS SQL Server installed. Please install MS SQL Server then run this installer again.">
       <![CDATA[Installed OR SQL_EDITION]]>
