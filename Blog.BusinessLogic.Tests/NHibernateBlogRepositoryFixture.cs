@@ -14,6 +14,9 @@ namespace Blog.BusinessLogic.Tests
 {
     public class NHibernateBlogRepositoryFixture : IDisposable
     {
+        private const string postText = "text";
+        private const string postTitle = "title";
+
         public NHibernateBlogRepositoryFixture()
         {
             CreateDbSchema();
@@ -24,13 +27,7 @@ namespace Blog.BusinessLogic.Tests
         public void CanAddPost()
         {
             var manager = new NHibernateBlogRepository(GetAppSettingsHelper());
-            var post = new BlogPost
-            {
-                Title = "Title",
-                Text = "Post text",
-                CreateDate = DateTime.Now,
-                Description = "some description"
-            };
+            BlogPost post = CreatePost(postTitle, postText);
             IList<BlogPost> posts = manager.GetPosts();
             int beforePostCount = posts.Count;
             manager.AddPost(post);
@@ -53,13 +50,7 @@ namespace Blog.BusinessLogic.Tests
         public void CanAddPostWithTextLengthLessThat200Characters(int textLength)
         {
             var manager = new NHibernateBlogRepository(GetAppSettingsHelper());
-            var post = new BlogPost
-            {
-                Title = "title",
-                Description = "description",
-                CreateDate = DateTime.Now,
-                Text = new string('a', textLength)
-            };
+            BlogPost post = CreatePost(postTitle, GetString(textLength));
             manager.AddPost(post);
         }
 
@@ -72,12 +63,7 @@ namespace Blog.BusinessLogic.Tests
         public void CanAddPostWithTitleLengthLessThat100Characters(int titleLength)
         {
             var manager = new NHibernateBlogRepository(GetAppSettingsHelper());
-            var post = new BlogPost
-            {
-                Text = "text",
-                Description = "description",
-                CreateDate = DateTime.Now, Title = new string('a', titleLength)
-            };
+            BlogPost post = CreatePost(GetString(titleLength), postText);
 
             manager.AddPost(post);
         }
@@ -87,13 +73,7 @@ namespace Blog.BusinessLogic.Tests
         {
             const int maxLength = 200;
             var manager = new NHibernateBlogRepository(GetAppSettingsHelper());
-            var post = new BlogPost
-            {
-                Title = "title",
-                Description = "description",
-                CreateDate = DateTime.Now,
-                Text = new string('a', maxLength + 1)
-            };
+            BlogPost post = CreatePost(postTitle, GetString(maxLength + 1));
             Assert.Throws<GenericADOException>(() => manager.AddPost(post));
         }
 
@@ -102,13 +82,7 @@ namespace Blog.BusinessLogic.Tests
         {
             const int maxLength = 100;
             var manager = new NHibernateBlogRepository(GetAppSettingsHelper());
-            var post = new BlogPost
-            {
-                Text = "text",
-                Description = "description",
-                CreateDate = DateTime.Now,
-                Title = new string('a', maxLength + 1)
-            };
+            BlogPost post = CreatePost(GetString(maxLength + 1),postText);
             Assert.Throws<GenericADOException>(() => manager.AddPost(post));
         }
 
@@ -136,6 +110,16 @@ namespace Blog.BusinessLogic.Tests
             NHibernateConfigurator.BuildConfiguration(GetAppSettingsHelper().GetConnectionString());
         }
 
+        private BlogPost CreatePost(string title, string text)
+        {
+            return new BlogPost
+            {
+                Title = title,
+                CreateDate = DateTime.Now,
+                Text = text
+            };
+        }
+
         private void Equals<T>(T t1, T t2)
         {
             PropertyInfo[] properties = typeof(T).GetProperties();
@@ -155,6 +139,11 @@ namespace Blog.BusinessLogic.Tests
             var mock = new Mock<IAppSettingsHelper>();
             mock.Setup(x => x.GetConnectionString()).Returns(@"Data Source=localhost\SQLEXPRESS;Initial Catalog=BlogServiceTest;Integrated Security=False;User ID=tests_user;Password=tests_user");
             return mock.Object;
+        }
+
+        private string GetString(int stringLength)
+        {
+            return new string('a', stringLength);
         }
     }
 }
