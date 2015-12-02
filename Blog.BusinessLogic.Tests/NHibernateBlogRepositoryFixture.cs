@@ -153,7 +153,7 @@ namespace Blog.BusinessLogic.Tests
         private IAppSettingsHelper GetAppSettingsHelper()
         {
             var mock = new Mock<IAppSettingsHelper>();
-            mock.Setup(x => x.GetConnectionString()).Returns(@"Data Source=localhost\SQLEXPRESS;Initial Catalog=BlogServiceTest;Integrated Security=True");
+            mock.Setup(x => x.GetConnectionString()).Returns(@"Data Source=localhost\SQLEXPRESS;Initial Catalog=BlogServiceTest;Integrated Security=False;User ID=tests_user;Password=tests_user");
             return mock.Object;
         }
     }
