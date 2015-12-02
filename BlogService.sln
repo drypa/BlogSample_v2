@@ -28,6 +28,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.Worker", "Blog.Worker\Blog.Worker.csproj", "{72A069C7-BA53-49A8-8896-C5DAD43C7D37}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{21B06B97-47F9-42CA-A318-B70F7F4BB180}"
+	ProjectSection(SolutionItems) = preProject
+		BuildSetup.msbuild = BuildSetup.msbuild
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.Client.PowerShellCmdlet", "Blog.Client.PowerShellCmdlet\Blog.Client.PowerShellCmdlet.csproj", "{807A28F0-0C7A-4C45-802A-62CC07EC370D}"
 EndProject
