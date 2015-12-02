@@ -2,6 +2,7 @@
 *.user
 *.zip
 bin
+obj
 debug
 packages
 *.DotSettings

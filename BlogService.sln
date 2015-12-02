@@ -35,6 +35,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.FitNesse.Tests", "Blog
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Blog.SetupProject", "Blog.SetupProject\Blog.SetupProject.wixproj", "{050C9FEE-2917-4D2A-8E22-94AEF6F7E068}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{4C88DCAB-716D-47E9-AEE6-D94F7C4383C6}"
+	ProjectSection(SolutionItems) = preProject
+		Build.proj = Build.proj
+		.build\MSBuild.Community.Tasks.dll = .build\MSBuild.Community.Tasks.dll
+		.build\MSBuild.Community.Tasks.targets = .build\MSBuild.Community.Tasks.targets
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
