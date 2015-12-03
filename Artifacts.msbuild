@@ -17,9 +17,9 @@
         <ArchiveTask Include="BlogClient">
             <Path>$(MSBuildThisFileDirectory)BlogClient\bin\$(Configuration)</Path>
         </ArchiveTask>
-	<!--	<ArchiveTask Include="Blog.SetupProject">
-            <Path>$(MSBuildThisFileDirectory)Blog.SetupProject\bin\$(Configuration)\ru-Ru</Path>
-        </ArchiveTask> -->
+        <ArchiveTask Include="Blog.Client.PowerShellCmdlet">
+            <Path>$(MSBuildThisFileDirectory)Blog.Client.PowerShellCmdlet\bin\$(Configuration)</Path>
+        </ArchiveTask>
     </ItemGroup>
 
     
@@ -49,8 +49,13 @@
         <Message Text="Distributive %(ArchiveTask.Identity) skipped. Folder does not exist."
                  Condition="!Exists('%(ArchiveTask.Path)')" />
 				 
-        <Message Text="Copy msi $(InstallerPath)"
+
+    </Target>
+	
+	<Target Name="Copy" Outputs="%(ArchiveTask.Identity)">
+	    <Message Text="Copy msi $(InstallerPath)"
                  Condition="Exists('$(InstallerPath)')" />					
 		<Copy DestinationFolder="$(ArtifactsPath)" SourceFiles="$(InstallerPath)"/>
-    </Target>
+	</Target>
+	
 </Project>
