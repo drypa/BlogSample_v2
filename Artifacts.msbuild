@@ -9,6 +9,8 @@
 
     <PropertyGroup>
         <Configuration Condition="'$(Configuration)'==''">Release</Configuration>
+		<ArtifactsPath>$(MSBuildThisFileDirectory)Out</ArtifactsPath>
+		<InstallerPath>$(MSBuildThisFileDirectory)Blog.SetupProject\bin\$(Configuration)\ru-Ru\SetupProject.msi</InstallerPath>
     </PropertyGroup> 
 
     <ItemGroup>
@@ -25,7 +27,7 @@
         <Message Text="Starting archive distributives %(ArchiveTask.Identity) ..." />
         <Message Text="Path %(ArchiveTask.Path)" />
 		<ItemGroup>
-            <ArtifactFiles Include="$(MSBuildThisFileDirectory)Out\%(ArchiveTask.Identity).zip" />
+            <ArtifactFiles Include="$(ArtifactsPath)\%(ArchiveTask.Identity).zip" />
         </ItemGroup>
 		
 		<Message Text="deleting files @(ArtifactFiles)" />
@@ -39,12 +41,16 @@
         <Zip Files="@(Files)"
              WorkingDirectory="%(ArchiveTask.Path)"
              Condition="Exists('%(ArchiveTask.Path)')"
-             ZipFileName="$(MSBuildThisFileDirectory)Out\%(ArchiveTask.Identity).zip" />
+             ZipFileName="$(ArtifactsPath)\%(ArchiveTask.Identity).zip" />
 
         <Message Text="Distributive %(ArchiveTask.Identity) successfully archived"
                  Condition="Exists('%(ArchiveTask.Path)')" />
 
         <Message Text="Distributive %(ArchiveTask.Identity) skipped. Folder does not exist."
                  Condition="!Exists('%(ArchiveTask.Path)')" />
+				 
+        <Message Text="Copy msi $(InstallerPath)"
+                 Condition="Exists('$(InstallerPath)')" />					
+		<Copy DestinationFolder="$(ArtifactsPath)" SourceFiles="$(InstallerPath)"/>
     </Target>
 </Project>
