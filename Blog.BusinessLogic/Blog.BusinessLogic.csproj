@@ -31,7 +31,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -90,6 +90,8 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppSettingsHelper.cs" />
@@ -112,6 +114,10 @@
     <Compile Include="RabbitMQ\ExchangeType.cs" />
     <Compile Include="RabbitMQ\Producer.cs" />
     <Compile Include="RabbitMQ\Serializer.cs" />
+    <Compile Include="Server\BlogProcessor.cs" />
+    <Compile Include="Server\BlogService.cs" />
+    <Compile Include="Server\BlogServiceProvider.cs" />
+    <Compile Include="Server\IBlogService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Blog.BusinessEntities\Blog.BusinessEntities.csproj">

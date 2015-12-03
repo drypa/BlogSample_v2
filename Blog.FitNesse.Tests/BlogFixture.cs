@@ -2,6 +2,7 @@
 using System.Linq;
 using Blog.BusinessEntities;
 using Blog.BusinessLogic.Client;
+using Blog.Test.Common;
 using fitlibrary;
 
 namespace Blog.FitNesse.Tests

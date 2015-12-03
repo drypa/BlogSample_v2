@@ -3,7 +3,6 @@
 | Open Connection | Data Source=localhost\SQLEXPRESS;Initial Catalog=BlogServiceTest;Integrated Security=True |
 | Clean Comments |
 | Clean Posts |
-| Close Connection |
 | Set Service Url| http://localhost:9999/blog |
 | Update Blog ConnectionString | C:\projects\BlogService.v2\Blog.ConsoleService\bin\Debug\Blog.ConsoleService.exe.config |
 | Start Service | C:\projects\BlogService.v2\Blog.ConsoleService\bin\Debug\Blog.ConsoleService.exe | 

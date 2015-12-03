@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Data;
-using System.Data.SqlClient;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
+using Blog.Test.Common;
 using fitlibrary;
 
 namespace Blog.FitNesse.Tests
@@ -16,7 +16,6 @@ namespace Blog.FitNesse.Tests
         private static Process serviceProcess;
         private static string serviceUrl;
         private static Process workerProcess;
-        private SqlConnection connection;
 
         public static string ConnectionString
         {
@@ -30,40 +29,19 @@ namespace Blog.FitNesse.Tests
 
         public void CleanComments()
         {
-            using (SqlCommand command = connection.CreateCommand())
-            {
-                command.CommandType = CommandType.Text;
-                command.CommandText = "truncate table [dbo].[Comment];";
-                command.ExecuteNonQuery();
-            }
+            new TestDalc(ConnectionString).CleanComments();
             Console.WriteLine("Comments table was cleaned");
         }
 
         public void CleanPosts()
         {
-            using (SqlCommand command = connection.CreateCommand())
-            {
-                command.CommandType = CommandType.Text;
-                command.CommandText = "delete from [dbo].[BlogPost];";
-                command.ExecuteNonQuery();
-            }
+            new TestDalc(ConnectionString).CleanPosts();
             Console.WriteLine("BlogPosts table was cleaned");
-        }
-
-        public void CloseConnection()
-        {
-            if (connection != null)
-            {
-                connection.Close();
-                Console.WriteLine("Connection was closed");
-            }
         }
 
         public void OpenConnection(string connectionStr)
         {
             connectionString = connectionStr;
-            connection = new SqlConnection(connectionString);
-            connection.Open();
             Console.WriteLine("Connection was opened");
         }
 
@@ -110,10 +88,10 @@ namespace Blog.FitNesse.Tests
 
         public void UpdateBlogConnectionString(string configPath)
         {
-            var doc = XDocument.Load(configPath);
-            XmlNamespaceManager xnm = new XmlNamespaceManager(new NameTable());
+            XDocument doc = XDocument.Load(configPath);
+            var xnm = new XmlNamespaceManager(new NameTable());
             xnm.AddNamespace("x", "http://demo.com/2011/demo-schema");
-            var el = doc.XPathSelectElements("/configuration/connectionStrings/add[1]");
+            IEnumerable<XElement> el = doc.XPathSelectElements("/configuration/connectionStrings/add[1]");
             el.Attributes("connectionString").First().Value = ConnectionString;
             doc.Save(configPath);
         }
@@ -122,7 +100,6 @@ namespace Blog.FitNesse.Tests
         {
             StopService();
             StopWorker();
-            CloseConnection();
         }
 
         private Process StartProcess(string executablePath)
