@@ -25,7 +25,7 @@
         <Message Text="Starting archive distributives %(ArchiveTask.Identity) ..." />
         <Message Text="Path %(ArchiveTask.Path)" />
 		<ItemGroup>
-            <ArtifactFiles Include="$(MSBuildThisFileDirectory)dist\%(ArchiveTask.Identity).zip" />
+            <ArtifactFiles Include="$(MSBuildThisFileDirectory)Out\%(ArchiveTask.Identity).zip" />
         </ItemGroup>
 		
 		<Message Text="deleting files @(ArtifactFiles)" />
@@ -33,13 +33,13 @@
 		
 
         <ItemGroup>
-            <Files Include="%(ArchiveTask.Path)\**\*.*" />
+            <Files Include="%(ArchiveTask.Path)\**\*.*" Exclude="%(ArchiveTask.Path)\**\*.pdb" />
         </ItemGroup>
 
         <Zip Files="@(Files)"
              WorkingDirectory="%(ArchiveTask.Path)"
              Condition="Exists('%(ArchiveTask.Path)')"
-             ZipFileName="$(MSBuildThisFileDirectory)dist\%(ArchiveTask.Identity).zip" />
+             ZipFileName="$(MSBuildThisFileDirectory)Out\%(ArchiveTask.Identity).zip" />
 
         <Message Text="Distributive %(ArchiveTask.Identity) successfully archived"
                  Condition="Exists('%(ArchiveTask.Path)')" />
