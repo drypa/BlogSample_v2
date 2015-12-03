@@ -10,7 +10,8 @@
     <PropertyGroup>
         <Configuration Condition="'$(Configuration)'==''">Release</Configuration>
 		<ArtifactsPath>$(MSBuildThisFileDirectory)Out</ArtifactsPath>
-		<InstallerPath>$(MSBuildThisFileDirectory)Blog.SetupProject\bin\$(Configuration)\ru-Ru\SetupProject.msi</InstallerPath>
+		<InstallerFile>SetupProject.msi</InstallerFile>
+		<InstallerPath>$(MSBuildThisFileDirectory)Blog.SetupProject\bin\$(Configuration)\ru-Ru\$(InstallerFile)</InstallerPath>
     </PropertyGroup> 
 
     <ItemGroup>
@@ -52,7 +53,8 @@
 
     </Target>
 	
-	<Target Name="Copy" Outputs="%(ArchiveTask.Identity)">
+	<Target Name="Copy">
+		<Delete Files="@(ArtifactFiles)" />
 	    <Message Text="Copy msi $(InstallerPath)"
                  Condition="Exists('$(InstallerPath)')" />					
 		<Copy DestinationFolder="$(ArtifactsPath)" SourceFiles="$(InstallerPath)"/>
