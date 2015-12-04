@@ -5,7 +5,7 @@ using NHibernate;
 
 namespace Blog.BusinessLogic
 {
-    public class NHibernateBlogRepository : IBlogRepository
+    public class NHibernateBlogRepository : IBlogReader, IBlogWriter
     {
         private readonly IAppSettingsHelper appSettings;
         private NHibernateConfigurator configurator;

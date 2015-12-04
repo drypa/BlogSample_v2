@@ -2,7 +2,6 @@
 using Blog.BusinessEntities.Contract;
 using Blog.BusinessLogic;
 using Blog.BusinessLogic.Server;
-using Blog.ConsoleService;
 using Moq;
 using Xunit;
 
@@ -13,7 +12,7 @@ namespace Blog.Service.Tests
         [Fact]
         public void BlogServiceShouldReadThrougthReadRepository()
         {
-            var readRepoMock = new Mock<IBlogRepository>();
+            var readRepoMock = new Mock<IBlogReader>();
 
             var blogProcessor = new BlogProcessor(readRepoMock.Object, new ExchangeConfigurationProvider().Configuration);
 
