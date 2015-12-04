@@ -1,6 +1,7 @@
 *.suo
 *.user
 *.zip
+*~*
 bin
 obj
 debug
