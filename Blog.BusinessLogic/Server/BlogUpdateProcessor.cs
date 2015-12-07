@@ -3,7 +3,7 @@ using Blog.BusinessLogic.RabbitMQ;
 
 namespace Blog.BusinessLogic.Server
 {
-    public class BlogUpdateProcessor
+    public abstract class BlogUpdateProcessor
     {
         private readonly ExchangeConfiguration exchangeConfiguration;
 
