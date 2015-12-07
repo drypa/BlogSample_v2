@@ -7,7 +7,7 @@
       <Entity type="Interface">
         <Name>IAppSettingsHelper</Name>
         <Access>Public</Access>
-        <Location left="601" top="1001" />
+        <Location left="599" top="961" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Method">String GetConnectionString()</Member>
@@ -15,7 +15,7 @@
       <Entity type="Interface">
         <Name>IBlogWriter</Name>
         <Access>Public</Access>
-        <Location left="1093" top="419" />
+        <Location left="958" top="379" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Method">Void AddComment(Comment comment)</Member>
@@ -26,7 +26,7 @@
       <Entity type="Class">
         <Name>AppSettingsHelper</Name>
         <Access>Public</Access>
-        <Location left="601" top="726" />
+        <Location left="599" top="686" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private readonly String ConnectionstringName</Member>
@@ -37,7 +37,7 @@
       <Entity type="Class">
         <Name>ExchangeConfiguration</Name>
         <Access>Public</Access>
-        <Location left="349" top="419" />
+        <Location left="319" top="379" />
         <Size width="232" height="230" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private readonly String exchangeType</Member>
@@ -54,7 +54,7 @@
       <Entity type="Class">
         <Name>ExchangeConfigurationProvider</Name>
         <Access>Public</Access>
-        <Location left="715" top="419" />
+        <Location left="647" top="379" />
         <Size width="271" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private readonly ExchangeConfiguration configuration</Member>
@@ -65,8 +65,8 @@
       <Entity type="Class">
         <Name>NHibernateBlogRepository</Name>
         <Access>Public</Access>
-        <Location left="1093" top="727" />
-        <Size width="162" height="264" />
+        <Location left="1089" top="686" />
+        <Size width="235" height="264" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private readonly IAppSettingsHelper appSettings</Member>
         <Member type="Field">private NHibernateConfigurator configurator</Member>
@@ -84,7 +84,7 @@
       <Entity type="Class">
         <Name>NHibernateConfigurator</Name>
         <Access>Public</Access>
-        <Location left="858" top="727" />
+        <Location left="856" top="687" />
         <Size width="162" height="264" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private readonly IAppSettingsHelper appSettingsHelper</Member>
@@ -103,7 +103,7 @@
       <Entity type="Class">
         <Name>Consumer&lt;TMessage&gt;</Name>
         <Access>Public</Access>
-        <Location left="1324" top="74" />
+        <Location left="1055" top="16" />
         <Size width="162" height="281" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private readonly String HostName</Member>
@@ -123,7 +123,7 @@
       <Entity type="Class">
         <Name>Program</Name>
         <Access>Internal</Access>
-        <Location left="931" top="103" />
+        <Location left="476" top="38" />
         <Size width="261" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private IBlogWriter repository</Member>
@@ -137,45 +137,35 @@
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
-        <Name>AddCommentRequest</Name>
+        <Name>Consumert&lt;DeleteCommentRequest&gt;</Name>
         <Access>Public</Access>
-        <Location left="1585" top="351" />
-        <Size width="162" height="128" />
+        <Location left="1290" top="16" />
+        <Size width="282" height="84" />
         <Collapsed>False</Collapsed>
-        <Member type="Property">public Guid PostId { get; set; }</Member>
-        <Member type="Property">public String Text { get; set; }</Member>
-        <Member type="Constructor">public AddCommentRequest()</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
-        <Name>AddPostRequest</Name>
+        <Name>Consumer&lt;AddCommentRequest&gt;</Name>
         <Access>Public</Access>
-        <Location left="1324" top="438" />
-        <Size width="162" height="128" />
+        <Location left="1290" top="115" />
+        <Size width="241" height="77" />
         <Collapsed>False</Collapsed>
-        <Member type="Property">public String Title { get; set; }</Member>
-        <Member type="Property">public String Text { get; set; }</Member>
-        <Member type="Constructor">public AddPostRequest()</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
-        <Name>DeleteCommentRequest</Name>
+        <Name>Consumer&lt;DeletePostRequest&gt;</Name>
         <Access>Public</Access>
-        <Location left="1585" top="74" />
-        <Size width="185" height="111" />
+        <Location left="1290" top="247" />
+        <Size width="228" height="77" />
         <Collapsed>False</Collapsed>
-        <Member type="Property">public Guid CommentId { get; set; }</Member>
-        <Member type="Constructor">public DeleteCommentRequest()</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
-        <Name>DeletePostRequest</Name>
+        <Name>Consumer&lt;AddPostRequest&gt;</Name>
         <Access>Public</Access>
-        <Location left="1585" top="211" />
-        <Size width="162" height="111" />
+        <Location left="1212" top="346" />
+        <Size width="209" height="77" />
         <Collapsed>False</Collapsed>
-        <Member type="Property">public Guid PostId { get; set; }</Member>
-        <Member type="Constructor">public DeletePostRequest()</Member>
         <Modifier>None</Modifier>
       </Entity>
     </Entities>
@@ -187,10 +177,12 @@
       <Relationship type="Realization" first="5" second="1">
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1108</X>
+          <Y>661</Y>
+        </BendPoint>
       </Relationship>
       <Relationship type="Association" first="4" second="3">
-        <Label>
-        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <Direction>Unidirectional</Direction>
@@ -199,13 +191,11 @@
         <EndMultiplicity>1</EndMultiplicity>
       </Relationship>
       <Relationship type="Association" first="5" second="0">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="False">
-          <X>862</X>
-          <Y>1093</Y>
+          <X>860</X>
+          <Y>1053</Y>
         </BendPoint>
         <Direction>Unidirectional</Direction>
         <AssociationType>Association</AssociationType>
@@ -213,8 +203,6 @@
         <EndMultiplicity>1</EndMultiplicity>
       </Relationship>
       <Relationship type="Association" first="5" second="6">
-        <Label>
-        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <Direction>Unidirectional</Direction>
@@ -223,13 +211,11 @@
         <EndMultiplicity>1</EndMultiplicity>
       </Relationship>
       <Relationship type="Association" first="6" second="0">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="False">
-          <X>810</X>
-          <Y>1047</Y>
+          <X>808</X>
+          <Y>1007</Y>
         </BendPoint>
         <Direction>Unidirectional</Direction>
         <AssociationType>Association</AssociationType>
@@ -237,54 +223,64 @@
         <EndMultiplicity>1</EndMultiplicity>
       </Relationship>
       <Relationship type="Dependency" first="8" second="7">
-        <Label>
-        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
       </Relationship>
       <Relationship type="Dependency" first="8" second="1">
-        <Label>
-        </Label>
-        <StartOrientation>Vertical</StartOrientation>
+        <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>762</X>
+          <Y>238</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>974</X>
+          <Y>354</Y>
+        </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="8" second="4">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
-          <X>983</X>
-          <Y>349</Y>
+          <X>528</X>
+          <Y>284</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>692</X>
+          <Y>354</Y>
         </BendPoint>
       </Relationship>
-      <Relationship type="Dependency" first="7" second="11">
-        <Label>
-        </Label>
-        <StartOrientation>Horizontal</StartOrientation>
-        <EndOrientation>Horizontal</EndOrientation>
-      </Relationship>
-      <Relationship type="Dependency" first="7" second="12">
-        <Label>
-        </Label>
-        <StartOrientation>Horizontal</StartOrientation>
-        <EndOrientation>Horizontal</EndOrientation>
-      </Relationship>
-      <Relationship type="Dependency" first="7" second="9">
-        <Label>
-        </Label>
+      <Relationship type="Generalization" first="9" second="7">
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="True">
-          <X>1511</X>
-          <Y>326</Y>
+          <X>1264</X>
+          <Y>70</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>1242</X>
+          <Y>70</Y>
         </BendPoint>
       </Relationship>
-      <Relationship type="Dependency" first="7" second="10">
-        <Label>
-        </Label>
-        <StartOrientation>Vertical</StartOrientation>
+      <Relationship type="Generalization" first="10" second="7">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="11" second="7">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>1242</X>
+          <Y>276</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="12" second="7">
+        <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>1139</X>
+          <Y>337</Y>
+        </BendPoint>
       </Relationship>
     </Relationships>
   </ProjectItem>
