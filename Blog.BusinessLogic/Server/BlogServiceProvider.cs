@@ -2,6 +2,7 @@
 using System.ServiceModel.Web;
 using Blog.BusinessEntities.Contract;
 using Nelibur.ServiceModel.Services;
+using Nelibur.ServiceModel.Services.Operations;
 using Ninject;
 
 namespace Blog.BusinessLogic.Server
@@ -24,7 +25,7 @@ namespace Blog.BusinessLogic.Server
 
         public BlogServiceProvider Open()
         {
-            var instance = new BlogProcessor(ninjectKernel.Get<IBlogReader>(), new ExchangeConfigurationProvider().Configuration);
+            var instance = new GetPostBlogProcessor(ninjectKernel.Get<IBlogReader>());
             ConfigureRestService(instance);
             serviceHost.Open();
             return this;
@@ -38,16 +39,21 @@ namespace Blog.BusinessLogic.Server
             }
         }
 
-        private void ConfigureRestService(BlogProcessor processor)
+        private void ConfigureRestService(GetPostBlogProcessor processor)
         {
+            var addPost = ninjectKernel.Get<IPostOneWay<AddPostRequest>>();
+            var addComment = ninjectKernel.Get<IPostOneWay<AddCommentRequest>>();
+            var deletePost = ninjectKernel.Get<IDeleteOneWay<DeletePostRequest>>();
+            var deleteComment = ninjectKernel.Get<IDeleteOneWay<DeleteCommentRequest>>();
+
             NeliburRestService.Configure(x =>
             {
-                x.Bind<AddPostRequest, BlogProcessor>(() => processor);
-                x.Bind<DeletePostRequest, BlogProcessor>(() => processor);
-                x.Bind<GetPostRequest, BlogProcessor>(() => processor);
-                x.Bind<GetPostsRequest, BlogProcessor>(() => processor);
-                x.Bind<AddCommentRequest, BlogProcessor>(() => processor);
-                x.Bind<DeleteCommentRequest, BlogProcessor>(() => processor);
+                x.Bind<AddPostRequest, IPostOneWay<AddPostRequest>>(() => addPost);
+                x.Bind<DeletePostRequest, IDeleteOneWay<DeletePostRequest>>(() => deletePost);
+                x.Bind<GetPostRequest, GetPostBlogProcessor>(() => processor);
+                x.Bind<GetPostsRequest, GetPostBlogProcessor>(() => processor);
+                x.Bind<AddCommentRequest, IPostOneWay<AddCommentRequest>>(() => addComment);
+                x.Bind<DeleteCommentRequest, IDeleteOneWay<DeleteCommentRequest>>(() => deleteComment);
             });
         }
     }

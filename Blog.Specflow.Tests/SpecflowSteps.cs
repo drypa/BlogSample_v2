@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using Blog.BusinessEntities;
+using Blog.BusinessEntities.Contract;
 using Blog.BusinessLogic;
 using Blog.BusinessLogic.Client;
 using Blog.BusinessLogic.Server;
 using Blog.Test.Common;
 using Moq;
+using Nelibur.ServiceModel.Services.Operations;
 using Ninject;
 using TechTalk.SpecFlow;
 using Xunit;
@@ -16,29 +18,24 @@ namespace Blog.SpecflowTests
     public class SpecflowSteps
     {
         private const string GetPostsResponseKey = "GetPostsResponseKey";
-        private const string serviceUrl = "http://localhost:9999/blog";
         private const string connectionstring = @"Data Source=localhost\SQLEXPRESS;Initial Catalog=BlogServiceTest;User ID=tests_user;Password=tests_user";
+        private const string serviceUrl = "http://localhost:9999/blog";
         private BlogServiceProvider provider;
+
         [Given("Server was started")]
         public void AndServerWasStarted()
         {
             Cleanup();
             provider = new BlogServiceProvider(serviceUrl, GetNinjectKernel()).Open();
-
         }
-        private static IKernel GetNinjectKernel()
+
+        [AfterScenario]
+        public void Cleanup()
         {
-            var kernel = new StandardKernel();
-
-            kernel.Bind<IBlogReader>()
-                .To<DapperBlogRepository>();
-
-            Mock<IAppSettingsHelper> settingsMock = new Mock<IAppSettingsHelper>();
-            settingsMock.Setup(x => x.GetConnectionString()).Returns(connectionstring);
-            kernel.Bind<IAppSettingsHelper>()
-                .ToConstant(settingsMock.Object);
-
-            return kernel;
+            if (provider != null)
+            {
+                provider.Dispose();
+            }
         }
 
         [Given("There are posts in database")]
@@ -73,10 +70,34 @@ namespace Blog.SpecflowTests
         [When("I request all posts")]
         public void WhenIRequestAllPosts()
         {
-
             IBlogClient client = new BlogClient(serviceUrl);
-            var response = client.GetPosts();
+            List<BlogPost> response = client.GetPosts();
             ScenarioContext.Current[GetPostsResponseKey] = response;
+        }
+
+        private static IKernel GetNinjectKernel()
+        {
+            var kernel = new StandardKernel();
+            kernel.Bind<IBlogReader>()
+                .To<DapperBlogRepository>();
+            var addPostMock = new Mock<IPostOneWay<AddPostRequest>>();
+            var addCommentMock = new Mock<IPostOneWay<AddCommentRequest>>();
+            var delCommentMock = new Mock<IDeleteOneWay<DeleteCommentRequest>>();
+            var delPostMock = new Mock<IDeleteOneWay<DeletePostRequest>>();
+            kernel.Bind<IPostOneWay<AddPostRequest>>()
+                .ToConstant(addPostMock.Object);
+            kernel.Bind<IPostOneWay<AddCommentRequest>>()
+                .ToConstant(addCommentMock.Object);
+            kernel.Bind<IDeleteOneWay<DeleteCommentRequest>>()
+                .ToConstant(delCommentMock.Object);
+            kernel.Bind<IDeleteOneWay<DeletePostRequest>>()
+               .ToConstant(delPostMock.Object);
+            var settingsMock = new Mock<IAppSettingsHelper>();
+            settingsMock.Setup(x => x.GetConnectionString()).Returns(connectionstring);
+            kernel.Bind<IAppSettingsHelper>()
+                .ToConstant(settingsMock.Object);
+
+            return kernel;
         }
 
         private BlogPost ParseTableRow(TableRow row)
@@ -88,15 +109,6 @@ namespace Blog.SpecflowTests
                 Text = row["Text"],
                 CreateDate = DateTime.Parse(row["CreateDate"])
             };
-        }
-
-        [AfterScenario]
-        public void Cleanup()
-        {
-            if (provider != null)
-            {
-                provider.Dispose();
-            }
         }
     }
 }

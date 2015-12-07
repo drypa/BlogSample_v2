@@ -14,7 +14,7 @@ namespace Blog.Service.Tests
         {
             var readRepoMock = new Mock<IBlogReader>();
 
-            var blogProcessor = new BlogProcessor(readRepoMock.Object, new ExchangeConfigurationProvider().Configuration);
+            var blogProcessor = new GetPostBlogProcessor(readRepoMock.Object);
 
             blogProcessor.Get(new GetPostRequest());
             readRepoMock.Verify(x => x.GetPost(It.IsAny<Guid>()), Times.Once());

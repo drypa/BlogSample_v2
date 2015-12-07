@@ -113,9 +113,14 @@
     <Compile Include="RabbitMQ\ExchangeType.cs" />
     <Compile Include="RabbitMQ\Producer.cs" />
     <Compile Include="RabbitMQ\Serializer.cs" />
-    <Compile Include="Server\BlogProcessor.cs" />
+    <Compile Include="Server\AddCommentRequestProcessor.cs" />
+    <Compile Include="Server\AddPostRequestProcessor.cs" />
+    <Compile Include="Server\GetPostBlogProcessor.cs" />
     <Compile Include="Server\BlogService.cs" />
     <Compile Include="Server\BlogServiceProvider.cs" />
+    <Compile Include="Server\BlogUpdateProcessor.cs" />
+    <Compile Include="Server\DeletePostRequestProcessor.cs" />
+    <Compile Include="Server\DeleteCommentRequestProcessor.cs" />
     <Compile Include="Server\IBlogService.cs" />
   </ItemGroup>
   <ItemGroup>
