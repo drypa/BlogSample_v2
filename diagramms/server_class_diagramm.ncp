@@ -1,0 +1,606 @@
+<Project>
+  <Name>Service</Name>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>Blog.BusinessLogic.dll</Name>
+    <Language>CSharp</Language>
+    <Entities>
+      <Entity type="Interface">
+        <Name>IAppSettingsHelper</Name>
+        <Access>Public</Access>
+        <Location left="421" top="64" />
+        <Size width="162" height="83" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">String GetConnectionString()</Member>
+      </Entity>
+      <Entity type="Interface">
+        <Name>IBlogReader</Name>
+        <Access>Public</Access>
+        <Location left="676" top="82" />
+        <Size width="162" height="109" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">BlogPost GetPost(Guid postId)</Member>
+        <Member type="Method">IList&lt;BlogPost&gt; GetPosts()</Member>
+      </Entity>
+      <Entity type="Interface">
+        <Name>IBlogService</Name>
+        <Access>Public</Access>
+        <Location left="1159" top="455" />
+        <Size width="162" height="141" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">Void Delete(Message message)</Member>
+        <Member type="Method">Message Get(Message message)</Member>
+        <Member type="Method">Void Post(Message message)</Member>
+      </Entity>
+      <Entity type="Class">
+        <Name>AppSettingsHelper</Name>
+        <Access>Public</Access>
+        <Location left="246" top="247" />
+        <Size width="162" height="128" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private readonly String ConnectionstringName</Member>
+        <Member type="Constructor">public AppSettingsHelper()</Member>
+        <Member type="Method">public String GetConnectionString()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>DapperBlogRepository</Name>
+        <Access>Public</Access>
+        <Location left="483" top="184" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private readonly IAppSettingsHelper appSettings</Member>
+        <Member type="Field">private readonly String selectPostWithCommentsQuery</Member>
+        <Member type="Field">private readonly String selectPostsQuery</Member>
+        <Member type="Constructor">public DapperBlogRepository(IAppSettingsHelper appSettingsHelper)</Member>
+        <Member type="Method">public BlogPost GetPost(Guid postId)</Member>
+        <Member type="Method">public IList&lt;BlogPost&gt; GetPosts()</Member>
+        <Member type="Method">private SqlConnection GetOpenConnection()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>ExchangeConfiguration</Name>
+        <Access>Public</Access>
+        <Location left="702" top="1187" />
+        <Size width="201" height="230" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private readonly String exchangeType</Member>
+        <Member type="Field">private readonly Dictionary&lt;Type, String&gt; routingMap</Member>
+        <Member type="Field">private readonly String serverName</Member>
+        <Member type="Property">public String ExchangeType { get; }</Member>
+        <Member type="Property">public Dictionary&lt;Type, String&gt; Routes { get; }</Member>
+        <Member type="Property">public String ServerName { get; }</Member>
+        <Member type="Constructor">public ExchangeConfiguration(String serverName, String exchangeType)</Member>
+        <Member type="Method">public ExchangeConfiguration AddRouting(Type type, String routing)</Member>
+        <Member type="Method">public String GetRouting(Type type)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>ExchangeConfigurationProvider</Name>
+        <Access>Public</Access>
+        <Location left="396" top="1271" />
+        <Size width="238" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private readonly ExchangeConfiguration configuration</Member>
+        <Member type="Property">public ExchangeConfiguration Configuration { get; }</Member>
+        <Member type="Constructor">public ExchangeConfigurationProvider()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Producer&lt;TMessage&gt;</Name>
+        <Access>Public</Access>
+        <Location left="261" top="738" />
+        <Size width="162" height="230" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private readonly String exchangeName</Member>
+        <Member type="Field">private readonly String hostName</Member>
+        <Member type="Field">private readonly String routing</Member>
+        <Member type="Field">private IConnection connection</Member>
+        <Member type="Property">private IConnection Connection { get; }</Member>
+        <Member type="Constructor">public Producer(String serverName, String exchange, String routingKey)</Member>
+        <Member type="Method">public Void Send(TMessage obj)</Member>
+        <Member type="Method">public Void Dispose()</Member>
+        <Member type="Method">private Void Send(Byte[] message)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>BlogUpdateProcessor</Name>
+        <Access>Public</Access>
+        <Location left="677" top="887" />
+        <Size width="162" height="173" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private readonly ExchangeConfiguration exchangeConfiguration</Member>
+        <Member type="Constructor">public BlogUpdateProcessor(ExchangeConfiguration configuration)</Member>
+        <Member type="Method">protected Producer&lt;T&gt; GetProducer(T request)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>AddCommentRequestProcessor</Name>
+        <Access>Public</Access>
+        <Location left="575" top="684" />
+        <Size width="254" height="121" />
+        <Collapsed>False</Collapsed>
+        <Member type="Constructor">public AddCommentRequestProcessor(ExchangeConfiguration configuration)</Member>
+        <Member type="Method">public Void PostOneWay(AddCommentRequest request)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>AddPostRequestProcessor</Name>
+        <Access>Public</Access>
+        <Location left="320" top="1119" />
+        <Size width="254" height="114" />
+        <Collapsed>False</Collapsed>
+        <Member type="Constructor">public AddPostRequestProcessor(ExchangeConfiguration configuration)</Member>
+        <Member type="Method">public Void PostOneWay(AddPostRequest request)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>GetPostBlogProcessor</Name>
+        <Access>Public</Access>
+        <Location left="932" top="142" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private readonly IBlogReader reader</Member>
+        <Member type="Constructor">public GetPostBlogProcessor(IBlogReader readRepository)</Member>
+        <Member type="Method">public Object Get(GetPostRequest request)</Member>
+        <Member type="Method">public Object Get(GetPostsRequest request)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>BlogService</Name>
+        <Access>Public</Access>
+        <Location left="883" top="455" />
+        <Size width="162" height="145" />
+        <Collapsed>False</Collapsed>
+        <Member type="Constructor">public BlogService()</Member>
+        <Member type="Method">public Void Delete(Message message)</Member>
+        <Member type="Method">public Message Get(Message message)</Member>
+        <Member type="Method">public Void Post(Message message)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>BlogServiceProvider</Name>
+        <Access>Public</Access>
+        <Location left="261" top="488" />
+        <Size width="162" height="196" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private readonly IKernel ninjectKernel</Member>
+        <Member type="Field">private readonly WebServiceHost serviceHost</Member>
+        <Member type="Constructor">public BlogServiceProvider(String serviceUrl, IKernel ninject)</Member>
+        <Member type="Method">public Void Close()</Member>
+        <Member type="Method">public BlogServiceProvider Open()</Member>
+        <Member type="Method">public Void Dispose()</Member>
+        <Member type="Method">private Void ConfigureRestService(GetPostBlogProcessor processor)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>DeletePostRequestProcessor</Name>
+        <Access>Public</Access>
+        <Location left="1022" top="684" />
+        <Size width="254" height="122" />
+        <Collapsed>False</Collapsed>
+        <Member type="Constructor">public DeletePostRequestProcessor(ExchangeConfiguration configuration)</Member>
+        <Member type="Method">public Void DeleteOneWay(DeletePostRequest request)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>DeleteCommentRequestProcessor</Name>
+        <Access>Public</Access>
+        <Location left="279" top="990" />
+        <Size width="254" height="112" />
+        <Collapsed>False</Collapsed>
+        <Member type="Constructor">public DeleteCommentRequestProcessor(ExchangeConfiguration configuration)</Member>
+        <Member type="Method">public Void DeleteOneWay(DeleteCommentRequest request)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>AddCommentRequest</Name>
+        <Access>Public</Access>
+        <Location left="950" top="831" />
+        <Size width="162" height="128" />
+        <Collapsed>False</Collapsed>
+        <Member type="Property">public Guid PostId { get; set; }</Member>
+        <Member type="Property">public String Text { get; set; }</Member>
+        <Member type="Constructor">public AddCommentRequest()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>AddPostRequest</Name>
+        <Access>Public</Access>
+        <Location left="88" top="1297" />
+        <Size width="162" height="128" />
+        <Collapsed>False</Collapsed>
+        <Member type="Property">public String Title { get; set; }</Member>
+        <Member type="Property">public String Text { get; set; }</Member>
+        <Member type="Constructor">public AddPostRequest()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>PostListResponse</Name>
+        <Access>Public</Access>
+        <Location left="1381" top="62" />
+        <Size width="162" height="111" />
+        <Collapsed>False</Collapsed>
+        <Member type="Property">public IList&lt;BlogPost&gt; Posts { get; set; }</Member>
+        <Member type="Constructor">public PostListResponse()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>GetPostsRequest</Name>
+        <Access>Public</Access>
+        <Location left="1381" top="232" />
+        <Size width="162" height="94" />
+        <Collapsed>False</Collapsed>
+        <Member type="Constructor">public GetPostsRequest()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>GetPostRequest</Name>
+        <Access>Public</Access>
+        <Location left="1381" top="368" />
+        <Size width="162" height="111" />
+        <Collapsed>False</Collapsed>
+        <Member type="Property">public Guid PostId { get; set; }</Member>
+        <Member type="Constructor">public GetPostRequest()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>DeletePostRequest</Name>
+        <Access>Public</Access>
+        <Location left="1381" top="666" />
+        <Size width="162" height="111" />
+        <Collapsed>False</Collapsed>
+        <Member type="Property">public Guid PostId { get; set; }</Member>
+        <Member type="Constructor">public DeletePostRequest()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>DeleteCommentRequest</Name>
+        <Access>Public</Access>
+        <Location left="48" top="1119" />
+        <Size width="222" height="111" />
+        <Collapsed>False</Collapsed>
+        <Member type="Property">public Guid CommentId { get; set; }</Member>
+        <Member type="Constructor">public DeleteCommentRequest()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>BlogPost</Name>
+        <Access>Public</Access>
+        <Location left="1593" top="74" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Property">public virtual IList&lt;Comment&gt; Comments { get; set; }</Member>
+        <Member type="Property">public virtual DateTime CreateDate { get; set; }</Member>
+        <Member type="Property">public virtual String Description { get; set; }</Member>
+        <Member type="Property">public virtual Guid Id { get; set; }</Member>
+        <Member type="Property">public virtual String Text { get; set; }</Member>
+        <Member type="Property">public virtual String Title { get; set; }</Member>
+        <Member type="Constructor">public BlogPost()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Comment</Name>
+        <Access>Public</Access>
+        <Location left="1604" top="368" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Property">public virtual DateTime CreateDate { get; set; }</Member>
+        <Member type="Property">public virtual Guid Id { get; set; }</Member>
+        <Member type="Property">public virtual BlogPost Post { get; set; }</Member>
+        <Member type="Property">public virtual String Text { get; set; }</Member>
+        <Member type="Constructor">public Comment()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>NeliburRestService</Name>
+        <Access>Public</Access>
+        <Location left="517" top="501" />
+        <Size width="229" height="130" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+    </Entities>
+    <Relationships>
+      <Relationship type="Generalization" first="9" second="8">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>755</X>
+          <Y>830</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>755</X>
+          <Y>851</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="10" second="8">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>600</X>
+          <Y>1152</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>648</X>
+          <Y>1048</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="14" second="8">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1244</X>
+          <Y>831</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>867</X>
+          <Y>982</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="15" second="8">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Realization" first="3" second="0">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>437</X>
+          <Y>302</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>437</X>
+          <Y>302</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Realization" first="4" second="1">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>760</X>
+          <Y>361</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Realization" first="12" second="2">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1070</X>
+          <Y>511</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>1110</X>
+          <Y>511</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Association" first="4" second="0">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>608</X>
+          <Y>159</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>608</X>
+          <Y>159</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <StartRole>appSettings</StartRole>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="6" second="5">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <StartRole>configuration</StartRole>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="8" second="5">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>784</X>
+          <Y>1142</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <StartRole>exchangeConfiguration</StartRole>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="11" second="1">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>828</X>
+          <Y>286</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <StartRole>reader</StartRole>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Dependency" first="15" second="22">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>185</X>
+          <Y>1052</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="9" second="16">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Dependency" first="10" second="17">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>361</X>
+          <Y>1258</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>275</X>
+          <Y>1345</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="14" second="21">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Dependency" first="11" second="18">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1121</X>
+          <Y>170</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="11" second="23">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Dependency" first="11" second="19">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Dependency" first="11" second="20">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1063</X>
+          <Y>383</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>1337</X>
+          <Y>398</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Association" first="23" second="24">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Aggregation</AssociationType>
+      </Relationship>
+      <Relationship type="Dependency" first="8" second="7">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>652</X>
+          <Y>925</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>448</X>
+          <Y>925</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="12" second="25">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>786</X>
+          <Y>565</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>876</X>
+          <Y>565</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="25" second="13">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>484</X>
+          <Y>609</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>527</X>
+          <Y>609</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="25" second="10">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>546</X>
+          <Y>656</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>546</X>
+          <Y>1090</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="25" second="15">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>518</X>
+          <Y>660</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>518</X>
+          <Y>960</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="25" second="9">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>582</X>
+          <Y>656</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="25" second="14">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Dependency" first="25" second="11">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+    </Relationships>
+  </ProjectItem>
+</Project>
