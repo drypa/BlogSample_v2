@@ -1,6 +1,6 @@
 ﻿Feature: Get posts feature
 
-Scenario: Get post list from remove server
+Scenario: Get posts list from remote server
 	Given There are posts in database
 	| Id									| CreateDate			| Text	| Title	 |
 	| AEBA973B-1210-49CE-B17D-000363361A81	| 2015-11-26 10:46:21	| Text1 | Title1 |
