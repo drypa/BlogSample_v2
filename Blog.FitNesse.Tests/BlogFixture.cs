@@ -17,7 +17,7 @@ namespace Blog.FitNesse.Tests
         public void AddComment()
         {
             BlogPost post = CreatePost();
-            var dalc = new TestDalc(Commands.ConnectionString);
+            var dalc = new TestRepository(Commands.ConnectionString);
             dalc.AddPost(post);
 
             IBlogClient client = new BlogClient(Commands.ServiceUrl);
@@ -37,7 +37,7 @@ namespace Blog.FitNesse.Tests
         public void DeleteComment()
         {
             BlogPost post = CreatePost();
-            var dalc = new TestDalc(Commands.ConnectionString);
+            var dalc = new TestRepository(Commands.ConnectionString);
             var comment = new Comment
             {
                 Id = Guid.NewGuid(),
@@ -56,7 +56,7 @@ namespace Blog.FitNesse.Tests
         public void DeletePostWithComments()
         {
             BlogPost post = CreatePost();
-            var dalc = new TestDalc(Commands.ConnectionString);
+            var dalc = new TestRepository(Commands.ConnectionString);
             Comment comment = CreateComment(post);
             dalc.AddPost(post);
             dalc.AddComment(comment);
@@ -84,25 +84,25 @@ namespace Blog.FitNesse.Tests
 
         private void WaitUntilCommentAdded(Comment comment)
         {
-            var dalc = new TestDalc(Commands.ConnectionString);
+            var dalc = new TestRepository(Commands.ConnectionString);
             Helpers.WaitUntil(() => dalc.GetComments().Any(x => x.Text == comment.Text), MaxTimeoutSeconds);
         }
 
         private void WaitUntilCommentDeleted(Comment comment)
         {
-            var dalc = new TestDalc(Commands.ConnectionString);
+            var dalc = new TestRepository(Commands.ConnectionString);
             Helpers.WaitUntil(() => !dalc.GetComments().Any(x => x.Id == comment.Id), MaxTimeoutSeconds);
         }
 
         private void WaitUntilPostAdded(BlogPost post)
         {
-            var dalc = new TestDalc(Commands.ConnectionString);
+            var dalc = new TestRepository(Commands.ConnectionString);
             Helpers.WaitUntil(() => dalc.GetPosts().Any(x => x.Text == post.Text && x.Title == post.Title), MaxTimeoutSeconds);
         }
 
         private void WaitUntilPostDeleted(BlogPost post)
         {
-            var dalc = new TestDalc(Commands.ConnectionString);
+            var dalc = new TestRepository(Commands.ConnectionString);
             Helpers.WaitUntil(() => !dalc.GetPosts().Any(x => x.Id == post.Id), MaxTimeoutSeconds);
         }
     }

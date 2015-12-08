@@ -6,11 +6,11 @@ using Blog.BusinessEntities;
 
 namespace Blog.Test.Common
 {
-    public class TestDalc
+    public class TestRepository
     {
         private readonly string connectionString;
 
-        public TestDalc(string connectionStr)
+        public TestRepository(string connectionStr)
         {
             connectionString = connectionStr;
         }

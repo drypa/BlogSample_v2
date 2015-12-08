@@ -29,13 +29,13 @@ namespace Blog.FitNesse.Tests
 
         public void CleanComments()
         {
-            new TestDalc(ConnectionString).CleanComments();
+            new TestRepository(ConnectionString).CleanComments();
             Console.WriteLine("Comments table was cleaned");
         }
 
         public void CleanPosts()
         {
-            new TestDalc(ConnectionString).CleanPosts();
+            new TestRepository(ConnectionString).CleanPosts();
             Console.WriteLine("BlogPosts table was cleaned");
         }
 

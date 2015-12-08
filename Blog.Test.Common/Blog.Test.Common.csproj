@@ -38,7 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestDalc.cs" />
+    <Compile Include="TestRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Blog.BusinessEntities\Blog.BusinessEntities.csproj">

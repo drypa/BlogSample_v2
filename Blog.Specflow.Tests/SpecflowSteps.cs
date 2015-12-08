@@ -41,7 +41,7 @@ namespace Blog.SpecflowTests
         [Given("There are posts in database")]
         public void GivenThereArePostsInDatabase(Table data)
         {
-            var dalc = new TestDalc(connectionstring);
+            var dalc = new TestRepository(connectionstring);
             dalc.CleanDatabase();
             foreach (TableRow row in data.Rows)
             {
