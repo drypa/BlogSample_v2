@@ -31,7 +31,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -71,9 +71,13 @@
       <Project>{8089F243-361A-41A8-957D-61DB7ECFB5CC}</Project>
       <Name>Blog.BusinessEntities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Blog.BusinessLogic\Blog.BusinessLogic.csproj">
-      <Project>{D0B75ADA-DBE1-40A8-BD77-1EC43817DBEE}</Project>
-      <Name>Blog.BusinessLogic</Name>
+    <ProjectReference Include="..\Blog.BusinessLogic.Common\Blog.BusinessLogic.Common.csproj">
+      <Project>{C05F1874-F1F2-41F1-B06F-76AEFC210015}</Project>
+      <Name>Blog.BusinessLogic.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Blog.BusinessLogic.Server\Blog.BusinessLogic.Server.csproj">
+      <Project>{ad44ea7d-704d-4baa-86ac-6979589987a9}</Project>
+      <Name>Blog.BusinessLogic.Server</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

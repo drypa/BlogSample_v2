@@ -81,9 +81,13 @@
       <Project>{8089F243-361A-41A8-957D-61DB7ECFB5CC}</Project>
       <Name>Blog.BusinessEntities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Blog.BusinessLogic\Blog.BusinessLogic.csproj">
-      <Project>{D0B75ADA-DBE1-40A8-BD77-1EC43817DBEE}</Project>
-      <Name>Blog.BusinessLogic</Name>
+    <ProjectReference Include="..\Blog.BusinessLogic.Common\Blog.BusinessLogic.Common.csproj">
+      <Project>{C05F1874-F1F2-41F1-B06F-76AEFC210015}</Project>
+      <Name>Blog.BusinessLogic.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Blog.BusinessLogic.Server\Blog.BusinessLogic.Server.csproj">
+      <Project>{AD44EA7D-704D-4BAA-86AC-6979589987A9}</Project>
+      <Name>Blog.BusinessLogic.Server</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

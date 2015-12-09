@@ -1,7 +1,7 @@
 ﻿using System;
 using Blog.BusinessEntities.Contract;
 using Blog.BusinessLogic;
-using Blog.BusinessLogic.Server;
+using Blog.BusinessLogic.Server.Server;
 using Moq;
 using Xunit;
 

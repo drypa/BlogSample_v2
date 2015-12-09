@@ -49,25 +49,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dapper, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dapper.1.42\lib\net45\Dapper.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Dapper.Contrib, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dapper.Contrib.1.43\lib\net45\Dapper.Contrib.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Dapper.Contrib.Ext, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dapper.Contrib.Ext.1.0.3\lib\Dapper.Contrib.Ext.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Nelibur, Version=3.0.3.223, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nelibur.3.1.6\lib\net45\Nelibur.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Nelibur.Sword, Version=3.0.3.223, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nelibur.Sword.3.1.6\lib\net45\Nelibur.Sword.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\BlogClient\bin\Debug\Nelibur.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -94,39 +78,18 @@
     <Reference Include="System.ServiceModel.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppSettingsHelper.cs" />
     <Compile Include="Client\BlogClient.cs" />
     <Compile Include="Client\IBlogClient.cs" />
-    <Compile Include="DapperBlogRepository.cs" />
-    <Compile Include="ExchangeConfiguration.cs" />
-    <Compile Include="ExchangeConfigurationProvider.cs" />
-    <Compile Include="IAppSettingsHelper.cs" />
-    <Compile Include="IBlogReader.cs" />
-    <Compile Include="IBlogWriter.cs" />
-    <Compile Include="Mappings\BlogPostMapping.cs" />
-    <Compile Include="Mappings\CommentMapping.cs" />
-    <Compile Include="NHibernateBlogRepository.cs" />
-    <Compile Include="NHibernateConfigurator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RabbitMQ\Consumer.cs" />
-    <Compile Include="RabbitMQ\DeliveryMode.cs" />
-    <Compile Include="RabbitMQ\ExchangeType.cs" />
-    <Compile Include="RabbitMQ\Producer.cs" />
-    <Compile Include="RabbitMQ\Serializer.cs" />
-    <Compile Include="Server\AddCommentRequestProcessor.cs" />
-    <Compile Include="Server\AddPostRequestProcessor.cs" />
-    <Compile Include="Server\GetPostBlogProcessor.cs" />
-    <Compile Include="Server\BlogService.cs" />
-    <Compile Include="Server\BlogServiceProvider.cs" />
-    <Compile Include="Server\BlogUpdateProcessor.cs" />
-    <Compile Include="Server\DeletePostRequestProcessor.cs" />
-    <Compile Include="Server\DeleteCommentRequestProcessor.cs" />
-    <Compile Include="Server\IBlogService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Blog.BusinessEntities\Blog.BusinessEntities.csproj">
       <Project>{8089F243-361A-41A8-957D-61DB7ECFB5CC}</Project>
       <Name>Blog.BusinessEntities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Blog.BusinessLogic.Common\Blog.BusinessLogic.Common.csproj">
+      <Project>{C05F1874-F1F2-41F1-B06F-76AEFC210015}</Project>
+      <Name>Blog.BusinessLogic.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

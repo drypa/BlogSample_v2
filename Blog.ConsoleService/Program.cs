@@ -1,7 +1,8 @@
 ﻿using System;
 using Blog.BusinessEntities.Contract;
 using Blog.BusinessLogic;
-using Blog.BusinessLogic.Server;
+using Blog.BusinessLogic.Common;
+using Blog.BusinessLogic.Server.Server;
 using Nelibur.ServiceModel.Services.Operations;
 using Ninject;
 

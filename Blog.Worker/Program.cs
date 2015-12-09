@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using Blog.BusinessEntities;
 using Blog.BusinessEntities.Contract;
 using Blog.BusinessLogic;
+using Blog.BusinessLogic.Common;
 using Blog.BusinessLogic.RabbitMQ;
+using Blog.BusinessLogic.Server;
 
 namespace Blog.Worker
 {

@@ -9,3 +9,4 @@ packages
 Out
 *.DotSettings
 *.feature.cs
+StyleCop.Cache

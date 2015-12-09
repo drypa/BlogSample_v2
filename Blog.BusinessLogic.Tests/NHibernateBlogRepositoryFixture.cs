@@ -5,6 +5,8 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
 using Blog.BusinessEntities;
+using Blog.BusinessLogic.Common;
+using Blog.BusinessLogic.Server;
 using Moq;
 using NHibernate.Exceptions;
 using Xunit;
