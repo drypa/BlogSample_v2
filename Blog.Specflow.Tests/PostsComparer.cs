@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Blog.BusinessEntities;
 using Blog.Client.Common.Model;
 
 namespace Blog.Specflow.Tests

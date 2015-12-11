@@ -77,14 +77,6 @@
       <Project>{AD44EA7D-704D-4BAA-86AC-6979589987A9}</Project>
       <Name>Blog.BusinessLogic.Server</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Blog.BusinessLogic\Blog.BusinessLogic.csproj">
-      <Project>{D0B75ADA-DBE1-40A8-BD77-1EC43817DBEE}</Project>
-      <Name>Blog.BusinessLogic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Blog.ConsoleService\Blog.ConsoleService.csproj">
-      <Project>{640B6ADA-5478-4CE3-825C-2F4B89560672}</Project>
-      <Name>Blog.ConsoleService</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Blog.Contract\Blog.Contract.csproj">
       <Project>{9CB40C54-BB59-4D00-BA87-DFAC5E8BAD40}</Project>
       <Name>Blog.Contract</Name>
