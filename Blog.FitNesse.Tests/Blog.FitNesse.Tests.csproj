@@ -68,9 +68,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -88,17 +86,9 @@
       <Project>{8089F243-361A-41A8-957D-61DB7ECFB5CC}</Project>
       <Name>Blog.BusinessEntities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Blog.BusinessLogic\Blog.BusinessLogic.csproj">
-      <Project>{D0B75ADA-DBE1-40A8-BD77-1EC43817DBEE}</Project>
-      <Name>Blog.BusinessLogic</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Blog.Client.Models\Blog.Client.Common.csproj">
       <Project>{206EE75E-2EDF-4D05-8A0B-5C79B5E431DB}</Project>
       <Name>Blog.Client.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Blog.Contract\Blog.Contract.csproj">
-      <Project>{9CB40C54-BB59-4D00-BA87-DFAC5E8BAD40}</Project>
-      <Name>Blog.Contract</Name>
     </ProjectReference>
     <ProjectReference Include="..\Blog.Test.Common\Blog.Test.Common.csproj">
       <Project>{B7EB834A-E508-4F7D-9E7A-405C93E32351}</Project>

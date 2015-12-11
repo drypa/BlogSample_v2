@@ -4,8 +4,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using Blog.BusinessEntities;
-using Blog.BusinessLogic.Client;
 using Blog.Client.Annotations;
 using Blog.Client.Common;
 using Blog.Client.Common.Model;

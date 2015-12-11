@@ -39,9 +39,7 @@
       <HintPath>..\packages\System.Management.Automation.6.1.7601.17515\lib\net45\System.Management.Automation.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseBlogCmdlet.cs" />
@@ -61,10 +59,6 @@
     <ProjectReference Include="..\Blog.Client.Models\Blog.Client.Common.csproj">
       <Project>{206EE75E-2EDF-4D05-8A0B-5C79B5E431DB}</Project>
       <Name>Blog.Client.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Blog.Contract\Blog.Contract.csproj">
-      <Project>{9CB40C54-BB59-4D00-BA87-DFAC5E8BAD40}</Project>
-      <Name>Blog.Contract</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
