@@ -7,12 +7,14 @@ using System.Windows.Input;
 using Blog.BusinessEntities;
 using Blog.BusinessLogic.Client;
 using Blog.Client.Annotations;
+using Blog.Client.Common;
+using Blog.Client.Common.Model;
 
 namespace Blog.Client.Models
 {
     public sealed class BlogViewModel : INotifyPropertyChanged
     {
-        private readonly IBlogClient blogClient;
+        private readonly BlogClientController blogClientController;
         private readonly PostComment newComment = new PostComment();
         private readonly IClientNotificator clientNotificator;
 
@@ -25,9 +27,9 @@ namespace Blog.Client.Models
         /// </summary>
         /// <param name="client" >Клиент получения данных</param>
         /// <param name="notificator">Сервис, позволяющий информировать пользователя</param>
-        public BlogViewModel(IBlogClient client, IClientNotificator notificator)
+        public BlogViewModel(BlogClientController client, IClientNotificator notificator)
         {
-            blogClient = client;
+            blogClientController = client;
             clientNotificator = notificator;
         }
 
@@ -82,7 +84,7 @@ namespace Blog.Client.Models
             {
                 if (posts == null)
                 {
-                    posts = blogClient.GetPosts().ToViewModel();
+                    posts = blogClientController.GetPosts();
                     OnPropertyChanged();
                 }
                 return posts;
@@ -127,10 +129,10 @@ namespace Blog.Client.Models
 
         private void Refresh(object obj)
         {
-            Posts = blogClient.GetPosts().ToViewModel();
+            Posts = blogClientController.GetPosts();
             if (CurrentPost != null)
             {
-                CurrentPost = blogClient.GetPost(CurrentPost.Id).ToPostDetails();
+                CurrentPost = blogClientController.GetPost(CurrentPost.Id);
             }
         }
 
@@ -139,7 +141,7 @@ namespace Blog.Client.Models
             NewComment.CreationDate = DateTime.Now;
             NewComment.Post = CurrentPost;
 
-            blogClient.AddComment(NewComment.ToModel());
+            blogClientController.AddComment(NewComment);
 
             LoadPostDetails(CurrentPost);
             NewComment.Text = string.Empty;
@@ -148,8 +150,8 @@ namespace Blog.Client.Models
         private void AddNewPost()
         {
             CurrentPost.CreationDate = DateTime.Now;
-            blogClient.AddPost(CurrentPost.ToModel());
-            Posts = blogClient.GetPosts().ToViewModel();
+            blogClientController.AddPost(CurrentPost);
+            Posts = blogClientController.GetPosts();
             HasNewPost = false;
         }
 
@@ -168,7 +170,7 @@ namespace Blog.Client.Models
         {
             var comment = (obj as PostComment);
             comment.Post = CurrentPost;
-            blogClient.DeleteComment(comment.ToModel());
+            blogClientController.DeleteComment(comment);
 
             LoadPostDetails(CurrentPost);
         }
@@ -176,8 +178,8 @@ namespace Blog.Client.Models
         private void DeletePost(object obj)
         {
             var post = (obj as Post);
-            blogClient.DeletePost(post.ToModel());
-            Posts = blogClient.GetPosts().ToViewModel();
+            blogClientController.DeletePost(post);
+            Posts = blogClientController.GetPosts();
             if (Posts.Count > 0)
             {
                 LoadPostDetails(Posts.First());
@@ -187,14 +189,14 @@ namespace Blog.Client.Models
         private void LoadPostDetails(object post)
         {
             Guid postId = (post as Post).Id;
-            BlogPost loadedPost = blogClient.GetPost(postId);
+            PostDetails loadedPost = blogClientController.GetPost(postId);
             if (loadedPost == null)
             {
                 clientNotificator.ShowMessage("Статья не найдена");
             }
             else
             {
-                CurrentPost = loadedPost.ToPostDetails();
+                CurrentPost = loadedPost;
             }
         }
 

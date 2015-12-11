@@ -1,5 +1,8 @@
 ﻿using System;
-using Blog.BusinessEntities.Contract;
+using System.Collections.Generic;
+using Blog.BusinessEntities;
+using Blog.BusinessLogic.Common;
+using Blog.Contract;
 using Nelibur.ServiceModel.Services.Operations;
 
 namespace Blog.BusinessLogic.Server.Server
@@ -22,11 +25,11 @@ namespace Blog.BusinessLogic.Server.Server
 
         public object Get(GetPostsRequest request)
         {
+            IList<BlogPost> posts = reader.GetPosts();
             return new PostListResponse
             {
-                Posts = reader.GetPosts()
+                Posts = posts == null ? null : posts.ToDto()
             };
         }
-
     }
 }

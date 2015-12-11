@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using Blog.BusinessEntities;
+using Blog.Client.Common.Model;
 
-namespace Blog.SpecflowTests
+namespace Blog.Specflow.Tests
 {
-    internal class PostsComparer : IEqualityComparer<BlogPost>
+    internal class PostsComparer : IEqualityComparer<Post>
     {
-        public bool Equals(BlogPost x, BlogPost y)
+        public bool Equals(Post x, Post y)
         {
             return x.Id == y.Id &&
-                x.Text == y.Text &&
                 x.Title == y.Title;
         }
 
-        public int GetHashCode(BlogPost obj)
+        public int GetHashCode(Post obj)
         {
-            return obj.Id.GetHashCode() & obj.Text.GetHashCode() & obj.Title.GetHashCode();
+            return obj.Id.GetHashCode() & obj.Title.GetHashCode();
         }
     }
 }

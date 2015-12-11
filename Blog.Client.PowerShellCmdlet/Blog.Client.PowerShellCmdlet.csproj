@@ -58,13 +58,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Blog.BusinessEntities\Blog.BusinessEntities.csproj">
-      <Project>{8089f243-361a-41a8-957d-61db7ecfb5cc}</Project>
-      <Name>Blog.BusinessEntities</Name>
+    <ProjectReference Include="..\Blog.Client.Models\Blog.Client.Common.csproj">
+      <Project>{206EE75E-2EDF-4D05-8A0B-5C79B5E431DB}</Project>
+      <Name>Blog.Client.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Blog.BusinessLogic\Blog.BusinessLogic.csproj">
-      <Project>{D0B75ADA-DBE1-40A8-BD77-1EC43817DBEE}</Project>
-      <Name>Blog.BusinessLogic</Name>
+    <ProjectReference Include="..\Blog.Contract\Blog.Contract.csproj">
+      <Project>{9CB40C54-BB59-4D00-BA87-DFAC5E8BAD40}</Project>
+      <Name>Blog.Contract</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

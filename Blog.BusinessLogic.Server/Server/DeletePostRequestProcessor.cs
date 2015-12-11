@@ -1,5 +1,5 @@
 ﻿using System;
-using Blog.BusinessEntities.Contract;
+using Blog.Contract;
 using Nelibur.ServiceModel.Services.Operations;
 
 namespace Blog.BusinessLogic.Server.Server

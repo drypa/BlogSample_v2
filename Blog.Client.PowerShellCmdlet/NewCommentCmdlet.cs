@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Management.Automation;
-using Blog.BusinessEntities;
+using Blog.Client.Common.Model;
 
 namespace Blog.Client.PowerShellCmdlet
 {
@@ -15,7 +15,7 @@ namespace Blog.Client.PowerShellCmdlet
 
         protected override void ProcessRecord()
         {
-            GetClient().AddComment(new Comment { Post = new BlogPost { Id = PostId }, Text = Text });
+            GetClient().AddComment(new PostComment { Post = new Post { Id = PostId }, Text = Text });
             WriteObject("comment added");
         }
     }

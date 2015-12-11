@@ -1,5 +1,5 @@
 ﻿using System;
-using Blog.BusinessEntities.Contract;
+using Blog.Contract;
 
 namespace Blog.BusinessLogic
 {

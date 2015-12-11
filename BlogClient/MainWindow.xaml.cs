@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Windows;
+using Blog.Client.Common;
 using Blog.Client.Models;
 
 namespace Blog.Client
@@ -15,7 +16,7 @@ namespace Blog.Client
             var alert = (Action<string>)((msg) => MessageBox.Show(msg));
             string serviceUrl = ConfigurationManager.AppSettings["SeviceUrl"];
 
-            var client = new BusinessLogic.Client.BlogClient(serviceUrl);
+            var client = new BlogClientController(serviceUrl);
             var notificator = new ClientNotificator(alert);
             ViewModel = new BlogViewModel(client, notificator);
             InitializeComponent();

@@ -79,6 +79,10 @@
       <Project>{ad44ea7d-704d-4baa-86ac-6979589987a9}</Project>
       <Name>Blog.BusinessLogic.Server</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Blog.Contract\Blog.Contract.csproj">
+      <Project>{9CB40C54-BB59-4D00-BA87-DFAC5E8BAD40}</Project>
+      <Name>Blog.Contract</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Linq;
 using Blog.BusinessEntities;
-using Blog.BusinessLogic.Client;
+using Blog.Client.Common;
+using Blog.Client.Common.Model;
 using Blog.Test.Common;
 using fitlibrary;
 
@@ -16,94 +17,109 @@ namespace Blog.FitNesse.Tests
 
         public void AddComment()
         {
-            BlogPost post = CreatePost();
-            var dalc = new TestRepository(Commands.ConnectionString);
-            dalc.AddPost(post);
+            PostDetails post = CreatePost();
+            var repository = GetTestRepository();
+            repository.AddPost(post);
 
-            IBlogClient client = new BlogClient(Commands.ServiceUrl);
-            Comment comment = CreateComment(post);
+            BlogClientController client = new BlogClientController(Commands.ServiceUrl);
+            var comment = CreateComment(post);
             client.AddComment(comment);
             WaitUntilCommentAdded(comment);
         }
 
+        private TestRepository GetTestRepository()
+        {
+            return new TestRepository(Commands.ConnectionString);
+        }
+
         public void AddPost()
         {
-            IBlogClient client = new BlogClient(Commands.ServiceUrl);
-            BlogPost postToAdd = CreatePost();
+            var client = GetClient();
+            PostDetails postToAdd = CreatePost();
             client.AddPost(postToAdd);
             WaitUntilPostAdded(postToAdd);
         }
 
         public void DeleteComment()
         {
-            BlogPost post = CreatePost();
-            var dalc = new TestRepository(Commands.ConnectionString);
-            var comment = new Comment
+            PostDetails post = CreatePost();
+            var repository = GetTestRepository();
+            var comment = new PostComment
             {
                 Id = Guid.NewGuid(),
                 Post = post,
                 Text = commentText,
-                CreateDate = DateTime.Now
+                CreationDate = DateTime.Now
             };
-            dalc.AddPost(post);
-            dalc.AddComment(comment);
+            repository.AddPost(post);
+            repository.AddComment(comment);
 
-            IBlogClient client = new BlogClient(Commands.ServiceUrl);
+            var client = GetClient();
             client.DeleteComment(comment);
             WaitUntilCommentDeleted(comment);
         }
 
         public void DeletePostWithComments()
         {
-            BlogPost post = CreatePost();
-            var dalc = new TestRepository(Commands.ConnectionString);
-            Comment comment = CreateComment(post);
-            dalc.AddPost(post);
-            dalc.AddComment(comment);
+            PostDetails post = CreatePost();
+            var repository = GetTestRepository();
+            var comment = CreateComment(post);
+            repository.AddPost(post);
+            repository.AddComment(comment);
 
-            IBlogClient client = new BlogClient(Commands.ServiceUrl);
+            var client = GetClient();
             client.DeletePost(post);
             WaitUntilPostDeleted(post);
         }
 
-        private Comment CreateComment(BlogPost post)
+        private BlogClientController GetClient()
         {
-            return new Comment
+            return new BlogClientController(Commands.ServiceUrl);
+        }
+
+        private PostComment CreateComment(Post post)
+        {
+            return new PostComment
             {
                 Id = Guid.NewGuid(),
                 Post = post,
                 Text = commentText,
-                CreateDate = DateTime.Now
+                CreationDate = DateTime.Now
             };
         }
 
-        private BlogPost CreatePost()
+        private PostDetails CreatePost()
         {
-            return new BlogPost { Text = postText, Title = postTitle, Id = Guid.NewGuid(), CreateDate = DateTime.Now };
+            return new PostDetails { Text = postText, Title = postTitle, Id = Guid.NewGuid(), CreationDate = DateTime.Now };
         }
 
-        private void WaitUntilCommentAdded(Comment comment)
+        private void WaitUntilCommentAdded(PostComment comment)
         {
-            var dalc = new TestRepository(Commands.ConnectionString);
-            Helpers.WaitUntil(() => dalc.GetComments().Any(x => x.Text == comment.Text), MaxTimeoutSeconds);
+            var repo = GetRepo();
+            Helpers.WaitUntil(() => repo.GetComments().Any(x => x.Text == comment.Text), MaxTimeoutSeconds);
         }
 
-        private void WaitUntilCommentDeleted(Comment comment)
+        private TestRepository GetRepo()
         {
-            var dalc = new TestRepository(Commands.ConnectionString);
-            Helpers.WaitUntil(() => !dalc.GetComments().Any(x => x.Id == comment.Id), MaxTimeoutSeconds);
+            return new TestRepository(Commands.ConnectionString);
         }
 
-        private void WaitUntilPostAdded(BlogPost post)
+        private void WaitUntilCommentDeleted(PostComment comment)
         {
-            var dalc = new TestRepository(Commands.ConnectionString);
-            Helpers.WaitUntil(() => dalc.GetPosts().Any(x => x.Text == post.Text && x.Title == post.Title), MaxTimeoutSeconds);
+            var repo = GetRepo();
+            Helpers.WaitUntil(() => !repo.GetComments().Any(x => x.Id == comment.Id), MaxTimeoutSeconds);
         }
 
-        private void WaitUntilPostDeleted(BlogPost post)
+        private void WaitUntilPostAdded(PostDetails post)
         {
-            var dalc = new TestRepository(Commands.ConnectionString);
-            Helpers.WaitUntil(() => !dalc.GetPosts().Any(x => x.Id == post.Id), MaxTimeoutSeconds);
+            var repo = GetRepo();
+            Helpers.WaitUntil(() => repo.GetPosts().Any(x => x.Text == post.Text && x.Title == post.Title), MaxTimeoutSeconds);
+        }
+
+        private void WaitUntilPostDeleted(Post post)
+        {
+            var repo = GetRepo();
+            Helpers.WaitUntil(() => !repo.GetPosts().Any(x => x.Id == post.Id), MaxTimeoutSeconds);
         }
     }
 }

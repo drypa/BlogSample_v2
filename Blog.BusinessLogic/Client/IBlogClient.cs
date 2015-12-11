@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using Blog.BusinessEntities;
+using Blog.Contract;
 
 namespace Blog.BusinessLogic.Client
 {
     public interface IBlogClient
     {
-        void AddComment(Comment comment);
+        void AddComment(CommentDto comment);
 
-        void AddPost(BlogPost post);
+        void AddPost(BlogPostDto post);
 
-        void DeleteComment(Comment comment);
+        void DeleteComment(CommentDto comment);
 
-        void DeletePost(BlogPost post);
+        void DeletePost(BlogPostDto post);
 
-        BlogPost GetPost(Guid postId);
+        BlogPostDto GetPost(Guid postId);
 
-        List<BlogPost> GetPosts();
+        List<BlogPostDto> GetPosts();
     }
 }

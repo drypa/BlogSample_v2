@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ServiceModel.Web;
-using Blog.BusinessEntities.Contract;
+using Blog.Contract;
 using Nelibur.ServiceModel.Services;
 using Nelibur.ServiceModel.Services.Operations;
 using Ninject;

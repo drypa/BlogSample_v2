@@ -57,11 +57,7 @@
     </ApplicationDefinition>
     <Compile Include="ClientNotificator.cs" />
     <Compile Include="IClientNotificator.cs" />
-    <Compile Include="ModelsConverter.cs" />
     <Compile Include="Models\BlogViewModel.cs" />
-    <Compile Include="Models\Post.cs" />
-    <Compile Include="Models\PostComment.cs" />
-    <Compile Include="Models\PostDetails.cs" />
     <Compile Include="RelayCommand .cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -113,6 +109,10 @@
     <ProjectReference Include="..\Blog.BusinessLogic\Blog.BusinessLogic.csproj">
       <Project>{D0B75ADA-DBE1-40A8-BD77-1EC43817DBEE}</Project>
       <Name>Blog.BusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Blog.Client.Models\Blog.Client.Common.csproj">
+      <Project>{206EE75E-2EDF-4D05-8A0B-5C79B5E431DB}</Project>
+      <Name>Blog.Client.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

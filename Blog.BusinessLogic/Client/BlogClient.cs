@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Blog.BusinessEntities;
-using Blog.BusinessEntities.Contract;
+using Blog.Contract;
 using Nelibur.ServiceModel.Clients;
 
 namespace Blog.BusinessLogic.Client
@@ -15,29 +14,29 @@ namespace Blog.BusinessLogic.Client
             client = new JsonServiceClient(service);
         }
 
-        public void AddComment(Comment comment)
+        public void AddComment(CommentDto comment)
         {
             client.Post(new AddCommentRequest { Text = comment.Text, PostId = comment.Post.Id });
         }
 
-        public void AddPost(BlogPost post)
+        public void AddPost(BlogPostDto post)
         {
             client.Post(new AddPostRequest { Title = post.Title, Text = post.Text });
         }
 
-        public void DeleteComment(Comment comment)
+        public void DeleteComment(CommentDto comment)
         {
             client.Delete(new DeleteCommentRequest { CommentId = comment.Id });
         }
 
-        public void DeletePost(BlogPost post)
+        public void DeletePost(BlogPostDto post)
         {
             client.Delete(new DeletePostRequest { PostId = post.Id });
         }
 
-        public BlogPost GetPost(Guid postId)
+        public BlogPostDto GetPost(Guid postId)
         {
-            var post = client.Get<BlogPost>(new GetPostRequest { PostId = postId });
+            var post = client.Get<BlogPostDto>(new GetPostRequest { PostId = postId });
             if (post == null)
             {
                 return null;
@@ -45,7 +44,7 @@ namespace Blog.BusinessLogic.Client
             return post;
         }
 
-        public List<BlogPost> GetPosts()
+        public List<BlogPostDto> GetPosts()
         {
             var response = client.Get<PostListResponse>(new GetPostsRequest());
             return response.Posts.ToList();

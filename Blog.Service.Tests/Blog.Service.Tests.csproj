@@ -85,6 +85,10 @@
       <Project>{640B6ADA-5478-4CE3-825C-2F4B89560672}</Project>
       <Name>Blog.ConsoleService</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Blog.Contract\Blog.Contract.csproj">
+      <Project>{9CB40C54-BB59-4D00-BA87-DFAC5E8BAD40}</Project>
+      <Name>Blog.Contract</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

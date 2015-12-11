@@ -1,5 +1,5 @@
 ﻿using System;
-using Blog.BusinessEntities.Contract;
+using Blog.Contract;
 using Blog.BusinessLogic;
 using Blog.BusinessLogic.Server.Server;
 using Moq;

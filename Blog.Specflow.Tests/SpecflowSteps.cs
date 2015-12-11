@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using Blog.BusinessEntities;
-using Blog.BusinessEntities.Contract;
 using Blog.BusinessLogic;
-using Blog.BusinessLogic.Client;
 using Blog.BusinessLogic.Common;
-using Blog.BusinessLogic.Server;
 using Blog.BusinessLogic.Server.Server;
+using Blog.Client.Common;
+using Blog.Client.Common.Model;
+using Blog.Contract;
+using Blog.Specflow.Tests;
 using Blog.Test.Common;
 using Moq;
 using Nelibur.ServiceModel.Services.Operations;
@@ -47,7 +48,7 @@ namespace Blog.SpecflowTests
             dalc.CleanDatabase();
             foreach (TableRow row in data.Rows)
             {
-                BlogPost post = ParseTableRow(row);
+                PostDetails post = ParseTableRow(row);
                 dalc.AddPost(post);
             }
         }
@@ -55,15 +56,15 @@ namespace Blog.SpecflowTests
         [Then("I get posts list")]
         public void IGetPostsList(Table data)
         {
-            var expectedPosts = new List<BlogPost>(data.RowCount);
+            var expectedPosts = new List<PostDetails>(data.RowCount);
             foreach (TableRow row in data.Rows)
             {
-                BlogPost post = ParseTableRow(row);
+                PostDetails post = ParseTableRow(row);
                 expectedPosts.Add(post);
             }
-            var actualPosts = ScenarioContext.Current[GetPostsResponseKey] as List<BlogPost>;
+            var actualPosts = ScenarioContext.Current[GetPostsResponseKey] as List<Post>;
             Assert.Equal(expectedPosts.Count, actualPosts.Count);
-            foreach (BlogPost expectedPost in expectedPosts)
+            foreach (Post expectedPost in expectedPosts)
             {
                 Assert.Contains(expectedPost, actualPosts, new PostsComparer());
             }
@@ -72,8 +73,8 @@ namespace Blog.SpecflowTests
         [When("I request all posts")]
         public void WhenIRequestAllPosts()
         {
-            IBlogClient client = new BlogClient(serviceUrl);
-            List<BlogPost> response = client.GetPosts();
+            BlogClientController client = new BlogClientController(serviceUrl);
+            List<Post> response = client.GetPosts();
             ScenarioContext.Current[GetPostsResponseKey] = response;
         }
 
@@ -102,14 +103,14 @@ namespace Blog.SpecflowTests
             return kernel;
         }
 
-        private BlogPost ParseTableRow(TableRow row)
+        private PostDetails ParseTableRow(TableRow row)
         {
-            return new BlogPost
+            return new PostDetails
             {
                 Id = Guid.Parse(row["Id"]),
                 Title = row["Title"],
                 Text = row["Text"],
-                CreateDate = DateTime.Parse(row["CreateDate"])
+                CreationDate = DateTime.Parse(row["CreateDate"])
             };
         }
     }

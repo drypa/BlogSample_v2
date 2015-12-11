@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Blog.BusinessEntities;
-using Blog.BusinessEntities.Contract;
+using Blog.Contract;
 using Blog.BusinessLogic;
 using Blog.BusinessLogic.Common;
 using Blog.BusinessLogic.RabbitMQ;
@@ -25,7 +25,7 @@ namespace Blog.Worker
 
                     Type generic = consumerType.MakeGenericType(route.Key);
 
-                    Action<dynamic> action = (x) => OnAction(x);
+                    Action<dynamic> action = x => OnAction(x);
                     object[] parameters = { config.ServerName, config.ExchangeType, route.Value, action };
                     dynamic consumer = Activator.CreateInstance(generic, parameters);
                     consumers.Add(consumer);

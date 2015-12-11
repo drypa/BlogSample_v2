@@ -42,7 +42,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
@@ -50,13 +49,6 @@
   <ItemGroup>
     <Compile Include="BlogPost.cs" />
     <Compile Include="Comment.cs" />
-    <Compile Include="Contract\AddCommentRequest.cs" />
-    <Compile Include="Contract\AddPostRequest.cs" />
-    <Compile Include="Contract\DeleteCommentRequest.cs" />
-    <Compile Include="Contract\DeletePostRequest.cs" />
-    <Compile Include="Contract\GetPostRequest.cs" />
-    <Compile Include="Contract\GetPostsRequest.cs" />
-    <Compile Include="Contract\PostListResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

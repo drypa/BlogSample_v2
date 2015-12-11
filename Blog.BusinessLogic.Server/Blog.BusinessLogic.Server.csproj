@@ -99,7 +99,12 @@
       <Project>{C05F1874-F1F2-41F1-B06F-76AEFC210015}</Project>
       <Name>Blog.BusinessLogic.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Blog.Contract\Blog.Contract.csproj">
+      <Project>{9CB40C54-BB59-4D00-BA87-DFAC5E8BAD40}</Project>
+      <Name>Blog.Contract</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

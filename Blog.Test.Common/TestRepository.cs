@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using Blog.BusinessEntities;
+using Blog.Client.Common.Model;
 
 namespace Blog.Test.Common
 {
@@ -15,7 +16,7 @@ namespace Blog.Test.Common
             connectionString = connectionStr;
         }
 
-        public void AddComment(Comment comment)
+        public void AddComment(PostComment comment)
         {
             using (var connection = new SqlConnection(connectionString))
             {
@@ -34,7 +35,7 @@ namespace Blog.Test.Common
                                            ,@text)";
                     cmd.CommandType = CommandType.Text;
                     cmd.Parameters.Add("@id", SqlDbType.UniqueIdentifier).Value = comment.Id;
-                    cmd.Parameters.Add("@date", SqlDbType.DateTime).Value = comment.CreateDate;
+                    cmd.Parameters.Add("@date", SqlDbType.DateTime).Value = comment.CreationDate;
                     cmd.Parameters.Add("@text", SqlDbType.VarChar, 200).Value = comment.Text;
                     cmd.Parameters.Add("@postId", SqlDbType.UniqueIdentifier).Value = comment.Post.Id;
 
@@ -78,7 +79,7 @@ namespace Blog.Test.Common
         }
 
 
-        public void AddPost(BlogPost post)
+        public void AddPost(PostDetails post)
         {
             using (var connection = new SqlConnection(connectionString))
             {
@@ -97,7 +98,7 @@ namespace Blog.Test.Common
                                            ,@title)";
                     cmd.CommandType = CommandType.Text;
                     cmd.Parameters.Add("@id", SqlDbType.UniqueIdentifier).Value = post.Id;
-                    cmd.Parameters.Add("@createDate", SqlDbType.DateTime).Value = post.CreateDate;
+                    cmd.Parameters.Add("@createDate", SqlDbType.DateTime).Value = post.CreationDate;
                     cmd.Parameters.Add("@text", SqlDbType.VarChar, 200).Value = post.Text;
                     cmd.Parameters.Add("@title", SqlDbType.VarChar, 100).Value = post.Title;
 
